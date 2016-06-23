@@ -16,8 +16,11 @@ namespace StockPortfolioApplication
         private string totalCostDisplay, totalValueDisplay, totalPLDisplay;
 
         public ctlBerkshireView()
-        {t
-            
+        {
+            // i don't know what repository I'm working with yet
+            // trying to understand github integration
+
+            // i changed this but i'm not sure how to upload it to the repo...
         }
 
         public ctlBerkshireView(Portfolio portfolio)
