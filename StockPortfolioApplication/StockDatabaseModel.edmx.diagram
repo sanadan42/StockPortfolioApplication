@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="cff129cfbe174689a0af198a4c081b87" Name="Diagram1">
+        <EntityTypeShape EntityType="StockPortfolioDBModel.sysdiagram" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockPortfolioDBModel.tblAccount" Width="1.5" PointX="0.75" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockPortfolioDBModel.tblBalance" Width="1.5" PointX="3" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockPortfolioDBModel.tblCurrency" Width="1.5" PointX="0.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockPortfolioDBModel.tblEquity" Width="2" PointX="5" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockPortfolioDBModel.tblPortfolioHolding" Width="2.125" PointX="7.5" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockPortfolioDBModel.tblPortfolio" Width="1.5" PointX="5.25" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockPortfolioDBModel.tblStockExchanx" Width="2.5" PointX="2" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockPortfolioDBModel.tblTransactionDividend" Width="2.125" PointX="7.5" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockPortfolioDBModel.tblTransactionEquity" Width="2.5" PointX="10.5" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockPortfolioDBModel.tblTransactionFinance" Width="2.125" PointX="10.5" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockPortfolioDBModel.tblTransactionType" Width="2" PointX="8.25" PointY="12.375" IsExpanded="true" />
+        <AssociationConnector Association="StockPortfolioDBModel.FK_tblBalances_tblAccounts" ManuallyRouted="false" />
+        <AssociationConnector Association="StockPortfolioDBModel.FK_tblTransactionDividend_tblAccounts" ManuallyRouted="false" />
+        <AssociationConnector Association="StockPortfolioDBModel.FK_tblTransactionEquities_tblAccounts" ManuallyRouted="false" />
+        <AssociationConnector Association="StockPortfolioDBModel.FK_tblTransactionFinance_tblAccounts" ManuallyRouted="false" />
+        <AssociationConnector Association="StockPortfolioDBModel.FK_tblBalances_tblCurrencies" ManuallyRouted="false" />
+        <AssociationConnector Association="StockPortfolioDBModel.FK_tblStockExchanges_tblCurrencies" ManuallyRouted="false" />
+        <AssociationConnector Association="StockPortfolioDBModel.FK_tblEquities_tblStockExchanges" ManuallyRouted="false" />
+        <AssociationConnector Association="StockPortfolioDBModel.FK_tblPortfolioHoldings_tblEquities" ManuallyRouted="false" />
+        <AssociationConnector Association="StockPortfolioDBModel.FK_tblTransactionDividend_tblEquities" ManuallyRouted="false" />
+        <AssociationConnector Association="StockPortfolioDBModel.FK_tblTransactionEquities_tblEquities" ManuallyRouted="false" />
+        <AssociationConnector Association="StockPortfolioDBModel.FK_tblPortfolioHoldings_tblPortfolios" ManuallyRouted="false" />
+        <AssociationConnector Association="StockPortfolioDBModel.FK_tblTransactionEquities_tblTransactionTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="StockPortfolioDBModel.FK_tblTransactionFinance_tblTransactionTypes" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

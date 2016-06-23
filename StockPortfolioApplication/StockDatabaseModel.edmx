@@ -1,0 +1,862 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="StockPortfolioDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="tblAccounts">
+          <Key>
+            <PropertyRef Name="AccountID" />
+          </Key>
+          <Property Name="AccountID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccountNumber" Type="int" />
+          <Property Name="AccountName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tblBalances">
+          <Key>
+            <PropertyRef Name="BalanceID" />
+          </Key>
+          <Property Name="BalanceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccountIDFK" Type="int" />
+          <Property Name="CurrencyIDFK" Type="int" />
+          <Property Name="Balance" Type="decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="tblCurrencies">
+          <Key>
+            <PropertyRef Name="CurrencyID" />
+          </Key>
+          <Property Name="CurrencyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CurrencyType" Type="nvarchar" MaxLength="50" />
+          <Property Name="ExchangeRate" Type="decimal" Precision="19" Scale="6" />
+        </EntityType>
+        <EntityType Name="tblEquities">
+          <Key>
+            <PropertyRef Name="EquityID" />
+          </Key>
+          <Property Name="EquityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ExchangeIDFK" Type="int" />
+          <Property Name="StockTicker" Type="nvarchar" MaxLength="10" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+          <Property Name="CurrentPrice" Type="decimal" Precision="19" Scale="4" />
+          <Property Name="HasDividend" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblPortfolioHoldings">
+          <Key>
+            <PropertyRef Name="PortfolioHoldingID" />
+          </Key>
+          <Property Name="PortfolioHoldingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PortfolioIDFK" Type="int" />
+          <Property Name="EquityIDFK" Type="int" />
+        </EntityType>
+        <EntityType Name="tblPortfolios">
+          <Key>
+            <PropertyRef Name="PortfolioID" />
+          </Key>
+          <Property Name="PortfolioID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PortfolioName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tblStockExchanges">
+          <Key>
+            <PropertyRef Name="ExchangeID" />
+          </Key>
+          <Property Name="ExchangeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CurrencyIDFK" Type="int" />
+          <Property Name="ExchangeName" Type="nvarchar" MaxLength="10" />
+          <Property Name="ExchangeDescription" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tblTransactionDividend">
+          <Key>
+            <PropertyRef Name="TransactionID" />
+          </Key>
+          <Property Name="TransactionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EquityIDFK" Type="int" />
+          <Property Name="AccountIDFK" Type="int" />
+          <Property Name="DividendDate" Type="date" />
+          <Property Name="DividendValue" Type="decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="tblTransactionEquities">
+          <Key>
+            <PropertyRef Name="TransactionID" />
+          </Key>
+          <Property Name="TransactionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EquityIDFK" Type="int" />
+          <Property Name="AccountIDFK" Type="int" />
+          <Property Name="TransactionTypeIDFK" Type="int" />
+          <Property Name="TransactionDate" Type="date" />
+          <Property Name="Shares" Type="int" />
+          <Property Name="Price" Type="decimal" Precision="19" Scale="4" />
+          <Property Name="Commission" Type="decimal" Precision="19" Scale="4" />
+          <Property Name="ExchangeRate" Type="decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="tblTransactionFinance">
+          <Key>
+            <PropertyRef Name="TransactionID" />
+          </Key>
+          <Property Name="TransactionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccountIDFK" Type="int" />
+          <Property Name="TransactionIDFK" Type="int" />
+          <Property Name="CurrencyIDFK" Type="int" />
+          <Property Name="TransactionDate" Type="date" />
+          <Property Name="Net" Type="decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="tblTransactionTypes">
+          <Key>
+            <PropertyRef Name="TransactionTypeID" />
+          </Key>
+          <Property Name="TransactionTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TransactionTypeUsage" Type="int" />
+          <Property Name="TransactionType" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <Association Name="FK_tblBalances_tblAccounts">
+          <End Role="tblAccounts" Type="Self.tblAccounts" Multiplicity="0..1" />
+          <End Role="tblBalances" Type="Self.tblBalances" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAccounts">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="tblBalances">
+              <PropertyRef Name="AccountIDFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblBalances_tblCurrencies">
+          <End Role="tblCurrencies" Type="Self.tblCurrencies" Multiplicity="0..1" />
+          <End Role="tblBalances" Type="Self.tblBalances" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCurrencies">
+              <PropertyRef Name="CurrencyID" />
+            </Principal>
+            <Dependent Role="tblBalances">
+              <PropertyRef Name="CurrencyIDFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblEquities_tblStockExchanges">
+          <End Role="tblStockExchanges" Type="Self.tblStockExchanges" Multiplicity="0..1" />
+          <End Role="tblEquities" Type="Self.tblEquities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblStockExchanges">
+              <PropertyRef Name="ExchangeID" />
+            </Principal>
+            <Dependent Role="tblEquities">
+              <PropertyRef Name="ExchangeIDFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPortfolioHoldings_tblEquities">
+          <End Role="tblEquities" Type="Self.tblEquities" Multiplicity="0..1" />
+          <End Role="tblPortfolioHoldings" Type="Self.tblPortfolioHoldings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblEquities">
+              <PropertyRef Name="EquityID" />
+            </Principal>
+            <Dependent Role="tblPortfolioHoldings">
+              <PropertyRef Name="EquityIDFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPortfolioHoldings_tblPortfolios">
+          <End Role="tblPortfolios" Type="Self.tblPortfolios" Multiplicity="0..1" />
+          <End Role="tblPortfolioHoldings" Type="Self.tblPortfolioHoldings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPortfolios">
+              <PropertyRef Name="PortfolioID" />
+            </Principal>
+            <Dependent Role="tblPortfolioHoldings">
+              <PropertyRef Name="PortfolioIDFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblStockExchanges_tblCurrencies">
+          <End Role="tblCurrencies" Type="Self.tblCurrencies" Multiplicity="0..1" />
+          <End Role="tblStockExchanges" Type="Self.tblStockExchanges" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCurrencies">
+              <PropertyRef Name="CurrencyID" />
+            </Principal>
+            <Dependent Role="tblStockExchanges">
+              <PropertyRef Name="CurrencyIDFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTransactionDividend_tblAccounts">
+          <End Role="tblAccounts" Type="Self.tblAccounts" Multiplicity="0..1" />
+          <End Role="tblTransactionDividend" Type="Self.tblTransactionDividend" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAccounts">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="tblTransactionDividend">
+              <PropertyRef Name="AccountIDFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTransactionDividend_tblEquities">
+          <End Role="tblEquities" Type="Self.tblEquities" Multiplicity="0..1" />
+          <End Role="tblTransactionDividend" Type="Self.tblTransactionDividend" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblEquities">
+              <PropertyRef Name="EquityID" />
+            </Principal>
+            <Dependent Role="tblTransactionDividend">
+              <PropertyRef Name="EquityIDFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTransactionEquities_tblAccounts">
+          <End Role="tblAccounts" Type="Self.tblAccounts" Multiplicity="0..1" />
+          <End Role="tblTransactionEquities" Type="Self.tblTransactionEquities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAccounts">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="tblTransactionEquities">
+              <PropertyRef Name="AccountIDFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTransactionEquities_tblEquities">
+          <End Role="tblEquities" Type="Self.tblEquities" Multiplicity="0..1" />
+          <End Role="tblTransactionEquities" Type="Self.tblTransactionEquities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblEquities">
+              <PropertyRef Name="EquityID" />
+            </Principal>
+            <Dependent Role="tblTransactionEquities">
+              <PropertyRef Name="EquityIDFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTransactionEquities_tblTransactionTypes">
+          <End Role="tblTransactionTypes" Type="Self.tblTransactionTypes" Multiplicity="0..1" />
+          <End Role="tblTransactionEquities" Type="Self.tblTransactionEquities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTransactionTypes">
+              <PropertyRef Name="TransactionTypeID" />
+            </Principal>
+            <Dependent Role="tblTransactionEquities">
+              <PropertyRef Name="TransactionTypeIDFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTransactionFinance_tblAccounts">
+          <End Role="tblAccounts" Type="Self.tblAccounts" Multiplicity="0..1" />
+          <End Role="tblTransactionFinance" Type="Self.tblTransactionFinance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAccounts">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="tblTransactionFinance">
+              <PropertyRef Name="AccountIDFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTransactionFinance_tblTransactionTypes">
+          <End Role="tblTransactionTypes" Type="Self.tblTransactionTypes" Multiplicity="0..1" />
+          <End Role="tblTransactionFinance" Type="Self.tblTransactionFinance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTransactionTypes">
+              <PropertyRef Name="TransactionTypeID" />
+            </Principal>
+            <Dependent Role="tblTransactionFinance">
+              <PropertyRef Name="TransactionIDFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="StockPortfolioDBModelStoreContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblAccounts" EntityType="Self.tblAccounts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblBalances" EntityType="Self.tblBalances" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblCurrencies" EntityType="Self.tblCurrencies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblEquities" EntityType="Self.tblEquities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPortfolioHoldings" EntityType="Self.tblPortfolioHoldings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPortfolios" EntityType="Self.tblPortfolios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblStockExchanges" EntityType="Self.tblStockExchanges" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblTransactionDividend" EntityType="Self.tblTransactionDividend" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblTransactionEquities" EntityType="Self.tblTransactionEquities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblTransactionFinance" EntityType="Self.tblTransactionFinance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblTransactionTypes" EntityType="Self.tblTransactionTypes" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tblBalances_tblAccounts" Association="Self.FK_tblBalances_tblAccounts">
+            <End Role="tblAccounts" EntitySet="tblAccounts" />
+            <End Role="tblBalances" EntitySet="tblBalances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblBalances_tblCurrencies" Association="Self.FK_tblBalances_tblCurrencies">
+            <End Role="tblCurrencies" EntitySet="tblCurrencies" />
+            <End Role="tblBalances" EntitySet="tblBalances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblEquities_tblStockExchanges" Association="Self.FK_tblEquities_tblStockExchanges">
+            <End Role="tblStockExchanges" EntitySet="tblStockExchanges" />
+            <End Role="tblEquities" EntitySet="tblEquities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPortfolioHoldings_tblEquities" Association="Self.FK_tblPortfolioHoldings_tblEquities">
+            <End Role="tblEquities" EntitySet="tblEquities" />
+            <End Role="tblPortfolioHoldings" EntitySet="tblPortfolioHoldings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPortfolioHoldings_tblPortfolios" Association="Self.FK_tblPortfolioHoldings_tblPortfolios">
+            <End Role="tblPortfolios" EntitySet="tblPortfolios" />
+            <End Role="tblPortfolioHoldings" EntitySet="tblPortfolioHoldings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblStockExchanges_tblCurrencies" Association="Self.FK_tblStockExchanges_tblCurrencies">
+            <End Role="tblCurrencies" EntitySet="tblCurrencies" />
+            <End Role="tblStockExchanges" EntitySet="tblStockExchanges" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTransactionDividend_tblAccounts" Association="Self.FK_tblTransactionDividend_tblAccounts">
+            <End Role="tblAccounts" EntitySet="tblAccounts" />
+            <End Role="tblTransactionDividend" EntitySet="tblTransactionDividend" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTransactionDividend_tblEquities" Association="Self.FK_tblTransactionDividend_tblEquities">
+            <End Role="tblEquities" EntitySet="tblEquities" />
+            <End Role="tblTransactionDividend" EntitySet="tblTransactionDividend" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTransactionEquities_tblAccounts" Association="Self.FK_tblTransactionEquities_tblAccounts">
+            <End Role="tblAccounts" EntitySet="tblAccounts" />
+            <End Role="tblTransactionEquities" EntitySet="tblTransactionEquities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTransactionEquities_tblEquities" Association="Self.FK_tblTransactionEquities_tblEquities">
+            <End Role="tblEquities" EntitySet="tblEquities" />
+            <End Role="tblTransactionEquities" EntitySet="tblTransactionEquities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTransactionEquities_tblTransactionTypes" Association="Self.FK_tblTransactionEquities_tblTransactionTypes">
+            <End Role="tblTransactionTypes" EntitySet="tblTransactionTypes" />
+            <End Role="tblTransactionEquities" EntitySet="tblTransactionEquities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTransactionFinance_tblAccounts" Association="Self.FK_tblTransactionFinance_tblAccounts">
+            <End Role="tblAccounts" EntitySet="tblAccounts" />
+            <End Role="tblTransactionFinance" EntitySet="tblTransactionFinance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTransactionFinance_tblTransactionTypes" Association="Self.FK_tblTransactionFinance_tblTransactionTypes">
+            <End Role="tblTransactionTypes" EntitySet="tblTransactionTypes" />
+            <End Role="tblTransactionFinance" EntitySet="tblTransactionFinance" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="StockPortfolioDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tblAccount">
+          <Key>
+            <PropertyRef Name="AccountID" />
+          </Key>
+          <Property Name="AccountID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccountNumber" Type="Int32" />
+          <Property Name="AccountName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblBalances" Relationship="Self.FK_tblBalances_tblAccounts" FromRole="tblAccounts" ToRole="tblBalances" />
+          <NavigationProperty Name="tblTransactionDividends" Relationship="Self.FK_tblTransactionDividend_tblAccounts" FromRole="tblAccounts" ToRole="tblTransactionDividend" />
+          <NavigationProperty Name="tblTransactionEquities" Relationship="Self.FK_tblTransactionEquities_tblAccounts" FromRole="tblAccounts" ToRole="tblTransactionEquities" />
+          <NavigationProperty Name="tblTransactionFinances" Relationship="Self.FK_tblTransactionFinance_tblAccounts" FromRole="tblAccounts" ToRole="tblTransactionFinance" />
+        </EntityType>
+        <EntityType Name="tblBalance">
+          <Key>
+            <PropertyRef Name="BalanceID" />
+          </Key>
+          <Property Name="BalanceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccountIDFK" Type="Int32" />
+          <Property Name="CurrencyIDFK" Type="Int32" />
+          <Property Name="Balance" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="tblAccount" Relationship="Self.FK_tblBalances_tblAccounts" FromRole="tblBalances" ToRole="tblAccounts" />
+          <NavigationProperty Name="tblCurrency" Relationship="Self.FK_tblBalances_tblCurrencies" FromRole="tblBalances" ToRole="tblCurrencies" />
+        </EntityType>
+        <EntityType Name="tblCurrency">
+          <Key>
+            <PropertyRef Name="CurrencyID" />
+          </Key>
+          <Property Name="CurrencyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CurrencyType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ExchangeRate" Type="Decimal" Precision="19" Scale="6" />
+          <NavigationProperty Name="tblBalances" Relationship="Self.FK_tblBalances_tblCurrencies" FromRole="tblCurrencies" ToRole="tblBalances" />
+          <NavigationProperty Name="tblStockExchanges" Relationship="Self.FK_tblStockExchanges_tblCurrencies" FromRole="tblCurrencies" ToRole="tblStockExchanges" />
+        </EntityType>
+        <EntityType Name="tblEquity">
+          <Key>
+            <PropertyRef Name="EquityID" />
+          </Key>
+          <Property Name="EquityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ExchangeIDFK" Type="Int32" />
+          <Property Name="StockTicker" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CurrentPrice" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="tblStockExchanx" Relationship="Self.FK_tblEquities_tblStockExchanges" FromRole="tblEquities" ToRole="tblStockExchanges" />
+          <NavigationProperty Name="tblPortfolioHoldings" Relationship="Self.FK_tblPortfolioHoldings_tblEquities" FromRole="tblEquities" ToRole="tblPortfolioHoldings" />
+          <NavigationProperty Name="tblTransactionDividends" Relationship="Self.FK_tblTransactionDividend_tblEquities" FromRole="tblEquities" ToRole="tblTransactionDividend" />
+          <NavigationProperty Name="tblTransactionEquities" Relationship="Self.FK_tblTransactionEquities_tblEquities" FromRole="tblEquities" ToRole="tblTransactionEquities" />
+          <Property Name="HasDividend" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="tblPortfolioHolding">
+          <Key>
+            <PropertyRef Name="PortfolioHoldingID" />
+          </Key>
+          <Property Name="PortfolioHoldingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PortfolioIDFK" Type="Int32" />
+          <Property Name="EquityIDFK" Type="Int32" />
+          <NavigationProperty Name="tblEquity" Relationship="Self.FK_tblPortfolioHoldings_tblEquities" FromRole="tblPortfolioHoldings" ToRole="tblEquities" />
+          <NavigationProperty Name="tblPortfolio" Relationship="Self.FK_tblPortfolioHoldings_tblPortfolios" FromRole="tblPortfolioHoldings" ToRole="tblPortfolios" />
+        </EntityType>
+        <EntityType Name="tblPortfolio">
+          <Key>
+            <PropertyRef Name="PortfolioID" />
+          </Key>
+          <Property Name="PortfolioID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PortfolioName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblPortfolioHoldings" Relationship="Self.FK_tblPortfolioHoldings_tblPortfolios" FromRole="tblPortfolios" ToRole="tblPortfolioHoldings" />
+        </EntityType>
+        <EntityType Name="tblStockExchanx">
+          <Key>
+            <PropertyRef Name="ExchangeID" />
+          </Key>
+          <Property Name="ExchangeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CurrencyIDFK" Type="Int32" />
+          <Property Name="ExchangeName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ExchangeDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblCurrency" Relationship="Self.FK_tblStockExchanges_tblCurrencies" FromRole="tblStockExchanges" ToRole="tblCurrencies" />
+          <NavigationProperty Name="tblEquities" Relationship="Self.FK_tblEquities_tblStockExchanges" FromRole="tblStockExchanges" ToRole="tblEquities" />
+        </EntityType>
+        <EntityType Name="tblTransactionDividend">
+          <Key>
+            <PropertyRef Name="TransactionID" />
+          </Key>
+          <Property Name="TransactionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EquityIDFK" Type="Int32" />
+          <Property Name="AccountIDFK" Type="Int32" />
+          <Property Name="DividendDate" Type="DateTime" Precision="0" />
+          <Property Name="DividendValue" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="tblAccount" Relationship="Self.FK_tblTransactionDividend_tblAccounts" FromRole="tblTransactionDividend" ToRole="tblAccounts" />
+          <NavigationProperty Name="tblEquity" Relationship="Self.FK_tblTransactionDividend_tblEquities" FromRole="tblTransactionDividend" ToRole="tblEquities" />
+        </EntityType>
+        <EntityType Name="tblTransactionEquity">
+          <Key>
+            <PropertyRef Name="TransactionID" />
+          </Key>
+          <Property Name="TransactionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EquityIDFK" Type="Int32" />
+          <Property Name="AccountIDFK" Type="Int32" />
+          <Property Name="TransactionTypeIDFK" Type="Int32" />
+          <Property Name="TransactionDate" Type="DateTime" Precision="0" />
+          <Property Name="Shares" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Commission" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ExchangeRate" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="tblAccount" Relationship="Self.FK_tblTransactionEquities_tblAccounts" FromRole="tblTransactionEquities" ToRole="tblAccounts" />
+          <NavigationProperty Name="tblEquity" Relationship="Self.FK_tblTransactionEquities_tblEquities" FromRole="tblTransactionEquities" ToRole="tblEquities" />
+          <NavigationProperty Name="tblTransactionType" Relationship="Self.FK_tblTransactionEquities_tblTransactionTypes" FromRole="tblTransactionEquities" ToRole="tblTransactionTypes" />
+        </EntityType>
+        <EntityType Name="tblTransactionFinance">
+          <Key>
+            <PropertyRef Name="TransactionID" />
+          </Key>
+          <Property Name="TransactionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccountIDFK" Type="Int32" />
+          <Property Name="TransactionIDFK" Type="Int32" />
+          <Property Name="CurrencyIDFK" Type="Int32" />
+          <Property Name="TransactionDate" Type="DateTime" Precision="0" />
+          <Property Name="Net" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="tblAccount" Relationship="Self.FK_tblTransactionFinance_tblAccounts" FromRole="tblTransactionFinance" ToRole="tblAccounts" />
+          <NavigationProperty Name="tblTransactionType" Relationship="Self.FK_tblTransactionFinance_tblTransactionTypes" FromRole="tblTransactionFinance" ToRole="tblTransactionTypes" />
+        </EntityType>
+        <EntityType Name="tblTransactionType">
+          <Key>
+            <PropertyRef Name="TransactionTypeID" />
+          </Key>
+          <Property Name="TransactionTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransactionTypeUsage" Type="Int32" />
+          <Property Name="TransactionType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblTransactionEquities" Relationship="Self.FK_tblTransactionEquities_tblTransactionTypes" FromRole="tblTransactionTypes" ToRole="tblTransactionEquities" />
+          <NavigationProperty Name="tblTransactionFinances" Relationship="Self.FK_tblTransactionFinance_tblTransactionTypes" FromRole="tblTransactionTypes" ToRole="tblTransactionFinance" />
+        </EntityType>
+        <Association Name="FK_tblBalances_tblAccounts">
+          <End Role="tblAccounts" Type="Self.tblAccount" Multiplicity="0..1" />
+          <End Role="tblBalances" Type="Self.tblBalance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAccounts">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="tblBalances">
+              <PropertyRef Name="AccountIDFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTransactionDividend_tblAccounts">
+          <End Role="tblAccounts" Type="Self.tblAccount" Multiplicity="0..1" />
+          <End Role="tblTransactionDividend" Type="Self.tblTransactionDividend" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAccounts">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="tblTransactionDividend">
+              <PropertyRef Name="AccountIDFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTransactionEquities_tblAccounts">
+          <End Role="tblAccounts" Type="Self.tblAccount" Multiplicity="0..1" />
+          <End Role="tblTransactionEquities" Type="Self.tblTransactionEquity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAccounts">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="tblTransactionEquities">
+              <PropertyRef Name="AccountIDFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTransactionFinance_tblAccounts">
+          <End Role="tblAccounts" Type="Self.tblAccount" Multiplicity="0..1" />
+          <End Role="tblTransactionFinance" Type="Self.tblTransactionFinance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAccounts">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="tblTransactionFinance">
+              <PropertyRef Name="AccountIDFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblBalances_tblCurrencies">
+          <End Role="tblCurrencies" Type="Self.tblCurrency" Multiplicity="0..1" />
+          <End Role="tblBalances" Type="Self.tblBalance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCurrencies">
+              <PropertyRef Name="CurrencyID" />
+            </Principal>
+            <Dependent Role="tblBalances">
+              <PropertyRef Name="CurrencyIDFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblStockExchanges_tblCurrencies">
+          <End Role="tblCurrencies" Type="Self.tblCurrency" Multiplicity="0..1" />
+          <End Role="tblStockExchanges" Type="Self.tblStockExchanx" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCurrencies">
+              <PropertyRef Name="CurrencyID" />
+            </Principal>
+            <Dependent Role="tblStockExchanges">
+              <PropertyRef Name="CurrencyIDFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblEquities_tblStockExchanges">
+          <End Role="tblStockExchanges" Type="Self.tblStockExchanx" Multiplicity="0..1" />
+          <End Role="tblEquities" Type="Self.tblEquity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblStockExchanges">
+              <PropertyRef Name="ExchangeID" />
+            </Principal>
+            <Dependent Role="tblEquities">
+              <PropertyRef Name="ExchangeIDFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPortfolioHoldings_tblEquities">
+          <End Role="tblEquities" Type="Self.tblEquity" Multiplicity="0..1" />
+          <End Role="tblPortfolioHoldings" Type="Self.tblPortfolioHolding" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblEquities">
+              <PropertyRef Name="EquityID" />
+            </Principal>
+            <Dependent Role="tblPortfolioHoldings">
+              <PropertyRef Name="EquityIDFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTransactionDividend_tblEquities">
+          <End Role="tblEquities" Type="Self.tblEquity" Multiplicity="0..1" />
+          <End Role="tblTransactionDividend" Type="Self.tblTransactionDividend" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblEquities">
+              <PropertyRef Name="EquityID" />
+            </Principal>
+            <Dependent Role="tblTransactionDividend">
+              <PropertyRef Name="EquityIDFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTransactionEquities_tblEquities">
+          <End Role="tblEquities" Type="Self.tblEquity" Multiplicity="0..1" />
+          <End Role="tblTransactionEquities" Type="Self.tblTransactionEquity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblEquities">
+              <PropertyRef Name="EquityID" />
+            </Principal>
+            <Dependent Role="tblTransactionEquities">
+              <PropertyRef Name="EquityIDFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPortfolioHoldings_tblPortfolios">
+          <End Role="tblPortfolios" Type="Self.tblPortfolio" Multiplicity="0..1" />
+          <End Role="tblPortfolioHoldings" Type="Self.tblPortfolioHolding" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPortfolios">
+              <PropertyRef Name="PortfolioID" />
+            </Principal>
+            <Dependent Role="tblPortfolioHoldings">
+              <PropertyRef Name="PortfolioIDFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTransactionEquities_tblTransactionTypes">
+          <End Role="tblTransactionTypes" Type="Self.tblTransactionType" Multiplicity="0..1" />
+          <End Role="tblTransactionEquities" Type="Self.tblTransactionEquity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTransactionTypes">
+              <PropertyRef Name="TransactionTypeID" />
+            </Principal>
+            <Dependent Role="tblTransactionEquities">
+              <PropertyRef Name="TransactionTypeIDFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTransactionFinance_tblTransactionTypes">
+          <End Role="tblTransactionTypes" Type="Self.tblTransactionType" Multiplicity="0..1" />
+          <End Role="tblTransactionFinance" Type="Self.tblTransactionFinance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTransactionTypes">
+              <PropertyRef Name="TransactionTypeID" />
+            </Principal>
+            <Dependent Role="tblTransactionFinance">
+              <PropertyRef Name="TransactionIDFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="StockPortfolioDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="tblAccounts" EntityType="Self.tblAccount" />
+          <EntitySet Name="tblBalances" EntityType="Self.tblBalance" />
+          <EntitySet Name="tblCurrencies" EntityType="Self.tblCurrency" />
+          <EntitySet Name="tblEquities" EntityType="Self.tblEquity" />
+          <EntitySet Name="tblPortfolioHoldings" EntityType="Self.tblPortfolioHolding" />
+          <EntitySet Name="tblPortfolios" EntityType="Self.tblPortfolio" />
+          <EntitySet Name="tblStockExchanges" EntityType="Self.tblStockExchanx" />
+          <EntitySet Name="tblTransactionDividends" EntityType="Self.tblTransactionDividend" />
+          <EntitySet Name="tblTransactionEquities" EntityType="Self.tblTransactionEquity" />
+          <EntitySet Name="tblTransactionFinances" EntityType="Self.tblTransactionFinance" />
+          <EntitySet Name="tblTransactionTypes" EntityType="Self.tblTransactionType" />
+          <AssociationSet Name="FK_tblBalances_tblAccounts" Association="Self.FK_tblBalances_tblAccounts">
+            <End Role="tblAccounts" EntitySet="tblAccounts" />
+            <End Role="tblBalances" EntitySet="tblBalances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTransactionDividend_tblAccounts" Association="Self.FK_tblTransactionDividend_tblAccounts">
+            <End Role="tblAccounts" EntitySet="tblAccounts" />
+            <End Role="tblTransactionDividend" EntitySet="tblTransactionDividends" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTransactionEquities_tblAccounts" Association="Self.FK_tblTransactionEquities_tblAccounts">
+            <End Role="tblAccounts" EntitySet="tblAccounts" />
+            <End Role="tblTransactionEquities" EntitySet="tblTransactionEquities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTransactionFinance_tblAccounts" Association="Self.FK_tblTransactionFinance_tblAccounts">
+            <End Role="tblAccounts" EntitySet="tblAccounts" />
+            <End Role="tblTransactionFinance" EntitySet="tblTransactionFinances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblBalances_tblCurrencies" Association="Self.FK_tblBalances_tblCurrencies">
+            <End Role="tblCurrencies" EntitySet="tblCurrencies" />
+            <End Role="tblBalances" EntitySet="tblBalances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblStockExchanges_tblCurrencies" Association="Self.FK_tblStockExchanges_tblCurrencies">
+            <End Role="tblCurrencies" EntitySet="tblCurrencies" />
+            <End Role="tblStockExchanges" EntitySet="tblStockExchanges" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblEquities_tblStockExchanges" Association="Self.FK_tblEquities_tblStockExchanges">
+            <End Role="tblStockExchanges" EntitySet="tblStockExchanges" />
+            <End Role="tblEquities" EntitySet="tblEquities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPortfolioHoldings_tblEquities" Association="Self.FK_tblPortfolioHoldings_tblEquities">
+            <End Role="tblEquities" EntitySet="tblEquities" />
+            <End Role="tblPortfolioHoldings" EntitySet="tblPortfolioHoldings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTransactionDividend_tblEquities" Association="Self.FK_tblTransactionDividend_tblEquities">
+            <End Role="tblEquities" EntitySet="tblEquities" />
+            <End Role="tblTransactionDividend" EntitySet="tblTransactionDividends" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTransactionEquities_tblEquities" Association="Self.FK_tblTransactionEquities_tblEquities">
+            <End Role="tblEquities" EntitySet="tblEquities" />
+            <End Role="tblTransactionEquities" EntitySet="tblTransactionEquities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPortfolioHoldings_tblPortfolios" Association="Self.FK_tblPortfolioHoldings_tblPortfolios">
+            <End Role="tblPortfolios" EntitySet="tblPortfolios" />
+            <End Role="tblPortfolioHoldings" EntitySet="tblPortfolioHoldings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTransactionEquities_tblTransactionTypes" Association="Self.FK_tblTransactionEquities_tblTransactionTypes">
+            <End Role="tblTransactionTypes" EntitySet="tblTransactionTypes" />
+            <End Role="tblTransactionEquities" EntitySet="tblTransactionEquities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTransactionFinance_tblTransactionTypes" Association="Self.FK_tblTransactionFinance_tblTransactionTypes">
+            <End Role="tblTransactionTypes" EntitySet="tblTransactionTypes" />
+            <End Role="tblTransactionFinance" EntitySet="tblTransactionFinances" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="StockPortfolioDBModelStoreContainer" CdmEntityContainer="StockPortfolioDBEntities">
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="StockPortfolioDBModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblAccounts">
+            <EntityTypeMapping TypeName="StockPortfolioDBModel.tblAccount">
+              <MappingFragment StoreEntitySet="tblAccounts">
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
+                <ScalarProperty Name="AccountName" ColumnName="AccountName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblBalances">
+            <EntityTypeMapping TypeName="StockPortfolioDBModel.tblBalance">
+              <MappingFragment StoreEntitySet="tblBalances">
+                <ScalarProperty Name="BalanceID" ColumnName="BalanceID" />
+                <ScalarProperty Name="AccountIDFK" ColumnName="AccountIDFK" />
+                <ScalarProperty Name="CurrencyIDFK" ColumnName="CurrencyIDFK" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblCurrencies">
+            <EntityTypeMapping TypeName="StockPortfolioDBModel.tblCurrency">
+              <MappingFragment StoreEntitySet="tblCurrencies">
+                <ScalarProperty Name="CurrencyID" ColumnName="CurrencyID" />
+                <ScalarProperty Name="CurrencyType" ColumnName="CurrencyType" />
+                <ScalarProperty Name="ExchangeRate" ColumnName="ExchangeRate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblEquities">
+            <EntityTypeMapping TypeName="StockPortfolioDBModel.tblEquity">
+              <MappingFragment StoreEntitySet="tblEquities">
+                <ScalarProperty Name="HasDividend" ColumnName="HasDividend" />
+                <ScalarProperty Name="EquityID" ColumnName="EquityID" />
+                <ScalarProperty Name="ExchangeIDFK" ColumnName="ExchangeIDFK" />
+                <ScalarProperty Name="StockTicker" ColumnName="StockTicker" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CurrentPrice" ColumnName="CurrentPrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblPortfolioHoldings">
+            <EntityTypeMapping TypeName="StockPortfolioDBModel.tblPortfolioHolding">
+              <MappingFragment StoreEntitySet="tblPortfolioHoldings">
+                <ScalarProperty Name="PortfolioHoldingID" ColumnName="PortfolioHoldingID" />
+                <ScalarProperty Name="PortfolioIDFK" ColumnName="PortfolioIDFK" />
+                <ScalarProperty Name="EquityIDFK" ColumnName="EquityIDFK" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblPortfolios">
+            <EntityTypeMapping TypeName="StockPortfolioDBModel.tblPortfolio">
+              <MappingFragment StoreEntitySet="tblPortfolios">
+                <ScalarProperty Name="PortfolioID" ColumnName="PortfolioID" />
+                <ScalarProperty Name="PortfolioName" ColumnName="PortfolioName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblStockExchanges">
+            <EntityTypeMapping TypeName="StockPortfolioDBModel.tblStockExchanx">
+              <MappingFragment StoreEntitySet="tblStockExchanges">
+                <ScalarProperty Name="ExchangeID" ColumnName="ExchangeID" />
+                <ScalarProperty Name="CurrencyIDFK" ColumnName="CurrencyIDFK" />
+                <ScalarProperty Name="ExchangeName" ColumnName="ExchangeName" />
+                <ScalarProperty Name="ExchangeDescription" ColumnName="ExchangeDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblTransactionDividends">
+            <EntityTypeMapping TypeName="StockPortfolioDBModel.tblTransactionDividend">
+              <MappingFragment StoreEntitySet="tblTransactionDividend">
+                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+                <ScalarProperty Name="EquityIDFK" ColumnName="EquityIDFK" />
+                <ScalarProperty Name="AccountIDFK" ColumnName="AccountIDFK" />
+                <ScalarProperty Name="DividendDate" ColumnName="DividendDate" />
+                <ScalarProperty Name="DividendValue" ColumnName="DividendValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblTransactionEquities">
+            <EntityTypeMapping TypeName="StockPortfolioDBModel.tblTransactionEquity">
+              <MappingFragment StoreEntitySet="tblTransactionEquities">
+                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+                <ScalarProperty Name="EquityIDFK" ColumnName="EquityIDFK" />
+                <ScalarProperty Name="AccountIDFK" ColumnName="AccountIDFK" />
+                <ScalarProperty Name="TransactionTypeIDFK" ColumnName="TransactionTypeIDFK" />
+                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+                <ScalarProperty Name="Shares" ColumnName="Shares" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Commission" ColumnName="Commission" />
+                <ScalarProperty Name="ExchangeRate" ColumnName="ExchangeRate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblTransactionFinances">
+            <EntityTypeMapping TypeName="StockPortfolioDBModel.tblTransactionFinance">
+              <MappingFragment StoreEntitySet="tblTransactionFinance">
+                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+                <ScalarProperty Name="AccountIDFK" ColumnName="AccountIDFK" />
+                <ScalarProperty Name="TransactionIDFK" ColumnName="TransactionIDFK" />
+                <ScalarProperty Name="CurrencyIDFK" ColumnName="CurrencyIDFK" />
+                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+                <ScalarProperty Name="Net" ColumnName="Net" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblTransactionTypes">
+            <EntityTypeMapping TypeName="StockPortfolioDBModel.tblTransactionType">
+              <MappingFragment StoreEntitySet="tblTransactionTypes">
+                <ScalarProperty Name="TransactionTypeID" ColumnName="TransactionTypeID" />
+                <ScalarProperty Name="TransactionTypeUsage" ColumnName="TransactionTypeUsage" />
+                <ScalarProperty Name="TransactionType" ColumnName="TransactionType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
