@@ -22,16 +22,23 @@ namespace StockPortfolioApplication
             this.lblTicker.Text = e.Ticker;
             this.lblDescription.Text = e.Description;
             this.lblShares.Text = e.Shares.ToString();
-            this.lblCostCalculated.Text = e.TotalCost.ToString();
-            this.lblValueCalculated.Text = (e.Shares * e.CurrentPrice).ToString();
+            this.lblCostCalculated.Text = e.TotalCost.ToString("C");
+            this.lblValueCalculated.Text = (e.Shares * e.CurrentPrice).ToString("C");
 
-            //this.lblCostCalculated.Visible = this.lblDescription.Visible = this.lblShares.Visible = this.lblTicker.Visible = this.lblValueCalculated.Visible = true;
+            //Ticker = e.Ticker;
+            //Description = e.Description;
+            //Shares = e.Shares;
+            //Cost = e.TotalCost;
+            //Value = e.Shares * e.CurrentPrice;
+        }
 
-            Ticker = e.Ticker;
-            Description = e.Description;
-            Shares = e.Shares;
-            Cost = e.TotalCost;
-            Value = e.Shares * e.CurrentPrice;
+        public void SetAsHeader()
+        {
+            this.lblTicker.Text = "Ticker";
+            this.lblDescription.Text = "Description";
+            this.lblShares.Text = "Shares";
+            this.lblCostCalculated.Text = "Cost";
+            this.lblValueCalculated.Text = "Value";
         }
 
         public string Ticker { get; set; }

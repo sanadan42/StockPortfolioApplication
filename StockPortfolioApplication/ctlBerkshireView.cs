@@ -41,9 +41,22 @@ namespace StockPortfolioApplication
             {
                 this.Controls.Add(brk);
             }
-            // this isn't needed because the totals that I want already exist as part of the account structure
-            //CreateTotals(portfolio.GetAccountSummary());
+        }
 
+        private void SetEquitiesVisible()
+        {
+            foreach (ctlBerkshireEquityView brk in equityViewList)
+            {
+                brk.Visible = true;
+            }
+        }
+
+        private void SetEquitiesInvisible()
+        {
+            foreach (ctlBerkshireEquityView brk in equityViewList)
+            {
+                brk.Visible = false;
+            }
         }
 
         private void BuildEquityList(List<Equity> equityList)
@@ -52,16 +65,44 @@ namespace StockPortfolioApplication
             {
                 this.equityViewList = new List<ctlBerkshireEquityView>();
 
+                AddHeader();
                 int y = 0;
+
                 foreach (Equity e in equityList)
                 {
-                    ctlBerkshireEquityView brkEquityView = new ctlBerkshireEquityView();
-                    y += brkEquityView.Size.Height;
-                    brkEquityView.Location = new Point(0, y);
-                    brkEquityView.Populate(e);
-                    brkEquityView.Visible = true;
-                    this.equityViewList.Add(brkEquityView);
+                    if (e.Shares > 0)
+                    {
+                        ctlBerkshireEquityView brkEquityView = new ctlBerkshireEquityView();
+                        y += brkEquityView.Size.Height;
+                        brkEquityView.Location = new Point(0, y);
+                        brkEquityView.Populate(e);
+                        brkEquityView.Visible = true;
+                        this.equityViewList.Add(brkEquityView);
+                    }
                 }
+            }
+        }
+
+        private void AddHeader()
+        {
+            ctlBerkshireEquityView brk = new ctlBerkshireEquityView();
+            brk.SetAsHeader();
+            
+            if(this.equityViewList != null) // check to see if current list is null
+            {
+                if(this.equityViewList.Count > 0) // if not empty then insert at the beginning
+                {
+                    this.equityViewList.Insert(0, brk);
+                }
+                else // if empty then simply add a new item (I'm afraid insert will throw an exception, but not sure)
+                {
+                    this.equityViewList.Add(brk);
+                }
+            }
+            else // if null then build the new list
+            {
+                this.equityViewList = new List<ctlBerkshireEquityView>();
+                this.equityViewList.Add(brk);
             }
         }
 
