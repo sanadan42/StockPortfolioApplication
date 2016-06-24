@@ -16,11 +16,23 @@ namespace StockPortfolioApplication
 
         public ctlTestSums()
         {
-            InitializeComponent();
-            InitializeControls();
-
             portfolio = new Portfolio();
             portfolio.CreatePortfolio();
+
+            Init();
+        }
+
+        public ctlTestSums(Portfolio portfolio)
+        {
+            this.portfolio = portfolio;
+
+            Init();
+        }
+
+        private void Init()
+        {
+            InitializeComponent();
+            InitializeControls();
         }
 
         private void InitializeControls()

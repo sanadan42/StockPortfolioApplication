@@ -12,22 +12,38 @@ namespace StockPortfolioApplication
 {
     public partial class ctlBerkshireView : UserControl
     {
+        Portfolio portfolio;
+
         List<ctlBerkshireEquityView> equityViewList;
         private string totalCostDisplay, totalValueDisplay, totalPLDisplay;
 
         public ctlBerkshireView()
         {
-            // i don't know what repository I'm working with yet
-            // trying to understand github integration
+            portfolio = new Portfolio();
+            portfolio.CreatePortfolio();
 
-            // i changed this but i'm not sure how to upload it to the repo...
+            Init();
         }
 
         public ctlBerkshireView(Portfolio portfolio)
         {
+            this.portfolio = portfolio;
+
+            Init();
+        }
+
+        private void Init()
+        {
             InitializeComponent();
             BuildEquityList(portfolio.GetEquityList());
-            CreateTotals(portfolio.GetAccountSummary());
+
+            foreach (ctlBerkshireEquityView brk in equityViewList)
+            {
+                this.Controls.Add(brk);
+            }
+            // this isn't needed because the totals that I want already exist as part of the account structure
+            //CreateTotals(portfolio.GetAccountSummary());
+
         }
 
         private void BuildEquityList(List<Equity> equityList)
@@ -36,18 +52,22 @@ namespace StockPortfolioApplication
             {
                 this.equityViewList = new List<ctlBerkshireEquityView>();
 
+                int y = 0;
                 foreach (Equity e in equityList)
                 {
                     ctlBerkshireEquityView brkEquityView = new ctlBerkshireEquityView();
+                    y += brkEquityView.Size.Height;
+                    brkEquityView.Location = new Point(0, y);
                     brkEquityView.Populate(e);
+                    brkEquityView.Visible = true;
                     this.equityViewList.Add(brkEquityView);
                 }
             }
         }
 
+
         private void CreateTotals(Account account)
         {
-            decimal totalcost = account.TotalEquityCost; ;
             /*
              * alright - where am I?
              * right now I'm thinking about displaying a list similar to one in a Berkshire annual letter
@@ -69,20 +89,6 @@ namespace StockPortfolioApplication
              * and I want to go to bed
              * so.... cookies?
              */
-
-
-
-            //List<Equity> equityList = account.GetEquities();
-            //decimal totalCost, totalValue, totalRealized, totalDividend, totalRealizedPL;
-            //totalCost = totalValue = totalRealized = totalDividend = totalRealizedPL = 0.0m;
-            //foreach (Equity e in equityList)
-            //{
-            //    totalCost += e.TotalCost;
-            //    totalValue += e.Shares * e.CurrentPrice;
-            //    totalRealized += e.RealizedGain;
-            //    totalDividend += e.DividendProfit;
-            //}
-            //totalRealizedPL += e.RealizedGain + e.DividendProfit;
         }
 
 

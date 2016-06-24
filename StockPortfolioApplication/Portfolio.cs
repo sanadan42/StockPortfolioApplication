@@ -98,10 +98,12 @@ namespace StockPortfolioApplication
                 return this.accounts.Where(a => a.ID == accountID).SingleOrDefault().GetEquities();
             }
         }
+
         public Account GetAccountSummary()
         {
             return GetAccount(-1);
         }
+
         public Account GetAccount (int accountID)
         {
             if(accountID == -1)

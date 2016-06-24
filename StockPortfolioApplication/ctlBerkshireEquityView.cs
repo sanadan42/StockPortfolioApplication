@@ -19,6 +19,14 @@ namespace StockPortfolioApplication
 
         public void Populate(Equity e)
         {
+            this.lblTicker.Text = e.Ticker;
+            this.lblDescription.Text = e.Description;
+            this.lblShares.Text = e.Shares.ToString();
+            this.lblCostCalculated.Text = e.TotalCost.ToString();
+            this.lblValueCalculated.Text = (e.Shares * e.CurrentPrice).ToString();
+
+            //this.lblCostCalculated.Visible = this.lblDescription.Visible = this.lblShares.Visible = this.lblTicker.Visible = this.lblValueCalculated.Visible = true;
+
             Ticker = e.Ticker;
             Description = e.Description;
             Shares = e.Shares;
