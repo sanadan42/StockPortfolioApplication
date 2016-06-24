@@ -28,33 +28,40 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
+            this.pnlBerkshireEquityView = new System.Windows.Forms.Panel();
+            this.pnlBerkshireSummary = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
-            // label1
+            // pnlBerkshireEquityView
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(771, 56);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "label1";
+            this.pnlBerkshireEquityView.Location = new System.Drawing.Point(0, 0);
+            this.pnlBerkshireEquityView.Name = "pnlBerkshireEquityView";
+            this.pnlBerkshireEquityView.Size = new System.Drawing.Size(926, 314);
+            this.pnlBerkshireEquityView.TabIndex = 0;
+            // 
+            // pnlBerkshireSummary
+            // 
+            this.pnlBerkshireSummary.Location = new System.Drawing.Point(314, 338);
+            this.pnlBerkshireSummary.Name = "pnlBerkshireSummary";
+            this.pnlBerkshireSummary.Size = new System.Drawing.Size(613, 116);
+            this.pnlBerkshireSummary.TabIndex = 1;
             // 
             // ctlBerkshireView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.pnlBerkshireSummary);
+            this.Controls.Add(this.pnlBerkshireEquityView);
             this.Name = "ctlBerkshireView";
-            this.Size = new System.Drawing.Size(1003, 472);
+            this.Size = new System.Drawing.Size(927, 627);
             this.Load += new System.EventHandler(this.ctlBerkshireView_Load);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel pnlBerkshireEquityView;
+        private System.Windows.Forms.Panel pnlBerkshireSummary;
     }
 }

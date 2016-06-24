@@ -41,6 +41,12 @@ namespace StockPortfolioApplication
             this.lblValueCalculated.Text = "Value";
         }
 
+        public int TickerHPos { get { return lblTicker.Location.X; } }
+        public int DecriptionHPos { get { return lblTicker.Location.X; } }
+        public int SharesHPos { get { return lblTicker.Location.X; } }
+        public int CostHPos { get { return lblTicker.Location.X; } }
+        public int ValueHPos { get { return lblTicker.Location.X; } }
+
         public string Ticker { get; set; }
         public string Description { get; set; }
         public int Shares { get; set; }

@@ -7,15 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing.Drawing2D;
 
 namespace StockPortfolioApplication
 {
     public partial class ctlBerkshireView : UserControl
     {
-        Portfolio portfolio;
-
-        List<ctlBerkshireEquityView> equityViewList;
-        private string totalCostDisplay, totalValueDisplay, totalPLDisplay;
+        private Portfolio portfolio;
+        private List<ctlBerkshireEquityView> equityViewList;
 
         public ctlBerkshireView()
         {
@@ -39,7 +38,7 @@ namespace StockPortfolioApplication
 
             foreach (ctlBerkshireEquityView brk in equityViewList)
             {
-                this.Controls.Add(brk);
+                this.pnlBerkshireEquityView.Controls.Add(brk);
             }
         }
 
