@@ -36,8 +36,14 @@ namespace StockPortfolioApplication
             InitializeComponent();
             BuildEquityList(portfolio.GetEquityList());
 
+            int i = 0;
             foreach (ctlBerkshireEquityView brk in equityViewList)
             {
+                if (i > 0)
+                {
+                    brk.SetBackColor(i++);
+                }
+                else i++;
                 this.pnlBerkshireEquityView.Controls.Add(brk);
             }
 

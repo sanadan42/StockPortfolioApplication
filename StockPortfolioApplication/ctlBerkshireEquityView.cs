@@ -39,6 +39,22 @@ namespace StockPortfolioApplication
             this.lblShares.Text = "Shares";
             this.lblCostCalculated.Text = "Cost";
             this.lblValueCalculated.Text = "Value";
+            this.BackColor = SystemColors.ActiveCaption;
+        }
+
+        public void SetBackColor(int i)
+        {
+            if (i == 0)
+            {
+                this.BackColor = SystemColors.ActiveCaption;
+            }
+            else
+            {
+                if ((i % 2) == 0)
+                {
+                    this.BackColor = SystemColors.ControlDark;
+                }
+            }
         }
 
         public int TickerHPos { get { return lblTicker.Location.X; } }

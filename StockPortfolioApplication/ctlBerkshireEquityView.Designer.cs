@@ -38,7 +38,7 @@
             // lblShares
             // 
             this.lblShares.AutoSize = true;
-            this.lblShares.Location = new System.Drawing.Point(186, 3);
+            this.lblShares.Location = new System.Drawing.Point(220, 3);
             this.lblShares.Name = "lblShares";
             this.lblShares.Size = new System.Drawing.Size(40, 13);
             this.lblShares.TabIndex = 124;
@@ -47,7 +47,7 @@
             // lblCostCalculated
             // 
             this.lblCostCalculated.AutoSize = true;
-            this.lblCostCalculated.Location = new System.Drawing.Point(266, 3);
+            this.lblCostCalculated.Location = new System.Drawing.Point(300, 3);
             this.lblCostCalculated.Name = "lblCostCalculated";
             this.lblCostCalculated.Size = new System.Drawing.Size(28, 13);
             this.lblCostCalculated.TabIndex = 123;
@@ -74,7 +74,7 @@
             // lblValueCalculated
             // 
             this.lblValueCalculated.AutoSize = true;
-            this.lblValueCalculated.Location = new System.Drawing.Point(354, 3);
+            this.lblValueCalculated.Location = new System.Drawing.Point(388, 3);
             this.lblValueCalculated.Name = "lblValueCalculated";
             this.lblValueCalculated.Size = new System.Drawing.Size(34, 13);
             this.lblValueCalculated.TabIndex = 120;
