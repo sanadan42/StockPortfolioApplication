@@ -42,10 +42,10 @@ namespace StockPortfolioApplication
         }
 
         public int TickerHPos { get { return lblTicker.Location.X; } }
-        public int DecriptionHPos { get { return lblTicker.Location.X; } }
-        public int SharesHPos { get { return lblTicker.Location.X; } }
-        public int CostHPos { get { return lblTicker.Location.X; } }
-        public int ValueHPos { get { return lblTicker.Location.X; } }
+        public int DecriptionHPos { get { return lblDescription.Location.X; } }
+        public int SharesHPos { get { return lblShares.Location.X; } }
+        public int CostHPos { get { return lblCostCalculated.Location.X; } }
+        public int ValueHPos { get { return lblValueCalculated.Location.X; } }
 
         public string Ticker { get; set; }
         public string Description { get; set; }

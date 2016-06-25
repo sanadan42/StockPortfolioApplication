@@ -126,13 +126,14 @@ namespace StockPortfolioApplication
         private List<Equity> equities;
         private List<BalanceType> balances;
 
-        private decimal totalEquityCost, totalRealizedGain, totalUnrealizedGain, totalDividendGain, totalPLGain;
+        private decimal totalEquityCost, totalRealizedGain, totalUnrealizedGain, totalDividendGain, totalPLGain, totalEquityValue;
 
         public int ID { get; set; }
         public String AccountName { get; set; }
         public int AccountNumber { get; set; }
 
         public decimal TotalEquityCost { get { return totalEquityCost; } }
+        public decimal TotalEquityValue { get { return totalEquityValue; } }
         public decimal TotalRealizedGain { get { return totalRealizedGain; } }
         public decimal TotalUnrealizedGain { get { return totalUnrealizedGain; } }
         public decimal TotalDividendGain { get { return totalDividendGain; } }
@@ -157,7 +158,7 @@ namespace StockPortfolioApplication
 
         private void ClearTotals()
         {
-            this.totalEquityCost = this.totalRealizedGain = this.totalUnrealizedGain = this.totalDividendGain = this.totalPLGain = 0.0m;
+            this.totalEquityCost = this.totalRealizedGain = this.totalUnrealizedGain = this.totalDividendGain = this.totalPLGain = this.totalEquityValue = 0.0m;
         }
 
         public void RefreshTotals()
@@ -169,6 +170,7 @@ namespace StockPortfolioApplication
                 {
                     // calculate totals
                     this.totalEquityCost += e.TotalCost;
+                    this.totalEquityValue += e.Shares * e.CurrentPrice;
                     this.totalRealizedGain += e.RealizedGain;
                     this.totalUnrealizedGain += e.UnrealizedGain;
                     this.totalDividendGain += e.DividendProfit;

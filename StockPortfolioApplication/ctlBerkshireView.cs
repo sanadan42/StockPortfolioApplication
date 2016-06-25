@@ -40,6 +40,10 @@ namespace StockPortfolioApplication
             {
                 this.pnlBerkshireEquityView.Controls.Add(brk);
             }
+
+            //pnlBerkshireEquityView.Size.Height = this.equityViewList[this.equityViewList.Count - 1].Bottom;
+            pnlBerkshireEquityView.Size = new Size(pnlBerkshireEquityView.Width, this.equityViewList[this.equityViewList.Count - 1].Bottom);
+            CreateTotals(portfolio.GetAccountSummary());
         }
 
         private void SetEquitiesVisible()
@@ -105,36 +109,47 @@ namespace StockPortfolioApplication
             }
         }
 
-
         private void CreateTotals(Account account)
         {
-            /*
-             * alright - where am I?
-             * right now I'm thinking about displaying a list similar to one in a Berkshire annual letter
-             * for each of my account I want to display each of the equities I currently own, the cost I paid to buy, and the value I carried them at
-             * I also want to display the total realized gains I have in that account
-             * I also want to dispaly the total dividends that account has earned
-             * I also want to disaply the sum of the the total realized and total dividends
-             * I also want to display balances (slow down ninja Dodd)
-             * 
-             * I'm starting this journey with the summary account so that I can view all of my current equities in the aforementioned format
-             * I then want to adjust this format so that I can display this data for a given year
-             * to do that I will need to get the historical stock prices into my program
-             * I will not rely upon the internet, but will create a new table in my databse for these prices and will then use the internet to populate that table
-             * 
-             * lots to do
-             * lots to do
-             * i'm going to stop for now as I am developing without a plan as to what I am attempting to do so i am unsure where I am going right now
-             * and it's late
-             * and I want to go to bed
-             * so.... cookies?
-             */
+            account.RefreshTotals();
+            lblCostTotal.Location = new Point(equityViewList[0].CostHPos, pnlBerkshireEquityView.Bottom + 6);
+            lblValueTotal.Location = new Point(equityViewList[0].ValueHPos, pnlBerkshireEquityView.Bottom + 6);
+            lblCostTotal.Text = account.TotalEquityCost.ToString("C");
+            lblValueTotal.Text = account.TotalEquityValue.ToString("C");
+        }
+        
+        private void ctlBerkshireView_Paint(object sender, PaintEventArgs e)
+        {
+            using (Graphics g = e.Graphics)
+            {
+                DrawTotalLines(g);
+                DrawSummaryLines(g);
+            }
         }
 
-
-        private void ctlBerkshireView_Load(object sender, EventArgs e)
+        private void DrawTotalLines(Graphics g)
         {
+            int y1 = pnlBerkshireEquityView.Bottom;
+            int y2 = y1 + 3;
 
+            int length = 65;
+            int x1 = equityViewList[0].CostHPos;
+            int x2 = x1 + length;
+            int x3 = equityViewList[0].ValueHPos;
+            int x4 = x3 + length;
+
+            g.DrawLine(new Pen(Color.Black, 1), new Point(x1, y1), new Point(x2, y1));
+            g.DrawLine(new Pen(Color.Black, 1), new Point(x1, y2), new Point(x2, y2));
+            g.DrawLine(new Pen(Color.Black, 1), new Point(x3, y1), new Point(x4, y1));
+            g.DrawLine(new Pen(Color.Black, 1), new Point(x3, y2), new Point(x4, y2));
+        }
+
+        private void DrawSummaryLines(Graphics g)
+        {
+            int x1 = equityViewList[0].CostHPos;
+            int x2 = equityViewList[0].ValueHPos + 65;
+            int y = lblCostTotal.Bottom + 3;
+            g.DrawLine(new Pen(Color.Black, 1), new Point(x1, y), new Point(x2, y));
         }
     }
 }
