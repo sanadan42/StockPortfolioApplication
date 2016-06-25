@@ -68,7 +68,9 @@ namespace StockPortfolioApplication
             foreach(Equity e in resultList)
             {
                 //e.CurrentPrice = allEquities.Where(eq => eq.ID == e.ID).CurrentPrice;
-                e.CurrentPrice = allEquities.Find(equity => equity.ID == e.ID).CurrentPrice;
+                Equity eqTemp = allEquities.Find(equity => equity.ID == e.ID);
+                e.CurrentPrice = eqTemp.CurrentPrice;
+                e.Description = eqTemp.Description;
             }
 
            return resultList;
@@ -86,6 +88,7 @@ namespace StockPortfolioApplication
                    {
                        ID = e.EquityID,
                        Ticker = e.StockTicker,
+                       Description = e.Description,
                        CurrentPrice = (decimal)e.CurrentPrice
                    });
 
