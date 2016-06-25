@@ -16,7 +16,7 @@ namespace StockPortfolioApplication
         private string totalCostDisplay, totalValueDisplay, totalPLDisplay;
 
         public ctlBerkshireView()
-        {t
+        {
             
         }
 
