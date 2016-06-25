@@ -41,8 +41,9 @@ namespace StockPortfolioApplication
                 this.pnlBerkshireEquityView.Controls.Add(brk);
             }
 
-            //pnlBerkshireEquityView.Size.Height = this.equityViewList[this.equityViewList.Count - 1].Bottom;
+            // resize the main equity panel view to fit all equities
             pnlBerkshireEquityView.Size = new Size(pnlBerkshireEquityView.Width, this.equityViewList[this.equityViewList.Count - 1].Bottom);
+            // display all totals
             CreateTotals(portfolio.GetAccountSummary());
         }
 
@@ -116,6 +117,13 @@ namespace StockPortfolioApplication
             lblValueTotal.Location = new Point(equityViewList[0].ValueHPos, pnlBerkshireEquityView.Bottom + 6);
             lblCostTotal.Text = account.TotalEquityCost.ToString("C");
             lblValueTotal.Text = account.TotalEquityValue.ToString("C");
+
+            pnlBerkshireSummary.Location = new Point(equityViewList[0].ValueHPos, lblCostTotal.Bottom + 6);
+            pnlBerkshireSummaryLabels.Location = new Point(pnlBerkshireSummary.Left - pnlBerkshireSummaryLabels.Width, pnlBerkshireSummary.Top);
+            lblSummaryDividends.Text = account.TotalDividendGain.ToString("C");
+            lblSummaryRealized.Text = account.TotalRealizedGain.ToString("C");
+            lblSummaryUnrealized.Text = account.TotalUnrealizedGain.ToString("C");
+            lblSummaryTotals.Text = account.TotalPLGain.ToString("C");
         }
         
         private void ctlBerkshireView_Paint(object sender, PaintEventArgs e)
