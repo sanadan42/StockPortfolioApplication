@@ -30,6 +30,7 @@
         {
             this.pnlDisplay = new System.Windows.Forms.Panel();
             this.pnlNavigation = new System.Windows.Forms.Panel();
+            this.btnBerkshireTesting = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.btnEECAdd = new System.Windows.Forms.Button();
             this.btnDataGridDisplay = new System.Windows.Forms.Button();
@@ -46,6 +47,7 @@
             // 
             // pnlNavigation
             // 
+            this.pnlNavigation.Controls.Add(this.btnBerkshireTesting);
             this.pnlNavigation.Controls.Add(this.button1);
             this.pnlNavigation.Controls.Add(this.btnEECAdd);
             this.pnlNavigation.Controls.Add(this.btnDataGridDisplay);
@@ -54,6 +56,16 @@
             this.pnlNavigation.Name = "pnlNavigation";
             this.pnlNavigation.Size = new System.Drawing.Size(179, 627);
             this.pnlNavigation.TabIndex = 1;
+            // 
+            // btnBerkshireTesting
+            // 
+            this.btnBerkshireTesting.Location = new System.Drawing.Point(15, 293);
+            this.btnBerkshireTesting.Name = "btnBerkshireTesting";
+            this.btnBerkshireTesting.Size = new System.Drawing.Size(149, 40);
+            this.btnBerkshireTesting.TabIndex = 4;
+            this.btnBerkshireTesting.Text = "Berkshire Format";
+            this.btnBerkshireTesting.UseVisualStyleBackColor = true;
+            this.btnBerkshireTesting.Click += new System.EventHandler(this.btnBerkshireTesting_Click);
             // 
             // button1
             // 
@@ -117,6 +129,7 @@
         private System.Windows.Forms.Button btnDataGridDisplay;
         private System.Windows.Forms.Button btnTransactionEntryDisplay;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnBerkshireTesting;
     }
 }
 

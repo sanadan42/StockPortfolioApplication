@@ -19,12 +19,49 @@ namespace StockPortfolioApplication
 
         public void Populate(Equity e)
         {
-            Ticker = e.Ticker;
-            Description = e.Description;
-            Shares = e.Shares;
-            Cost = e.TotalCost;
-            Value = e.Shares * e.CurrentPrice;
+            this.lblTicker.Text = e.Ticker;
+            this.lblDescription.Text = e.Description;
+            this.lblShares.Text = e.Shares.ToString();
+            this.lblCostCalculated.Text = e.TotalCost.ToString("C");
+            this.lblValueCalculated.Text = (e.Shares * e.CurrentPrice).ToString("C");
+
+            //Ticker = e.Ticker;
+            //Description = e.Description;
+            //Shares = e.Shares;
+            //Cost = e.TotalCost;
+            //Value = e.Shares * e.CurrentPrice;
         }
+
+        public void SetAsHeader()
+        {
+            this.lblTicker.Text = "Ticker";
+            this.lblDescription.Text = "Description";
+            this.lblShares.Text = "Shares";
+            this.lblCostCalculated.Text = "Cost";
+            this.lblValueCalculated.Text = "Value";
+            this.BackColor = SystemColors.ActiveCaption;
+        }
+
+        public void SetBackColor(int i)
+        {
+            if (i == 0)
+            {
+                this.BackColor = SystemColors.ActiveCaption;
+            }
+            else
+            {
+                if ((i % 2) == 0)
+                {
+                    this.BackColor = SystemColors.ControlDark;
+                }
+            }
+        }
+
+        public int TickerHPos { get { return lblTicker.Location.X; } }
+        public int DecriptionHPos { get { return lblDescription.Location.X; } }
+        public int SharesHPos { get { return lblShares.Location.X; } }
+        public int CostHPos { get { return lblCostCalculated.Location.X; } }
+        public int ValueHPos { get { return lblValueCalculated.Location.X; } }
 
         public string Ticker { get; set; }
         public string Description { get; set; }
