@@ -16,6 +16,8 @@ namespace StockPortfolioApplication
         private Portfolio portfolio;
         private List<ctlBerkshireEquityView> equityViewList;
 
+        private int lineOffset, totalsOffset, summaryPanelOffset;
+
         public ctlBerkshireView()
         {
             portfolio = new Portfolio();
@@ -41,9 +43,9 @@ namespace StockPortfolioApplication
             {
                 if (i > 0)
                 {
-                    brk.SetBackColor(i++);
+                    brk.SetBackColor(i);
                 }
-                else i++;
+                i++;
                 this.pnlBerkshireEquityView.Controls.Add(brk);
             }
 
@@ -118,13 +120,16 @@ namespace StockPortfolioApplication
 
         private void CreateTotals(Account account)
         {
+            this.lineOffset = 3;
+            this.totalsOffset = 9;
+
             account.RefreshTotals();
-            lblCostTotal.Location = new Point(equityViewList[0].CostHPos, pnlBerkshireEquityView.Bottom + 6);
-            lblValueTotal.Location = new Point(equityViewList[0].ValueHPos, pnlBerkshireEquityView.Bottom + 6);
+            lblCostTotal.Location = new Point(equityViewList[0].CostHPos, pnlBerkshireEquityView.Bottom + this.totalsOffset);
+            lblValueTotal.Location = new Point(equityViewList[0].ValueHPos, pnlBerkshireEquityView.Bottom + this.totalsOffset);
             lblCostTotal.Text = account.TotalEquityCost.ToString("C");
             lblValueTotal.Text = account.TotalEquityValue.ToString("C");
 
-            pnlBerkshireSummary.Location = new Point(equityViewList[0].ValueHPos, lblCostTotal.Bottom + 6);
+            pnlBerkshireSummary.Location = new Point(equityViewList[0].ValueHPos, lblCostTotal.Bottom + this.totalsOffset);
             pnlBerkshireSummaryLabels.Location = new Point(pnlBerkshireSummary.Left - pnlBerkshireSummaryLabels.Width, pnlBerkshireSummary.Top);
             lblSummaryDividends.Text = account.TotalDividendGain.ToString("C");
             lblSummaryRealized.Text = account.TotalRealizedGain.ToString("C");
@@ -143,7 +148,7 @@ namespace StockPortfolioApplication
 
         private void DrawTotalLines(Graphics g)
         {
-            int y1 = pnlBerkshireEquityView.Bottom;
+            int y1 = pnlBerkshireEquityView.Bottom + lineOffset;
             int y2 = y1 + 3;
 
             int length = 65;

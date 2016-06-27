@@ -39,7 +39,12 @@ namespace StockPortfolioApplication
             this.lblShares.Text = "Shares";
             this.lblCostCalculated.Text = "Cost";
             this.lblValueCalculated.Text = "Value";
-            this.BackColor = SystemColors.ActiveCaption;
+
+            this.BackColor = Color.Black;
+            foreach(Control c in Controls)
+            {
+                c.ForeColor = Color.White;
+            }
         }
 
         public void SetBackColor(int i)
