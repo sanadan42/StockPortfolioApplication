@@ -202,6 +202,8 @@ namespace StockPortfolioApplication
                 return RealizedGain + DividendProfit;
             }
         }
+
+        public string Currency { get; set; }
         
         
         //public decimal GetACB() { return this.acb; }

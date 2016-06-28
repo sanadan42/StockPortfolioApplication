@@ -18,12 +18,8 @@ namespace StockPortfolioApplication
 
     public class PortfolioCalculations
     {
-        List<DividendTransaction> dividendTransactionList;
-
         public void PopulateTransactionList()
         {
-            //transactionList = GetTransactionsEquities();
-            dividendTransactionList = GetTransactionsDividends();
         }
 
         #region Portfolio management
@@ -70,13 +66,13 @@ namespace StockPortfolioApplication
                                     ID = e.EquityID,
                                     Ticker = e.StockTicker,
                                     Description = e.Description,
-                                    CurrentPrice = (decimal)e.CurrentPrice
+                                    CurrentPrice = (decimal)e.CurrentPrice,
+                                    Currency = e.tblStockExchanx.tblCurrency.CurrencyType
                                 }).Distinct();
 
                     return result.ToList();
                 }
             }
-            
        }
 
         public List<Equity> GetEquityList()
@@ -144,7 +140,6 @@ namespace StockPortfolioApplication
             //      - TotalCost - in absolute dollars in the given currency for the specific equity
             //      - RealizedGain - whenever there is a sale there has to be a profit / loss
             //      - AverageCost - this is the ACB or Average Cost Basis
-
             var transactions = GetTransactionsForEquity(equity, account);
             EquityCalculations(equity, transactions);
         }
@@ -191,65 +186,35 @@ namespace StockPortfolioApplication
         #endregion
 
         #region Dividend Transactions
-        private List<DividendTransaction> GetTransactionsDividends()
+        private List<tblTransactionDividend> GetTransactionsDividends(Equity equity, Account account)
         {
-            List<DividendTransaction> resultList = new List<DividendTransaction>();
+            List<tblTransactionDividend> resultList = new List<tblTransactionDividend>();
             using (var stocks = new StockPortfolioDBEntities())
             {
-                var result = from trans in stocks.tblTransactionDividends
-                             join equity in stocks.tblEquities on trans.EquityIDFK equals equity.EquityID
-                             join acc in stocks.tblAccounts on trans.AccountIDFK equals acc.AccountID
-                             orderby acc.AccountName, equity.StockTicker
-                             select new DividendTransaction()
-                             {
-                                 AccountName = acc.AccountName,
-                                 StockTicker = equity.StockTicker,
-                                 TransactionDate = (DateTime)trans.DividendDate,
-                                 Dividend = (decimal)trans.DividendValue,
-                                 AccountID = (int)trans.AccountIDFK,
-                                 EquityID = (int)trans.EquityIDFK,
-                             };
-                resultList = result.ToList();
+                if (account.ID != -1)
+                {
+                    var result = from trans in stocks.tblTransactionDividends
+                                 join e in stocks.tblEquities on trans.EquityIDFK equals e.EquityID
+                                 join acc in stocks.tblAccounts on trans.AccountIDFK equals acc.AccountID
+                                 where trans.AccountIDFK == account.ID
+                                 where trans.EquityIDFK == equity.ID
+                                 orderby trans.DividendDate, acc.AccountName, e.StockTicker
+                                 select trans;
+                    resultList = result.ToList();
+                }
+                else
+                {
+                    var result = from trans in stocks.tblTransactionDividends
+                                 join e in stocks.tblEquities on trans.EquityIDFK equals e.EquityID
+                                 join acc in stocks.tblAccounts on trans.AccountIDFK equals acc.AccountID
+                                 where trans.EquityIDFK == equity.ID
+                                 orderby trans.DividendDate, acc.AccountName, e.StockTicker
+                                 select trans;
+                    resultList = result.ToList();
+                }
             }
 
             return resultList;
-        }
-
-        private List<DividendTransaction> GetDividendTransactionsForAccount(Account account)
-        {
-            //pre: assumes transactionList has been populated
-            //post: list should be sorted from oldest to newest
-            var result = this.dividendTransactionList
-                            .Where(a => a.AccountID == account.ID)
-                            .OrderBy(d => d.TransactionDate);
-            return result.ToList();
-        }
-
-        private List<DividendTransaction> GetDividendTransactionsForEquity(Equity equity)
-        {
-            //pre: assumes transactionList has been populated
-            //post: list should be sorted from oldest to newest
-            var result = this.dividendTransactionList
-                            .Where(e => e.EquityID == equity.ID);
-            if(result != null)
-                result = result.OrderBy(d => d.TransactionDate);
-            return result.ToList();
-        }
-
-        private List<DividendTransaction> GetDividendTransactionsForEquity(Equity equity, Account account)
-        {
-            //pre: assumes transactionList has been populated
-            //post: list should be sorted from oldest to newest
-            var result = GetDividendTransactionsForEquity(equity);
-            if(result != null)
-            {
-                var result2 = result.Where(a => a.AccountID == account.ID);
-                if (result2 != null)
-                    result2 = result2.OrderBy(d => d.TransactionDate);
-                return result2.ToList();
-            }
-                            
-            return result.ToList();
         }
         #endregion
 
@@ -263,27 +228,8 @@ namespace StockPortfolioApplication
             //      - RealizedGain - whenever there is a sale there has to be a profit / loss
             //      - AverageCost - this is the ACB or Average Cost Basis
 
-            List<DividendTransaction> transactions = GetDividendTransactionsForEquity(equity, account);
-            return DividendCalculations(transactions);
-        }
-
-        public decimal DividendCalculations(Equity equity)
-        {
-            // pre: transaction list must be populated
-            // post: equity will be populated with the most difficult aggregate calcs
-
-            List<DividendTransaction> transactions = GetDividendTransactionsForEquity(equity);
-            return DividendCalculations(transactions);
-        }
-
-        private decimal DividendCalculations(List<DividendTransaction> transactions)
-        {
-            decimal sumDividend;
-
-            // because the list that is being processed has already been filted, there is no need to filter it again.
-            //sumDividend = transactions.Where(e => e.EquityID == equity.ID).Sum(d => (decimal)d.Dividend);
-            sumDividend = transactions.Sum(d => (decimal)d.Dividend);
-            return sumDividend;
+            List<tblTransactionDividend> transactions = GetTransactionsDividends(equity, account);
+            return transactions.Sum(d => (decimal)d.DividendValue);
         }
         #endregion
 
