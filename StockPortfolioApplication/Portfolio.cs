@@ -18,6 +18,7 @@ namespace StockPortfolioApplication
         {
             // create the workhorse of portfolio calculations
             portCalcs = new PortfolioCalculations();
+
             // allAccounts will be used to store the totals, list of accounts, equities, etc.
             allAccounts = new Account();
             allAccounts.ID = -1;
@@ -31,27 +32,7 @@ namespace StockPortfolioApplication
         public void CreatePortfolio()
         {
             portCalcs.PopulateTransactionList();
-            this.RefreshAllEquities();
             this.RefreshAccounts();
-        }
-
-        private void RefreshAllEquities()
-        {
-            // process each equity
-            // this may be redudant as it must be derivable from the results of the equities in each account, but I'm not sure so let's just do it
-            List<Equity> equityListFromDB = portCalcs.GetEquityList();
-
-            if (equityListFromDB != null)
-            {
-                foreach (Equity equity in equityListFromDB)
-                {
-                    portCalcs.EquityCalculations(equity);
-                    equity.ACBPortfolio = equity.AverageCostBasis;
-                    equity.DividendProfit = portCalcs.DividendCalculations(equity);
-                }
-            }
-
-            this.allAccounts.SetEquities(equityListFromDB);
         }
 
         private void RefreshAccounts()
@@ -64,7 +45,8 @@ namespace StockPortfolioApplication
                 RefreshAccount(account);
             }
 
-            //RefreshAccount(this.allAccounts);
+            RefreshAccount(this.allAccounts);
+
         }
 
         private void RefreshAccount(Account account)

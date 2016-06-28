@@ -17,9 +17,13 @@ namespace StockPortfolioApplication
         private ctlEquityExchangeCurrency ctlEECAdd;
         private ctlTestSums ctlSums;
         private ctlBerkshireView ctlBerkshire;
+        private Portfolio portfolio;
 
         public MainForm()
         {
+            portfolio = new Portfolio();
+            portfolio.CreatePortfolio();
+
             InitializeComponent();
             InitializeControls();
         }
@@ -38,11 +42,11 @@ namespace StockPortfolioApplication
             this.ctlEECAdd.Location = new System.Drawing.Point(0, 0);
             this.ctlEECAdd.Visible = false;
 
-            this.ctlSums = new ctlTestSums();
+            this.ctlSums = new ctlTestSums(portfolio);
             this.ctlSums.Location = new System.Drawing.Point(0, 0);
             this.ctlSums.Visible = false;
 
-            this.ctlBerkshire = new ctlBerkshireView();
+            this.ctlBerkshire = new ctlBerkshireView(portfolio);
             this.ctlBerkshire.Location = new System.Drawing.Point(0, 0);
             this.ctlBerkshire.Visible = false;
 
