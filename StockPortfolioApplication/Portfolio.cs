@@ -39,14 +39,15 @@ namespace StockPortfolioApplication
         {
             this.accounts = portCalcs.GetAccountList();
 
+            // process the main account
+            //  - need to process this account before the other accounts get processed
+            RefreshAccount(this.allAccounts);
+            
             // process each account
             foreach (Account account in this.accounts)
             {
                 RefreshAccount(account);
             }
-
-            RefreshAccount(this.allAccounts);
-
         }
 
         private void RefreshAccount(Account account)
@@ -56,7 +57,14 @@ namespace StockPortfolioApplication
             foreach (Equity equity in equities)
             {
                 portCalcs.EquityCalculations(equity, account);
-                equity.ACBPortfolio = this.allAccounts.GetEquities().Find(e => e.ID == equity.ID).AverageCostBasis;
+                if(account.ID == -1)
+                {
+                    equity.ACBPortfolio = equity.AverageCostBasis;
+                }
+                else
+                {
+                    equity.ACBPortfolio = this.allAccounts.GetEquities().Find(e => e.ID == equity.ID).AverageCostBasis;
+                }
                 equity.DividendProfit = portCalcs.DividendCalculations(equity, account);
             }
 
@@ -126,7 +134,7 @@ namespace StockPortfolioApplication
             this.equities = new List<Equity>();
             this.balances = new List<BalanceType>();
             ClearTotals();
-    }
+        }
 
         public void SetEquities(List<Equity> eList)
         {

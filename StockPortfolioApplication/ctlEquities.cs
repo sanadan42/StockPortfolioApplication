@@ -49,44 +49,44 @@ namespace StockPortfolioApplication
             
         }
 
-        private void DoStuff()
-        {
-            List<StockTransactionDisplay> results = GetStuff();
+        //private void DoStuff()
+        //{
+        //    List<StockTransactionDisplay> results = GetStuff();
 
-            //dgEquities.DataSource = result.ToList();
+        //    //dgEquities.DataSource = result.ToList();
 
-            //dgEquities.DataSource = results;
-            var results2 = results.Where(p => p.AccountName == "Corporate");
-            dgEquities.DataSource = results2.ToList();
-            dgEquities.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
-            dgEquities.Refresh();
-        }
+        //    //dgEquities.DataSource = results;
+        //    var results2 = results.Where(p => p.AccountName == "Corporate");
+        //    dgEquities.DataSource = results2.ToList();
+        //    dgEquities.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+        //    dgEquities.Refresh();
+        //}
 
-        private List<StockTransactionDisplay> GetStuff()
-        {
-            List<StockTransactionDisplay> resultList = new List<StockTransactionDisplay>();
-            using (var stocks = new StockPortfolioDBEntities())
-            {
-                var result = from trans in stocks.tblTransactionEquities
-                             join tt in stocks.tblTransactionTypes on trans.TransactionTypeIDFK equals tt.TransactionTypeID
-                             join equity in stocks.tblEquities on trans.EquityIDFK equals equity.EquityID
-                             join acc in stocks.tblAccounts on trans.AccountIDFK equals acc.AccountID
-                             orderby acc.AccountName, equity.StockTicker
-                             select new StockTransactionDisplay()
-                             {
-                                 AccountName = acc.AccountName,
-                                 StockTicker = equity.StockTicker,
-                                 TransactionType = tt.TransactionType,
-                                 TransactionDate = (DateTime)trans.TransactionDate,
-                                 Shares = (int)trans.Shares,
-                                 Price = (decimal)trans.Price,
-                                 Commission = (decimal)trans.Commission
-                             };
+        //private List<StockTransactionDisplay> GetStuff()
+        //{
+        //    List<StockTransactionDisplay> resultList = new List<StockTransactionDisplay>();
+        //    using (var stocks = new StockPortfolioDBEntities())
+        //    {
+        //        var result = from trans in stocks.tblTransactionEquities
+        //                     join tt in stocks.tblTransactionTypes on trans.TransactionTypeIDFK equals tt.TransactionTypeID
+        //                     join equity in stocks.tblEquities on trans.EquityIDFK equals equity.EquityID
+        //                     join acc in stocks.tblAccounts on trans.AccountIDFK equals acc.AccountID
+        //                     orderby acc.AccountName, equity.StockTicker
+        //                     select new StockTransactionDisplay()
+        //                     {
+        //                         AccountName = acc.AccountName,
+        //                         StockTicker = equity.StockTicker,
+        //                         TransactionType = tt.TransactionType,
+        //                         TransactionDate = (DateTime)trans.TransactionDate,
+        //                         Shares = (int)trans.Shares,
+        //                         Price = (decimal)trans.Price,
+        //                         Commission = (decimal)trans.Commission
+        //                     };
 
-                resultList = result.ToList();
-            }
-            return resultList;
-        }
+        //        resultList = result.ToList();
+        //    }
+        //    return resultList;
+        //}
 
         private void UpdateDG()
         {

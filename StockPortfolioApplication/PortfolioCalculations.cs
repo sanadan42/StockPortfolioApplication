@@ -18,7 +18,6 @@ namespace StockPortfolioApplication
 
     public class PortfolioCalculations
     {
-        //List<StockTransaction> transactionList;
         List<DividendTransaction> dividendTransactionList;
 
         public void PopulateTransactionList()
@@ -146,7 +145,6 @@ namespace StockPortfolioApplication
             //      - RealizedGain - whenever there is a sale there has to be a profit / loss
             //      - AverageCost - this is the ACB or Average Cost Basis
 
-            //List<StockTransaction> transactions = GetTransactionsForEquity(equity, account);
             var transactions = GetTransactionsForEquity(equity, account);
             EquityCalculations(equity, transactions);
         }
