@@ -36,9 +36,15 @@ namespace StockPortfolioApplication
         private void Init()
         {
             InitializeComponent();
+            PopupulateData();
+        }
+
+        private void PopupulateData()
+        {
             BuildEquityList(portfolio.GetEquityList());
 
             int i = 0;
+            this.pnlBerkshireEquityView.Controls.Clear();
             foreach (ctlBerkshireEquityView brk in equityViewList)
             {
                 if (i > 0)
@@ -144,6 +150,12 @@ namespace StockPortfolioApplication
                 DrawTotalLines(g);
                 DrawSummaryLines(g);
             }
+        }
+
+        public void RefreshData()
+        {
+            portfolio.RefreshPortfolio();
+            PopupulateData();
         }
 
         private void DrawTotalLines(Graphics g)

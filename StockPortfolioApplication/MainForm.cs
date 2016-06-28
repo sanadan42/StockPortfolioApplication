@@ -107,7 +107,7 @@ namespace StockPortfolioApplication
             if(!this.ctlBerkshire.Visible)
             {
                 ClearDisplayPanel();
-                //this.ctlBerkshire.RefreshDisplay();
+                this.ctlBerkshire.RefreshData();
                 this.ctlBerkshire.Visible = true;
             }
         }

@@ -119,21 +119,29 @@ namespace StockPortfolioApplication
 
         private void btnTransactionSave_Click(object sender, EventArgs e)
         {
+            int shareModifier = 1;
             try
             {
                 using (var stockEntity = new StockPortfolioDBEntities())
                 {
+                    if((int)cmbTransactionEquity.SelectedValue == (int)TransactionTypes.SellStock)
+                    {
+                        if ((int)numEquityShares.Value > 0)
+                            shareModifier = -1;
+                    }
+
                     stockEntity.tblTransactionEquities.Add(new tblTransactionEquity
                     {
                         TransactionDate = dtpTransactionDate.Value,
                         TransactionTypeIDFK = (int)cmbTransactionEquity.SelectedValue,
                         AccountIDFK = (int)cmbAccountEquity.SelectedValue,
                         EquityIDFK = (int)cmbEquityEquity.SelectedValue,
-                        Shares = (int)numEquityShares.Value,
+                        Shares = shareModifier*(int)numEquityShares.Value,
                         Price = decimal.Parse(txtPrice.Text),
                         Commission = decimal.Parse(txtCommission.Text),
                         ExchangeRate = decimal.Parse(txtExchangeRate.Text)
                     });
+
                     stockEntity.SaveChanges();
                 }
             }
