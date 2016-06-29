@@ -14,9 +14,11 @@ namespace StockPortfolioApplication
     public partial class ctlEquities : UserControl
     {
         private List<EquityReduced> equityList;
+        private Portfolio portfolio;
 
-        public ctlEquities()
+        public ctlEquities(Portfolio p)
         {
+            this.portfolio = p;
             InitializeComponent();
             dgEquities.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
         }
@@ -31,24 +33,6 @@ namespace StockPortfolioApplication
             UpdateDG();
         }
         
-        // all of this code is really just around to keep an example of how I can work with my data in lists
-        private void btnTransactions_Click(object sender, EventArgs e)
-        {
-            //var result = from trans in stocks.tblTransactionEquities
-            //             join equity in stocks.tblEquities on trans.EquityIDFK equals equity.EquityID
-            //             join acc in stocks.tblAccounts on trans.AccountIDFK equals acc.AccountID
-            //             orderby acc.AccountName, equity.StockTicker
-            //             select new
-            //             {
-            //                 Account = acc.AccountName,
-            //                 StockTicker = equity.StockTicker,
-            //                 TransactionDate = trans.TransactionDate,
-            //                 Shares = trans.Shares,
-            //                 Price = trans.Price
-            //             };
-            
-        }
-
         private void UpdateDG()
         {
             
@@ -77,6 +61,7 @@ namespace StockPortfolioApplication
                 stockEntity.SaveChanges();
             }
             UpdateDG();
+            portfolio.RefreshPortfolio();
         }
     }
 

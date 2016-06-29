@@ -12,14 +12,13 @@ namespace StockPortfolioApplication
 {
     public partial class ctlStockTransaction : UserControl
     {
-        enum TransactionUsage
-        {
-            Financial = 0,
-            Equity
-        }
+        private Portfolio portfolio;
 
-        public ctlStockTransaction()
+        
+
+        public ctlStockTransaction(Portfolio p)
         {
+            this.portfolio = p;
             InitializeComponent();
             InitializeControls();
         }
@@ -35,8 +34,19 @@ namespace StockPortfolioApplication
                 transactionEquityTypes.Insert(0, new tblTransactionType());
                 transactionFinancialTypes.Insert(0, new tblTransactionType());
 
-                var accounts = stockEntity.tblAccounts.OrderBy(a => a.AccountName).ToList();
-                accounts.Insert(0, new tblAccount());
+                var entityAccounts = stockEntity.tblAccounts.OrderBy(a => a.AccountName);
+
+                var accountsEquity = entityAccounts.ToList();
+                var accountsEquityTo = entityAccounts.ToList();
+                var accountsDividend = entityAccounts.ToList();
+                var accountsFinancial = entityAccounts.ToList();
+                var accountsFinancialTo = entityAccounts.ToList();
+
+                accountsEquity.Insert(0, new tblAccount());
+                accountsEquityTo.Insert(0, new tblAccount());
+                accountsDividend.Insert(0, new tblAccount());
+                accountsFinancial.Insert(0, new tblAccount());
+                accountsFinancialTo.Insert(0, new tblAccount());
 
                 var equitiesAll = stockEntity.tblEquities.OrderBy(c => c.StockTicker);
                 var equities = equitiesAll.ToList(); 
@@ -54,7 +64,11 @@ namespace StockPortfolioApplication
                 cmbTransactionEquity.ValueMember = cmbFinancialTransaction.ValueMember = "TransactionTypeID";
 
                 // initialize accounts combo box
-                cmbAccountEquity.DataSource = cmbDividendAccount.DataSource = cmbFinancialAccount.DataSource = cmbAccountTo.DataSource = cmbFinancialAccountTo.DataSource = accounts;
+                cmbAccountEquity.DataSource = accountsEquity;
+                cmbDividendAccount.DataSource = accountsDividend;
+                cmbFinancialAccount.DataSource = accountsFinancial;
+                cmbAccountTo.DataSource = accountsEquityTo;
+                cmbFinancialAccountTo.DataSource = accountsFinancialTo;
                 cmbAccountEquity.DisplayMember = cmbDividendAccount.DisplayMember = cmbFinancialAccount.DisplayMember = cmbAccountTo.DisplayMember = cmbFinancialAccountTo.DisplayMember = "AccountName";
                 cmbAccountEquity.ValueMember = cmbDividendAccount.ValueMember = cmbFinancialAccount.ValueMember = cmbAccountTo.ValueMember = cmbFinancialAccountTo.ValueMember = "AccountID";
                 cmbAccountTo.Visible = cmbFinancialAccountTo.Visible = false;
@@ -124,7 +138,7 @@ namespace StockPortfolioApplication
             {
                 using (var stockEntity = new StockPortfolioDBEntities())
                 {
-                    if((int)cmbTransactionEquity.SelectedValue == (int)TransactionTypes.SellStock)
+                    if((int)cmbTransactionEquity.SelectedValue == (int)EquityTransactionTypes.SellStock)
                     {
                         if ((int)numEquityShares.Value > 0)
                             shareModifier = -1;
@@ -152,6 +166,7 @@ namespace StockPortfolioApplication
             finally
             {
                 InitEquityTransactions();
+                portfolio.RefreshPortfolio();
             }
         }
 
@@ -178,6 +193,7 @@ namespace StockPortfolioApplication
             finally
             {
                 InitDividendTransactions();
+                portfolio.RefreshPortfolio();
             }
         }
 
@@ -187,12 +203,26 @@ namespace StockPortfolioApplication
             {
                 using (var stockEntity = new StockPortfolioDBEntities())
                 {
+                    decimal netFinance = decimal.Parse(txtFincialNet.Text);
+
+                    switch ((int)cmbFinancialTransaction.SelectedValue)
+                    {
+                        case (int)FinancialTransactionTypes.Fees:
+                        case (int)FinancialTransactionTypes.Interest:
+                        case (int)FinancialTransactionTypes.Withdrawal:
+                            if (netFinance > 0)
+                                netFinance *= -1;
+                            break;
+                        default:
+                            break;
+                    }
+
                     stockEntity.tblTransactionFinances.Add(new tblTransactionFinance
                     {
                         TransactionDate = dtpFinancialTransaction.Value,
                         TransactionIDFK = (int)cmbFinancialTransaction.SelectedValue,
                         AccountIDFK = (int)cmbFinancialAccount.SelectedValue,
-                        Net = decimal.Parse(txtFincialNet.Text),
+                        Net = netFinance,
                         CurrencyIDFK = (int)cmbFinancialCurrency.SelectedValue
                     });
                     stockEntity.SaveChanges();
@@ -204,7 +234,8 @@ namespace StockPortfolioApplication
             }
             finally
             {
-                InitDividendTransactions();
+                InitFinancialTransactions();
+                portfolio.RefreshPortfolio();
             }
         }
     }

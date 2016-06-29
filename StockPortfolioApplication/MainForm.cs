@@ -30,11 +30,11 @@ namespace StockPortfolioApplication
 
         private void InitializeControls()
         {
-            this.ctlStockTrans = new ctlStockTransaction();
+            this.ctlStockTrans = new ctlStockTransaction(portfolio);
             this.ctlStockTrans.Location = new System.Drawing.Point(0, 0);
             this.ctlStockTrans.Visible = false;
 
-            this.ctlEquityUpdate = new ctlEquities();
+            this.ctlEquityUpdate = new ctlEquities(portfolio);
             this.ctlEquityUpdate.Location = new System.Drawing.Point(0, 0);
             this.ctlEquityUpdate.Visible = false;
 

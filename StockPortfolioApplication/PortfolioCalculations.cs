@@ -6,15 +6,7 @@ using System.Threading.Tasks;
 
 namespace StockPortfolioApplication
 {
-    enum TransactionTypes
-    {
-        BuyStock = 1,
-        SellStock = 2,
-        WithdrawalStock = 3,
-        DepositStock = 4,
-        TransferBuy = 5,
-        TransferSell = 6
-    }
+    
 
     public class PortfolioCalculations
     {
@@ -156,15 +148,15 @@ namespace StockPortfolioApplication
                     decimal priceForCalc;
                     switch(t.TransactionTypeIDFK)
                     {
-                        case ((int)TransactionTypes.BuyStock):
+                        case ((int)EquityTransactionTypes.BuyStock):
                             priceForCalc = (decimal)t.Price;
                             break;
-                        case ((int)TransactionTypes.SellStock):
+                        case ((int)EquityTransactionTypes.SellStock):
                             priceForCalc = averageCost;
                             realizedGain += -1*(int)t.Shares * ((decimal)t.Price - averageCost) - (decimal)t.Commission; // when we are selling stocks t.shares will be negative, so need to multiply by -1. or... could do aveCost - t.Price... same same
                             break;
-                        case ((int)TransactionTypes.TransferBuy):
-                        case ((int)TransactionTypes.TransferSell):
+                        case ((int)EquityTransactionTypes.TransferBuy):
+                        case ((int)EquityTransactionTypes.TransferSell):
                             priceForCalc = averageCost;
                             break;
                         default:

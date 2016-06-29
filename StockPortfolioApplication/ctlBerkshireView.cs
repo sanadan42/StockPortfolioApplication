@@ -16,7 +16,7 @@ namespace StockPortfolioApplication
         private Portfolio portfolio;
         private List<ctlBerkshireEquityView> equityViewList;
 
-        private int lineOffset, totalsOffset, summaryPanelOffset;
+        private int lineOffset, totalsOffset;
 
         public ctlBerkshireView()
         {
@@ -36,10 +36,10 @@ namespace StockPortfolioApplication
         private void Init()
         {
             InitializeComponent();
-            PopupulateData();
+            Refresh();
         }
 
-        private void PopupulateData()
+        public void RefreshData()
         {
             BuildEquityList(portfolio.GetEquityList());
 
@@ -150,12 +150,6 @@ namespace StockPortfolioApplication
                 DrawTotalLines(g);
                 DrawSummaryLines(g);
             }
-        }
-
-        public void RefreshData()
-        {
-            portfolio.RefreshPortfolio();
-            PopupulateData();
         }
 
         private void DrawTotalLines(Graphics g)
