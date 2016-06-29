@@ -91,6 +91,12 @@
     <Compile Include="ctlEquityExchangeCurrency.Designer.cs">
       <DependentUpon>ctlEquityExchangeCurrency.cs</DependentUpon>
     </Compile>
+    <Compile Include="ctlEquityTransaction.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctlEquityTransaction.Designer.cs">
+      <DependentUpon>ctlEquityTransaction.cs</DependentUpon>
+    </Compile>
     <Compile Include="ctlStockTransaction.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -181,6 +187,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ctlEquityExchangeCurrency.resx">
       <DependentUpon>ctlEquityExchangeCurrency.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ctlEquityTransaction.resx">
+      <DependentUpon>ctlEquityTransaction.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ctlStockTransaction.resx">
       <DependentUpon>ctlStockTransaction.cs</DependentUpon>
