@@ -126,6 +126,7 @@
     <Compile Include="PortfolioCalculations.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SortableBindingList.cs" />
     <Compile Include="StockDatabaseModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

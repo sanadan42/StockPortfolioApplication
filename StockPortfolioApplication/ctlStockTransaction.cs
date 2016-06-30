@@ -14,8 +14,6 @@ namespace StockPortfolioApplication
     {
         private Portfolio portfolio;
 
-        
-
         public ctlStockTransaction(Portfolio p)
         {
             this.portfolio = p;

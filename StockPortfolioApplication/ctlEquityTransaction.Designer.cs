@@ -89,6 +89,7 @@
             this.cmbTransactionEquity.Name = "cmbTransactionEquity";
             this.cmbTransactionEquity.Size = new System.Drawing.Size(70, 21);
             this.cmbTransactionEquity.TabIndex = 67;
+            this.cmbTransactionEquity.SelectedIndexChanged += new System.EventHandler(this.cmbTransactionEquity_SelectedIndexChanged);
             // 
             // lblExchangeRate
             // 
@@ -164,6 +165,7 @@
             this.btnTransactionSave.TabIndex = 79;
             this.btnTransactionSave.Text = "Save";
             this.btnTransactionSave.UseVisualStyleBackColor = true;
+            this.btnTransactionSave.Click += new System.EventHandler(this.btnTransactionSave_Click);
             // 
             // lblCommission
             // 
