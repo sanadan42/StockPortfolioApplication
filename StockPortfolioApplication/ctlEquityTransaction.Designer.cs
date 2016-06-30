@@ -48,8 +48,10 @@
             this.txtCommission = new System.Windows.Forms.TextBox();
             this.lblEquityAccount = new System.Windows.Forms.Label();
             this.lblEquityEquity = new System.Windows.Forms.Label();
+            this.dgvEquityTransactions = new System.Windows.Forms.DataGridView();
             this.grpTransactionEquities.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numEquityShares)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvEquityTransactions)).BeginInit();
             this.SuspendLayout();
             // 
             // grpTransactionEquities
@@ -250,16 +252,26 @@
             this.lblEquityEquity.TabIndex = 74;
             this.lblEquityEquity.Text = "Equity";
             // 
+            // dgvEquityTransactions
+            // 
+            this.dgvEquityTransactions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvEquityTransactions.Location = new System.Drawing.Point(3, 122);
+            this.dgvEquityTransactions.Name = "dgvEquityTransactions";
+            this.dgvEquityTransactions.Size = new System.Drawing.Size(921, 475);
+            this.dgvEquityTransactions.TabIndex = 86;
+            // 
             // ctlEquityTransaction
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.dgvEquityTransactions);
             this.Controls.Add(this.grpTransactionEquities);
             this.Name = "ctlEquityTransaction";
-            this.Size = new System.Drawing.Size(750, 109);
+            this.Size = new System.Drawing.Size(927, 597);
             this.grpTransactionEquities.ResumeLayout(false);
             this.grpTransactionEquities.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numEquityShares)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvEquityTransactions)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -286,5 +298,6 @@
         private System.Windows.Forms.TextBox txtCommission;
         private System.Windows.Forms.Label lblEquityAccount;
         private System.Windows.Forms.Label lblEquityEquity;
+        private System.Windows.Forms.DataGridView dgvEquityTransactions;
     }
 }
