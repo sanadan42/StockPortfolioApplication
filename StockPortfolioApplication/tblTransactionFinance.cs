@@ -23,5 +23,6 @@ namespace StockPortfolioApplication
     
         public virtual tblAccount tblAccount { get; set; }
         public virtual tblTransactionType tblTransactionType { get; set; }
+        public virtual tblCurrency tblCurrency { get; set; }
     }
 }

@@ -44,6 +44,8 @@
             this.lblRealizedCalculated = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.btnGetAllEquities = new System.Windows.Forms.Button();
+            this.lblBalanceCalc = new System.Windows.Forms.Label();
+            this.lblBalances = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgSumShares)).BeginInit();
             this.SuspendLayout();
             // 
@@ -197,10 +199,31 @@
             this.btnGetAllEquities.UseVisualStyleBackColor = true;
             this.btnGetAllEquities.Click += new System.EventHandler(this.btnGetAllEquities_Click);
             // 
+            // lblBalanceCalc
+            // 
+            this.lblBalanceCalc.AutoSize = true;
+            this.lblBalanceCalc.Location = new System.Drawing.Point(731, 560);
+            this.lblBalanceCalc.Name = "lblBalanceCalc";
+            this.lblBalanceCalc.Size = new System.Drawing.Size(46, 13);
+            this.lblBalanceCalc.TabIndex = 117;
+            this.lblBalanceCalc.Text = "Balance";
+            this.lblBalanceCalc.Visible = false;
+            // 
+            // lblBalances
+            // 
+            this.lblBalances.AutoSize = true;
+            this.lblBalances.Location = new System.Drawing.Point(731, 508);
+            this.lblBalances.Name = "lblBalances";
+            this.lblBalances.Size = new System.Drawing.Size(46, 13);
+            this.lblBalances.TabIndex = 116;
+            this.lblBalances.Text = "Balance";
+            // 
             // ctlTestSums
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.lblBalanceCalc);
+            this.Controls.Add(this.lblBalances);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.lblPLCalculated);
             this.Controls.Add(this.lblCostCalculated);
@@ -243,5 +266,7 @@
         private System.Windows.Forms.Label lblRealizedCalculated;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btnGetAllEquities;
+        private System.Windows.Forms.Label lblBalanceCalc;
+        private System.Windows.Forms.Label lblBalances;
     }
 }

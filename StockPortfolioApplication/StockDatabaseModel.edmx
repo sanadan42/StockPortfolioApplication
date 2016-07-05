@@ -262,6 +262,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tblTransactionFinance_tblCurrencies">
+          <End Role="tblCurrencies" Type="Self.tblCurrencies" Multiplicity="0..1" />
+          <End Role="tblTransactionFinance" Type="Self.tblTransactionFinance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCurrencies">
+              <PropertyRef Name="CurrencyID" />
+            </Principal>
+            <Dependent Role="tblTransactionFinance">
+              <PropertyRef Name="CurrencyIDFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tblTransactionFinance_tblTransactionTypes">
           <End Role="tblTransactionTypes" Type="Self.tblTransactionTypes" Multiplicity="0..1" />
           <End Role="tblTransactionFinance" Type="Self.tblTransactionFinance" Multiplicity="*" />
@@ -335,6 +347,10 @@
             <End Role="tblAccounts" EntitySet="tblAccounts" />
             <End Role="tblTransactionFinance" EntitySet="tblTransactionFinance" />
           </AssociationSet>
+          <AssociationSet Name="FK_tblTransactionFinance_tblCurrencies" Association="Self.FK_tblTransactionFinance_tblCurrencies">
+            <End Role="tblCurrencies" EntitySet="tblCurrencies" />
+            <End Role="tblTransactionFinance" EntitySet="tblTransactionFinance" />
+          </AssociationSet>
           <AssociationSet Name="FK_tblTransactionFinance_tblTransactionTypes" Association="Self.FK_tblTransactionFinance_tblTransactionTypes">
             <End Role="tblTransactionTypes" EntitySet="tblTransactionTypes" />
             <End Role="tblTransactionFinance" EntitySet="tblTransactionFinance" />
@@ -386,6 +402,7 @@
           <Property Name="ExchangeRate" Type="Decimal" Precision="19" Scale="6" />
           <NavigationProperty Name="tblBalances" Relationship="Self.FK_tblBalances_tblCurrencies" FromRole="tblCurrencies" ToRole="tblBalances" />
           <NavigationProperty Name="tblStockExchanges" Relationship="Self.FK_tblStockExchanges_tblCurrencies" FromRole="tblCurrencies" ToRole="tblStockExchanges" />
+          <NavigationProperty Name="tblTransactionFinances" Relationship="StockPortfolioDBModel.FK_tblTransactionFinance_tblCurrencies" FromRole="tblCurrency" ToRole="tblTransactionFinance" />
         </EntityType>
         <EntityType Name="tblEquity">
           <Key>
@@ -472,6 +489,7 @@
           <Property Name="Net" Type="Decimal" Precision="19" Scale="4" />
           <NavigationProperty Name="tblAccount" Relationship="Self.FK_tblTransactionFinance_tblAccounts" FromRole="tblTransactionFinance" ToRole="tblAccounts" />
           <NavigationProperty Name="tblTransactionType" Relationship="Self.FK_tblTransactionFinance_tblTransactionTypes" FromRole="tblTransactionFinance" ToRole="tblTransactionTypes" />
+          <NavigationProperty Name="tblCurrency" Relationship="StockPortfolioDBModel.FK_tblTransactionFinance_tblCurrencies" FromRole="tblTransactionFinance" ToRole="tblCurrency" />
         </EntityType>
         <EntityType Name="tblTransactionType">
           <Key>
@@ -704,7 +722,23 @@
             <End Role="tblTransactionTypes" EntitySet="tblTransactionTypes" />
             <End Role="tblTransactionFinance" EntitySet="tblTransactionFinances" />
           </AssociationSet>
+          <AssociationSet Name="FK_tblTransactionFinance_tblCurrencies" Association="StockPortfolioDBModel.FK_tblTransactionFinance_tblCurrencies">
+            <End Role="tblCurrency" EntitySet="tblCurrencies" />
+            <End Role="tblTransactionFinance" EntitySet="tblTransactionFinances" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_tblTransactionFinance_tblCurrencies">
+          <End Type="StockPortfolioDBModel.tblCurrency" Role="tblCurrency" Multiplicity="0..1" />
+          <End Type="StockPortfolioDBModel.tblTransactionFinance" Role="tblTransactionFinance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCurrency">
+              <PropertyRef Name="CurrencyID" />
+            </Principal>
+            <Dependent Role="tblTransactionFinance">
+              <PropertyRef Name="CurrencyIDFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
