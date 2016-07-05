@@ -10,8 +10,8 @@ namespace StockPortfolioApplication
     {
         BuyStock = 1,
         SellStock = 2,
-        WithdrawalStock = 3,
-        DepositStock = 4,
+        WithdrawalStock = 3, // never used - should I delete this?
+        DepositStock = 4, // never used - should I delete this?
         TransferBuy = 5,
         TransferSell = 6
     }
@@ -20,7 +20,6 @@ namespace StockPortfolioApplication
     {
         Deposit = 7,
         Withdrawal = 8,
-        EFT = 9,
         Conversion = 10,
         ForeignExchange = 11,
         Interest = 12,
