@@ -94,7 +94,7 @@
           <Property Name="AccountIDFK" Type="int" />
           <Property Name="TransactionTypeIDFK" Type="int" />
           <Property Name="TransactionDate" Type="date" />
-          <Property Name="Shares" Type="int" />
+          <Property Name="Shares" Type="decimal" Precision="19" Scale="4" />
           <Property Name="Price" Type="decimal" Precision="19" Scale="4" />
           <Property Name="Commission" Type="decimal" Precision="19" Scale="4" />
           <Property Name="ExchangeRate" Type="decimal" Precision="19" Scale="4" />
@@ -469,7 +469,7 @@
           <Property Name="AccountIDFK" Type="Int32" />
           <Property Name="TransactionTypeIDFK" Type="Int32" />
           <Property Name="TransactionDate" Type="DateTime" Precision="0" />
-          <Property Name="Shares" Type="Int32" />
+          <Property Name="Shares" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="Commission" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="ExchangeRate" Type="Decimal" Precision="19" Scale="4" />

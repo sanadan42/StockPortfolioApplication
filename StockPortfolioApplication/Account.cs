@@ -81,9 +81,9 @@ namespace StockPortfolioApplication
 
         public void CalculateAccountBalances()
         {
+            ClearAccountBalances();
             using (var stocks = new StockPortfolioDBEntities())
             {
-                ///*
                 var resultEquities = stocks.tblTransactionEquities.
                                         Where(t => t.AccountIDFK == this.ID).
                                         Where(t => t.tblTransactionType.TransactionTypeID != (int)EquityTransactionTypes.TransferBuy).
@@ -94,7 +94,7 @@ namespace StockPortfolioApplication
                     int currencyType = (int)t.tblEquity.tblStockExchanx.tblCurrency.CurrencyID;
                     // check to see if the balance for the given currency exists within the list
                     BalanceType balance = GetBalance(currencyType);
-                    balance.Balance -= (int)t.Shares * (decimal)t.Price + (decimal)t.Commission;
+                    balance.Balance -= (decimal)t.Shares * (decimal)t.Price + (decimal)t.Commission;
                 }
                 
                 var resultFinance = stocks.tblTransactionFinances.Where(f => f.AccountIDFK == this.ID).OrderBy(f => f.TransactionDate);
@@ -117,6 +117,7 @@ namespace StockPortfolioApplication
 
         private BalanceType GetBalance(int currency)
         {
+            // check to see if the currency type already exists, and if not then add it
             if (this.balances.Exists(b => b.CurrencyID == currency))
             {
                 return this.balances.Find(b => b.CurrencyID == currency);
@@ -139,6 +140,17 @@ namespace StockPortfolioApplication
             this.balances.Add(b);
 
             return b;
+        }
+
+        private void ClearAccountBalances()
+        {
+            if (this.balances.Count > 0)
+            {
+                foreach (var b in this.balances)
+                {
+                    b.Balance = 0.0m;
+                }
+            }
         }
     }
 }

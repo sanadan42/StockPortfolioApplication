@@ -19,7 +19,7 @@ namespace StockPortfolioApplication
         public Nullable<int> AccountIDFK { get; set; }
         public Nullable<int> TransactionTypeIDFK { get; set; }
         public Nullable<System.DateTime> TransactionDate { get; set; }
-        public Nullable<int> Shares { get; set; }
+        public Nullable<decimal> Shares { get; set; }
         public Nullable<decimal> Price { get; set; }
         public Nullable<decimal> Commission { get; set; }
         public Nullable<decimal> ExchangeRate { get; set; }

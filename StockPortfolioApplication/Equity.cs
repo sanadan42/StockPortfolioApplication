@@ -13,7 +13,7 @@ namespace StockPortfolioApplication
         public int ID { get; set; }
         public string Ticker { get; set; }
         public string Description { get; set; }
-        public int Shares { get; set; }
+        public decimal Shares { get; set; }
         public decimal CurrentPrice { get; set; }
 
         public decimal AverageCostBasis { get; set; }

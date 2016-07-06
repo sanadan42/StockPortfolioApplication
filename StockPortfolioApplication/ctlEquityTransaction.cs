@@ -104,7 +104,7 @@ namespace StockPortfolioApplication
                 c.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             }
 
-            dgvEquityTransactions.Columns["Shares"].DefaultCellStyle.Format = "d";
+            dgvEquityTransactions.Columns["Shares"].DefaultCellStyle.Format = "N0"; // Number, 0 decimal places (N0)
         }
 
         private void ChangeDGColors()
@@ -128,7 +128,6 @@ namespace StockPortfolioApplication
                         default:
                             break;
                     }
-
                 }
             }
         }
@@ -150,7 +149,7 @@ namespace StockPortfolioApplication
                                  StockDescription = equity.Description,
                                  TransactionType = tt.TransactionType,
                                  TransactionDate = (DateTime)trans.TransactionDate,
-                                 Shares = (int)trans.Shares,
+                                 Shares = (decimal)trans.Shares,
                                  Price = (decimal)trans.Price,
                                  Commission = (decimal)trans.Commission,
                                  AccountID = (int)trans.AccountIDFK,
@@ -201,7 +200,7 @@ namespace StockPortfolioApplication
                         TransactionTypeIDFK = (int)cmbTransactionEquity.SelectedValue,
                         AccountIDFK = (int)cmbAccountEquity.SelectedValue,
                         EquityIDFK = (int)cmbEquityEquity.SelectedValue,
-                        Shares = shareModifier * (int)numEquityShares.Value,
+                        Shares = shareModifier * (decimal)numEquityShares.Value,
                         Price = decimal.Parse(txtPrice.Text),
                         Commission = decimal.Parse(txtCommission.Text),
                         ExchangeRate = decimal.Parse(txtExchangeRate.Text)

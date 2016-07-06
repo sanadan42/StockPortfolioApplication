@@ -21,7 +21,7 @@ namespace StockPortfolioApplication
         {
             this.lblTicker.Text = e.Ticker;
             this.lblDescription.Text = e.Description;
-            this.lblShares.Text = e.Shares.ToString();
+            this.lblShares.Text = ((int)e.Shares).ToString();
             this.lblCostCalculated.Text = e.TotalCost.ToString("C");
             this.lblValueCalculated.Text = (e.Shares * e.CurrentPrice).ToString("C");
 
@@ -70,7 +70,7 @@ namespace StockPortfolioApplication
 
         public string Ticker { get; set; }
         public string Description { get; set; }
-        public int Shares { get; set; }
+        public decimal Shares { get; set; }
         public decimal Cost { get; set; }
         public decimal Value { get; set; }// this should be a calculated view of value = current # shares * current price
     }

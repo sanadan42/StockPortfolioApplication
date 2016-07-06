@@ -13,7 +13,7 @@ namespace StockPortfolioApplication
         public string TransactionType { get; set; }
         public string StockTicker { get; set; }
         public string StockDescription { get; set; }
-        public int Shares { get; set; }
+        public decimal Shares { get; set; }
         public decimal Price { get; set; }
         public decimal Commission { get; set; }
     }

@@ -76,7 +76,7 @@ namespace StockPortfolioApplication
             //        dgSumShares.Columns["Ticker"].DefaultCellStyle.Alignment =
             //        dgSumShares.Columns["Shares"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
-            dgSumShares.Columns["Shares"].DefaultCellStyle.Format = "d";
+            dgSumShares.Columns["Shares"].DefaultCellStyle.Format = "N0"; // N0 is for number no decimal places
         }
         
         private void btnGetAccountEquites_Click(object sender, EventArgs e)
