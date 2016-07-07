@@ -95,28 +95,17 @@ namespace StockPortfolioApplication
             {
                 if (account.ID == -1)
                 {
-                    var result = from trans in stocks.tblTransactionEquities
-                                 join tt in stocks.tblTransactionTypes on trans.TransactionTypeIDFK equals tt.TransactionTypeID
-                                 join eq in stocks.tblEquities on trans.EquityIDFK equals eq.EquityID
-                                 join acc in stocks.tblAccounts on trans.AccountIDFK equals acc.AccountID
-                                 orderby trans.TransactionDate, acc.AccountName, eq.StockTicker
-                                 where eq.EquityID == equity.ID
-                                 select trans;
-
+                    var result = stocks.tblTransactionEquities
+                                .Where(e => e.EquityIDFK == equity.ID)
+                                .OrderBy(d => d.TransactionDate);
                     return result.ToList();
                 }
                 else
                 {
-
-                    var result = from trans in stocks.tblTransactionEquities
-                                 join tt in stocks.tblTransactionTypes on trans.TransactionTypeIDFK equals tt.TransactionTypeID
-                                 join eq in stocks.tblEquities on trans.EquityIDFK equals eq.EquityID
-                                 join acc in stocks.tblAccounts on trans.AccountIDFK equals acc.AccountID
-                                 orderby trans.TransactionDate, acc.AccountName, eq.StockTicker
-                                 where acc.AccountID == account.ID
-                                 where eq.EquityID == equity.ID
-                                 select trans;
-
+                    var result = stocks.tblTransactionEquities
+                                .Where(a => a.AccountIDFK == account.ID)
+                                .Where(e => e.EquityIDFK == equity.ID)
+                                .OrderBy(d => d.TransactionDate);
                     return result.ToList();
                 }
             }
@@ -126,34 +115,30 @@ namespace StockPortfolioApplication
         #region Equity Calculations
         public void EquityCalculations(Equity equity, Account account)
         {
-            // pre: transaction list must be populated
+            // pre: 
             // post: equity will be populated with the most difficult aggregate calcs
             //      - ACB (averageCost)
             //      - TotalCost - in absolute dollars in the given currency for the specific equity
             //      - RealizedGain - whenever there is a sale there has to be a profit / loss
             //      - AverageCost - this is the ACB or Average Cost Basis
-            var transactions = GetTransactionsForEquity(equity, account);
-            EquityCalculations(equity, transactions);
-        }
-
-        private void EquityCalculations(Equity equity, List<tblTransactionEquity> transactions)
-        {
+            
             decimal totalCost = 0.0m, averageCost = 0.0m, realizedGain = 0.0m;
             decimal shares = 0;
 
+            var transactions = GetTransactionsForEquity(equity, account);
             if (!(transactions.Count == 0))
             {
-                foreach (tblTransactionEquity t in transactions)
+                foreach (var t in transactions)
                 {
                     decimal priceForCalc;
-                    switch(t.TransactionTypeIDFK)
+                    switch (t.TransactionTypeIDFK)
                     {
                         case ((int)EquityTransactionTypes.BuyStock):
                             priceForCalc = (decimal)t.Price;
                             break;
                         case ((int)EquityTransactionTypes.SellStock):
                             priceForCalc = averageCost;
-                            realizedGain += -1*(decimal)t.Shares * ((decimal)t.Price - averageCost) - (decimal)t.Commission; // when we are selling stocks t.shares will be negative, so need to multiply by -1. or... could do aveCost - t.Price... same same
+                            realizedGain += -1 * (decimal)t.Shares * ((decimal)t.Price - averageCost) - (decimal)t.Commission; // when we are selling stocks t.shares will be negative, so need to multiply by -1. or... could do aveCost - t.Price... same same
                             break;
                         case ((int)EquityTransactionTypes.TransferBuy):
                         case ((int)EquityTransactionTypes.TransferSell):
@@ -180,45 +165,36 @@ namespace StockPortfolioApplication
         #region Dividend Transactions
         private List<tblTransactionDividend> GetTransactionsDividends(Equity equity, Account account)
         {
-            List<tblTransactionDividend> resultList = new List<tblTransactionDividend>();
             using (var stocks = new StockPortfolioDBEntities())
             {
                 if (account.ID != -1)
                 {
-                    var result = from trans in stocks.tblTransactionDividends
-                                 join e in stocks.tblEquities on trans.EquityIDFK equals e.EquityID
-                                 join acc in stocks.tblAccounts on trans.AccountIDFK equals acc.AccountID
-                                 where trans.AccountIDFK == account.ID
-                                 where trans.EquityIDFK == equity.ID
-                                 orderby trans.DividendDate, acc.AccountName, e.StockTicker
-                                 select trans;
-                    resultList = result.ToList();
+                    var result = stocks.tblTransactionDividends
+                                .Where(a => a.AccountIDFK == account.ID)
+                                .Where(e => e.EquityIDFK == equity.ID)
+                                .OrderBy(d => d.DividendDate);
+                    
+                    return result.ToList();
                 }
                 else
                 {
-                    var result = from trans in stocks.tblTransactionDividends
-                                 join e in stocks.tblEquities on trans.EquityIDFK equals e.EquityID
-                                 join acc in stocks.tblAccounts on trans.AccountIDFK equals acc.AccountID
-                                 where trans.EquityIDFK == equity.ID
-                                 orderby trans.DividendDate, acc.AccountName, e.StockTicker
-                                 select trans;
-                    resultList = result.ToList();
+                    var result = stocks.tblTransactionDividends
+                                .Where(e => e.EquityIDFK == equity.ID)
+                                .OrderBy(d => d.DividendDate);
+                    
+                    return result.ToList();
                 }
             }
-
-            return resultList;
         }
         #endregion
 
         #region Dividend Calculations
         public decimal DividendCalculations(Equity equity, Account account)
         {
-            // pre: transaction list must be populated
-            // post: equity will be populated with the most difficult aggregate calcs
-            //      - ACB (averageCost)
-            //      - TotalCost - in absolute dollars in the given currency for the specific equity
-            //      - RealizedGain - whenever there is a sale there has to be a profit / loss
-            //      - AverageCost - this is the ACB or Average Cost Basis
+            // pre: 
+            // post: sum of dividends
+            //
+            // possible improvement could be to move this to server side?
 
             List<tblTransactionDividend> transactions = GetTransactionsDividends(equity, account);
             return transactions.Sum(d => (decimal)d.DividendValue);
