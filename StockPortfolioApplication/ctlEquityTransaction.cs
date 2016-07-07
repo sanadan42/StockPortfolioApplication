@@ -23,11 +23,8 @@ namespace StockPortfolioApplication
             InitializeControls();
         }
 
-        private void InitializeControls()
+        private void UpdateLists()
         {
-            dgvEquityTransactions.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            UpdateDG();
-
             using (var stockEntity = new StockPortfolioDBEntities())
             {
 
@@ -70,6 +67,14 @@ namespace StockPortfolioApplication
 
                 lblAccountTo.Visible = false;
             }
+        }
+
+        private void InitializeControls()
+        {
+            dgvEquityTransactions.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            UpdateDG();
+
+            UpdateLists();
         }
 
         public void RefreshData()
@@ -141,7 +146,7 @@ namespace StockPortfolioApplication
                              join tt in stocks.tblTransactionTypes on trans.TransactionTypeIDFK equals tt.TransactionTypeID
                              join equity in stocks.tblEquities on trans.EquityIDFK equals equity.EquityID
                              join acc in stocks.tblAccounts on trans.AccountIDFK equals acc.AccountID
-                             orderby acc.AccountName, equity.StockTicker
+                             orderby trans.TransactionDate descending
                              select new StockTransaction()
                              {
                                  AccountName = acc.AccountName,

@@ -113,7 +113,7 @@
             this.txtExchangeRate.Location = new System.Drawing.Point(568, 50);
             this.txtExchangeRate.Name = "txtExchangeRate";
             this.txtExchangeRate.Size = new System.Drawing.Size(81, 20);
-            this.txtExchangeRate.TabIndex = 82;
+            this.txtExchangeRate.TabIndex = 74;
             // 
             // cmbEquityEquity
             // 

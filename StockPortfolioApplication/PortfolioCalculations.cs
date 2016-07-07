@@ -163,6 +163,7 @@ namespace StockPortfolioApplication
         #endregion
 
         #region Dividend Transactions
+        /*
         private List<tblTransactionDividend> GetTransactionsDividends(Equity equity, Account account)
         {
             using (var stocks = new StockPortfolioDBEntities())
@@ -186,6 +187,7 @@ namespace StockPortfolioApplication
                 }
             }
         }
+        */
         #endregion
 
         #region Dividend Calculations
@@ -196,8 +198,28 @@ namespace StockPortfolioApplication
             //
             // possible improvement could be to move this to server side?
 
-            List<tblTransactionDividend> transactions = GetTransactionsDividends(equity, account);
-            return transactions.Sum(d => (decimal)d.DividendValue);
+            using (var stocks = new StockPortfolioDBEntities())
+            {
+                if (account.ID != -1)
+                {
+                    var result = stocks.tblTransactionDividends
+                                .Where(a => a.AccountIDFK == account.ID)
+                                .Where(e => e.EquityIDFK == equity.ID)
+                                .OrderBy(d => d.DividendDate)
+                                .Sum(v => v.DividendValue);
+
+                    return result == null ? 0.0m : (decimal)result;
+                }
+                else
+                {
+                    var result = stocks.tblTransactionDividends
+                                .Where(e => e.EquityIDFK == equity.ID)
+                                .OrderBy(d => d.DividendDate)
+                                .Sum(v => v.DividendValue);
+
+                    return result == null ? 0.0m : (decimal)result;
+                }
+            }
         }
         #endregion
 
