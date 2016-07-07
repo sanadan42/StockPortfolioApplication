@@ -14,8 +14,6 @@ namespace StockPortfolioApplication
     {
         private Portfolio portfolio;
 
-        
-
         public ctlStockTransaction(Portfolio p)
         {
             this.portfolio = p;
@@ -140,7 +138,7 @@ namespace StockPortfolioApplication
                 {
                     if((int)cmbTransactionEquity.SelectedValue == (int)EquityTransactionTypes.SellStock)
                     {
-                        if ((int)numEquityShares.Value > 0)
+                        if ((decimal)numEquityShares.Value > 0)
                             shareModifier = -1;
                     }
 
@@ -150,7 +148,7 @@ namespace StockPortfolioApplication
                         TransactionTypeIDFK = (int)cmbTransactionEquity.SelectedValue,
                         AccountIDFK = (int)cmbAccountEquity.SelectedValue,
                         EquityIDFK = (int)cmbEquityEquity.SelectedValue,
-                        Shares = shareModifier*(int)numEquityShares.Value,
+                        Shares = shareModifier*(decimal)numEquityShares.Value,
                         Price = decimal.Parse(txtPrice.Text),
                         Commission = decimal.Parse(txtCommission.Text),
                         ExchangeRate = decimal.Parse(txtExchangeRate.Text)

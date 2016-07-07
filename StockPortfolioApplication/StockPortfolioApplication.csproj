@@ -73,6 +73,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Account.cs" />
     <Compile Include="ctlBerkshireEquityView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -91,6 +92,12 @@
     <Compile Include="ctlEquityExchangeCurrency.Designer.cs">
       <DependentUpon>ctlEquityExchangeCurrency.cs</DependentUpon>
     </Compile>
+    <Compile Include="ctlEquityTransaction.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctlEquityTransaction.Designer.cs">
+      <DependentUpon>ctlEquityTransaction.cs</DependentUpon>
+    </Compile>
     <Compile Include="ctlStockTransaction.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -103,7 +110,14 @@
     <Compile Include="ctlTestSums.Designer.cs">
       <DependentUpon>ctlTestSums.cs</DependentUpon>
     </Compile>
+    <Compile Include="ctlTransactions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctlTransactions.Designer.cs">
+      <DependentUpon>ctlTransactions.cs</DependentUpon>
+    </Compile>
     <Compile Include="EnumsAndHelperClasses.cs" />
+    <Compile Include="Equity.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -114,6 +128,7 @@
     <Compile Include="PortfolioCalculations.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SortableBindingList.cs" />
     <Compile Include="StockDatabaseModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -182,11 +197,17 @@
     <EmbeddedResource Include="ctlEquityExchangeCurrency.resx">
       <DependentUpon>ctlEquityExchangeCurrency.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ctlEquityTransaction.resx">
+      <DependentUpon>ctlEquityTransaction.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ctlStockTransaction.resx">
       <DependentUpon>ctlStockTransaction.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ctlTestSums.resx">
       <DependentUpon>ctlTestSums.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ctlTransactions.resx">
+      <DependentUpon>ctlTransactions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

@@ -30,6 +30,7 @@
         <AssociationConnector Association="StockPortfolioDBModel.FK_tblPortfolioHoldings_tblPortfolios" ManuallyRouted="false" />
         <AssociationConnector Association="StockPortfolioDBModel.FK_tblTransactionEquities_tblTransactionTypes" ManuallyRouted="false" />
         <AssociationConnector Association="StockPortfolioDBModel.FK_tblTransactionFinance_tblTransactionTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="StockPortfolioDBModel.FK_tblTransactionFinance_tblCurrencies" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

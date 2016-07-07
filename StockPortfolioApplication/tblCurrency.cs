@@ -19,6 +19,7 @@ namespace StockPortfolioApplication
         {
             this.tblBalances = new HashSet<tblBalance>();
             this.tblStockExchanges = new HashSet<tblStockExchanx>();
+            this.tblTransactionFinances = new HashSet<tblTransactionFinance>();
         }
     
         public int CurrencyID { get; set; }
@@ -29,5 +30,7 @@ namespace StockPortfolioApplication
         public virtual ICollection<tblBalance> tblBalances { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblStockExchanx> tblStockExchanges { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblTransactionFinance> tblTransactionFinances { get; set; }
     }
 }

@@ -139,7 +139,7 @@ namespace StockPortfolioApplication
         private void EquityCalculations(Equity equity, List<tblTransactionEquity> transactions)
         {
             decimal totalCost = 0.0m, averageCost = 0.0m, realizedGain = 0.0m;
-            int shares = 0;
+            decimal shares = 0;
 
             if (!(transactions.Count == 0))
             {
@@ -153,7 +153,7 @@ namespace StockPortfolioApplication
                             break;
                         case ((int)EquityTransactionTypes.SellStock):
                             priceForCalc = averageCost;
-                            realizedGain += -1*(int)t.Shares * ((decimal)t.Price - averageCost) - (decimal)t.Commission; // when we are selling stocks t.shares will be negative, so need to multiply by -1. or... could do aveCost - t.Price... same same
+                            realizedGain += -1*(decimal)t.Shares * ((decimal)t.Price - averageCost) - (decimal)t.Commission; // when we are selling stocks t.shares will be negative, so need to multiply by -1. or... could do aveCost - t.Price... same same
                             break;
                         case ((int)EquityTransactionTypes.TransferBuy):
                         case ((int)EquityTransactionTypes.TransferSell):
@@ -164,9 +164,9 @@ namespace StockPortfolioApplication
                             break;
                     }
 
-                    shares += (int)t.Shares;
-                    totalCost += (int)t.Shares * priceForCalc + (decimal)t.Commission;
-                    averageCost = shares == 0 ? 0.0m : totalCost / shares;
+                    shares += (decimal)t.Shares;
+                    totalCost += (decimal)t.Shares * priceForCalc + (decimal)t.Commission;
+                    averageCost = shares == 0.0m ? 0.0m : totalCost / shares;
                 }
             }
 

@@ -17,6 +17,7 @@ namespace StockPortfolioApplication
         private ctlEquityExchangeCurrency ctlEECAdd;
         private ctlTestSums ctlSums;
         private ctlBerkshireView ctlBerkshire;
+        private ctlTransactions ctlTrans;
         private Portfolio portfolio;
 
         public MainForm()
@@ -50,11 +51,21 @@ namespace StockPortfolioApplication
             this.ctlBerkshire.Location = new System.Drawing.Point(0, 0);
             this.ctlBerkshire.Visible = false;
 
+            // added for testing - trying to get it right
+            //this.ctlEquityTrans = new ctlEquityTransaction(portfolio);
+            //this.ctlEquityTrans.Location = new System.Drawing.Point(0, 0);
+            //this.ctlEquityTrans.Visible = false;
+            this.ctlTrans = new ctlTransactions(portfolio);
+            this.ctlTrans.Location = new System.Drawing.Point(0, 0);
+            this.ctlTrans.Visible = false;
+
             this.pnlDisplay.Controls.Add(this.ctlStockTrans);
             this.pnlDisplay.Controls.Add(this.ctlEquityUpdate);
             this.pnlDisplay.Controls.Add(this.ctlEECAdd);
             this.pnlDisplay.Controls.Add(this.ctlSums);
             this.pnlDisplay.Controls.Add(this.ctlBerkshire);
+            this.pnlDisplay.Controls.Add(this.ctlTrans);
+            //this.pnlDisplay.Controls.Add(this.ctlEquityTrans);
         }
 
         private void btnTransactionEntryDisplay_Click(object sender, EventArgs e)
@@ -109,6 +120,16 @@ namespace StockPortfolioApplication
                 ClearDisplayPanel();
                 this.ctlBerkshire.RefreshData();
                 this.ctlBerkshire.Visible = true;
+            }
+        }
+
+        private void btnTestNewTransaction_Click(object sender, EventArgs e)
+        {
+            if(!this.ctlTrans.Visible)
+            {
+                ClearDisplayPanel();
+                this.ctlTrans.RefreshData();
+                this.ctlTrans.Visible = true;
             }
         }
     }

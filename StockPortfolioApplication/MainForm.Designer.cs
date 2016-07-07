@@ -33,8 +33,9 @@
             this.btnBerkshireTesting = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.btnEECAdd = new System.Windows.Forms.Button();
-            this.btnTransactionEntryDisplay = new System.Windows.Forms.Button();
             this.btnDataGridDisplay = new System.Windows.Forms.Button();
+            this.btnTransactionEntryDisplay = new System.Windows.Forms.Button();
+            this.btnTestNewTransaction = new System.Windows.Forms.Button();
             this.pnlNavigation.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -47,6 +48,7 @@
             // 
             // pnlNavigation
             // 
+            this.pnlNavigation.Controls.Add(this.btnTestNewTransaction);
             this.pnlNavigation.Controls.Add(this.btnBerkshireTesting);
             this.pnlNavigation.Controls.Add(this.button1);
             this.pnlNavigation.Controls.Add(this.btnEECAdd);
@@ -87,6 +89,16 @@
             this.btnEECAdd.UseVisualStyleBackColor = true;
             this.btnEECAdd.Click += new System.EventHandler(this.btnEECAdd_Click);
             // 
+            // btnDataGridDisplay
+            // 
+            this.btnDataGridDisplay.Location = new System.Drawing.Point(15, 112);
+            this.btnDataGridDisplay.Name = "btnDataGridDisplay";
+            this.btnDataGridDisplay.Size = new System.Drawing.Size(149, 40);
+            this.btnDataGridDisplay.TabIndex = 1;
+            this.btnDataGridDisplay.Text = "Equity Update";
+            this.btnDataGridDisplay.UseVisualStyleBackColor = true;
+            this.btnDataGridDisplay.Click += new System.EventHandler(this.btnDataGridDisplay_Click);
+            // 
             // btnTransactionEntryDisplay
             // 
             this.btnTransactionEntryDisplay.Location = new System.Drawing.Point(14, 20);
@@ -97,15 +109,15 @@
             this.btnTransactionEntryDisplay.UseVisualStyleBackColor = true;
             this.btnTransactionEntryDisplay.Click += new System.EventHandler(this.btnTransactionEntryDisplay_Click);
             // 
-            // btnDataGridDisplay
+            // btnTestNewTransaction
             // 
-            this.btnDataGridDisplay.Location = new System.Drawing.Point(15, 112);
-            this.btnDataGridDisplay.Name = "btnDataGridDisplay";
-            this.btnDataGridDisplay.Size = new System.Drawing.Size(149, 40);
-            this.btnDataGridDisplay.TabIndex = 1;
-            this.btnDataGridDisplay.Text = "Equity Update";
-            this.btnDataGridDisplay.UseVisualStyleBackColor = true;
-            this.btnDataGridDisplay.Click += new System.EventHandler(this.btnDataGridDisplay_Click);
+            this.btnTestNewTransaction.Location = new System.Drawing.Point(15, 437);
+            this.btnTestNewTransaction.Name = "btnTestNewTransaction";
+            this.btnTestNewTransaction.Size = new System.Drawing.Size(149, 40);
+            this.btnTestNewTransaction.TabIndex = 5;
+            this.btnTestNewTransaction.Text = "Testing New Transaction";
+            this.btnTestNewTransaction.UseVisualStyleBackColor = true;
+            this.btnTestNewTransaction.Click += new System.EventHandler(this.btnTestNewTransaction_Click);
             // 
             // MainForm
             // 
@@ -130,6 +142,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btnBerkshireTesting;
         private System.Windows.Forms.Button btnDataGridDisplay;
+        private System.Windows.Forms.Button btnTestNewTransaction;
     }
 }
 

@@ -76,17 +76,32 @@ namespace StockPortfolioApplication
             //        dgSumShares.Columns["Ticker"].DefaultCellStyle.Alignment =
             //        dgSumShares.Columns["Shares"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
-            dgSumShares.Columns["Shares"].DefaultCellStyle.Format = "d";
+            dgSumShares.Columns["Shares"].DefaultCellStyle.Format = "N0"; // N0 is for number no decimal places
         }
         
         private void btnGetAccountEquites_Click(object sender, EventArgs e)
         {
             portfolio.RefreshPortfolio();
             int accountID;
-            if (cmbAccount.SelectedIndex >= 0)
+            if (cmbAccount.SelectedIndex > 0)
             {
                 accountID = (int)cmbAccount.SelectedValue;
                 dgSumShares.DataSource = portfolio.GetEquityList(accountID);
+
+                Account account = portfolio.GetAccount(accountID);
+                account.CalculateAccountBalances();
+                Point loc = new System.Drawing.Point(lblBalanceCalc.Location.X, lblBalanceCalc.Location.Y);
+                foreach(BalanceType b in account.GetBalances())
+                {
+                    Label tempLabel = new Label();
+                    tempLabel.AutoSize = true;
+                    tempLabel.Location = loc;
+                    loc.Y += 13;
+                    tempLabel.Text = b.Balance.ToString();
+                    tempLabel.Visible = true;
+                    this.Controls.Add(tempLabel);
+                }
+                
             }
             else
             {
