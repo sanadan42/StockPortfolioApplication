@@ -47,6 +47,7 @@
             this.cmbTransactionSelection.Name = "cmbTransactionSelection";
             this.cmbTransactionSelection.Size = new System.Drawing.Size(141, 21);
             this.cmbTransactionSelection.TabIndex = 1;
+            this.cmbTransactionSelection.SelectedValueChanged += new System.EventHandler(this.cmbTransactionSelection_SelectedValueChanged);
             // 
             // lblTransactionType
             // 
