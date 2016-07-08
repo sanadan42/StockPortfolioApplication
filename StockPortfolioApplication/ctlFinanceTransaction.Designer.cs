@@ -115,6 +115,7 @@
             this.btnFinancialSave.TabIndex = 6;
             this.btnFinancialSave.Text = "Save";
             this.btnFinancialSave.UseVisualStyleBackColor = true;
+            this.btnFinancialSave.Click += new System.EventHandler(this.btnFinancialSave_Click);
             // 
             // dtpFinancialTransaction
             // 
@@ -189,6 +190,7 @@
             this.dgvFinancialTransactions.Name = "dgvFinancialTransactions";
             this.dgvFinancialTransactions.Size = new System.Drawing.Size(921, 475);
             this.dgvFinancialTransactions.TabIndex = 98;
+            this.dgvFinancialTransactions.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvFinancialTransactions_CellFormatting);
             // 
             // ctlFinanceTransaction
             // 

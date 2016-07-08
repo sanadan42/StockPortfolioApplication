@@ -26,6 +26,7 @@ namespace StockPortfolioApplication
         private void InitializeControls()
         {
             InitComboBoxes();
+            UpdateDG();
         }
 
         private void InitComboBoxes()
@@ -49,10 +50,14 @@ namespace StockPortfolioApplication
 
                 // initialize equity combo box
                 cmbFinancialTransaction.DataSource = transactionFinancialTypes;
+                cmbFinancialTransaction.DisplayMember = "TransactionType";
+                cmbFinancialTransaction.ValueMember = "TransactionTypeID";
 
                 // initialize accounts combo box
                 cmbFinancialAccount.DataSource = accountsFinancial;
                 cmbFinancialAccountTo.DataSource = accountsFinancialTo;
+                cmbFinancialAccount.DisplayMember = cmbFinancialAccountTo.DisplayMember = "AccountName";
+                cmbFinancialAccount.ValueMember = cmbFinancialAccountTo.ValueMember = "AccountID";
 
                 // initialize currency combo box
                 cmbFinancialCurrency.DataSource = currencies;
@@ -63,40 +68,23 @@ namespace StockPortfolioApplication
 
         private void UpdateDG()
         {
-            //*************************************************
-            // CHANGE THIS AND THEN UPDATE THE COMMENTS
-            //*************************************************
-            //*************************************************
-            // ALSO, Add the fucking button save stuff in as well.
-            //*************************************************
             sortableTransactionList = new SortableBindingList<FinancialTransactionDisplay>(GetTransactions());
-
             dgvFinancialTransactions.DataSource = sortableTransactionList;
             FormatDataGrid();
-            //ChangeDGColors(); // for now this is eliminated as it looks weird and also doesn't change colors until after the dgv has been displayed, and then refresh makes things "flash"
             dgvFinancialTransactions.Refresh();
-
         }
 
         private void FormatDataGrid()
         {
-            dgvFinancialTransactions.Columns["AccountID"].Visible = false;
-            dgvFinancialTransactions.Columns["EquityID"].Visible = false;
-            dgvFinancialTransactions.Columns["TransactionTypeID"].Visible = false;
-
             dgvFinancialTransactions.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvFinancialTransactions.Columns["Price"].DefaultCellStyle.Format =
-                     dgvFinancialTransactions.Columns["Commission"].DefaultCellStyle.Format = "c";
-
+            dgvFinancialTransactions.Columns["Net"].DefaultCellStyle.Format = "c";
             dgvFinancialTransactions.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             foreach (DataGridViewColumn c in dgvFinancialTransactions.Columns)
             {
                 c.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             }
-
-            dgvFinancialTransactions.Columns["Shares"].DefaultCellStyle.Format = "N0"; // Number, 0 decimal places (N0)
         }
-        
+
         private List<FinancialTransactionDisplay> GetTransactions()
         {
             List<FinancialTransactionDisplay> resultList = new List<FinancialTransactionDisplay>();
@@ -105,7 +93,7 @@ namespace StockPortfolioApplication
                 var result = from ft in stocks.tblTransactionFinances
                              join tt in stocks.tblTransactionTypes on ft.TransactionIDFK equals tt.TransactionTypeID
                              join a in stocks.tblAccounts on ft.AccountIDFK equals a.AccountID
-                             orderby ft.TransactionDate
+                             orderby ft.TransactionDate descending
                              select new FinancialTransactionDisplay()
                              {
                                  TransactionDate = (DateTime)ft.TransactionDate,
@@ -120,6 +108,73 @@ namespace StockPortfolioApplication
             return resultList;
         }
 
+        private void btnFinancialSave_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (var stockEntity = new StockPortfolioDBEntities())
+                {
+                    decimal netFinance = decimal.Parse(txtFincialNet.Text);
+
+                    switch ((int)cmbFinancialTransaction.SelectedValue)
+                    {
+                        case (int)FinancialTransactionTypes.Fees:
+                        case (int)FinancialTransactionTypes.Interest:
+                        case (int)FinancialTransactionTypes.Withdrawal:
+                            if (netFinance > 0)
+                                netFinance *= -1;
+                            break;
+                        default:
+                            break;
+                    }
+
+                    stockEntity.tblTransactionFinances.Add(new tblTransactionFinance
+                    {
+                        TransactionDate = dtpFinancialTransaction.Value,
+                        TransactionIDFK = (int)cmbFinancialTransaction.SelectedValue,
+                        AccountIDFK = (int)cmbFinancialAccount.SelectedValue,
+                        Net = netFinance,
+                        CurrencyIDFK = (int)cmbFinancialCurrency.SelectedValue
+                    });
+                    stockEntity.SaveChanges();
+                }
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.ToString());
+            }
+            finally
+            {
+                InitFinancialTransactions();
+                UpdateDG();
+            }
+        }
+
+        private void InitFinancialTransactions()
+        {
+            cmbFinancialTransaction.SelectedIndex = 0;
+            cmbFinancialAccount.SelectedIndex = cmbFinancialAccountTo.SelectedIndex = 0;
+            cmbFinancialCurrency.SelectedIndex = 0;
+            txtFincialNet.Text = "";
+        }
+
+        private void dgvFinancialTransactions_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (this.dgvFinancialTransactions.Columns[e.ColumnIndex].Name == "Net")
+            {
+                if (e.Value != null)
+                {
+                    if ((decimal)e.Value < 0.0m)
+                    {
+                        this.dgvFinancialTransactions.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.Red;
+                    }
+                    else
+                    {
+                        this.dgvFinancialTransactions.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.Black;
+                    }
+                }
+            }
+        }
     }
 
     public class FinancialTransactionDisplay

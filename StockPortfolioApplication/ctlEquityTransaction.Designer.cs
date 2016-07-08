@@ -261,6 +261,7 @@
             this.dgvEquityTransactions.Name = "dgvEquityTransactions";
             this.dgvEquityTransactions.Size = new System.Drawing.Size(921, 475);
             this.dgvEquityTransactions.TabIndex = 86;
+            this.dgvEquityTransactions.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvEquityTransactions_CellFormatting);
             // 
             // ctlEquityTransaction
             // 

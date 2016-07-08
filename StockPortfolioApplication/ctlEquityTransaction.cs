@@ -141,7 +141,7 @@ namespace StockPortfolioApplication
                              join tt in stocks.tblTransactionTypes on trans.TransactionTypeIDFK equals tt.TransactionTypeID
                              join equity in stocks.tblEquities on trans.EquityIDFK equals equity.EquityID
                              join acc in stocks.tblAccounts on trans.AccountIDFK equals acc.AccountID
-                             orderby acc.AccountName, equity.StockTicker
+                             orderby trans.TransactionDate descending
                              select new StockTransaction()
                              {
                                  AccountName = acc.AccountName,
@@ -221,5 +221,22 @@ namespace StockPortfolioApplication
             }
         }
 
+        private void dgvEquityTransactions_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (this.dgvEquityTransactions.Columns[e.ColumnIndex].Name == "Shares")
+            {
+                if (e.Value != null)
+                {
+                    if ((decimal)e.Value < 0.0m)
+                    {
+                        this.dgvEquityTransactions.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.Red;
+                    }
+                    else
+                    {
+                        this.dgvEquityTransactions.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.Black;
+                    }
+                }
+            }
+        }
     }
 }
