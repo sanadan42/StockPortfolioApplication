@@ -25,6 +25,8 @@ namespace StockPortfolioApplication
         public int TransactionTypeID { get; set; }
     }
 
+    
+
     //public class DividendTransactionDisplay
     //{
     //    public DateTime TransactionDate { get; set; }

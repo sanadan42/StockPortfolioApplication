@@ -42,16 +42,13 @@
             this.lblFinancialDate = new System.Windows.Forms.Label();
             this.lblFincialAccount = new System.Windows.Forms.Label();
             this.lblFinancialTransaction = new System.Windows.Forms.Label();
-            this.dgvEquityTransactions = new System.Windows.Forms.DataGridView();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgvFinancialTransactions = new System.Windows.Forms.DataGridView();
             this.grpFinancialTransactions.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvEquityTransactions)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvFinancialTransactions)).BeginInit();
             this.SuspendLayout();
             // 
             // grpFinancialTransactions
             // 
-            this.grpFinancialTransactions.Controls.Add(this.dgvEquityTransactions);
             this.grpFinancialTransactions.Controls.Add(this.lblFinancialAccountTo);
             this.grpFinancialTransactions.Controls.Add(this.cmbFinancialAccountTo);
             this.grpFinancialTransactions.Controls.Add(this.cmbFinancialCurrency);
@@ -185,34 +182,25 @@
             this.lblFinancialTransaction.TabIndex = 102;
             this.lblFinancialTransaction.Text = "Transaction";
             // 
-            // dgvEquityTransactions
+            // dgvFinancialTransactions
             // 
-            this.dgvEquityTransactions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvEquityTransactions.Location = new System.Drawing.Point(3, 122);
-            this.dgvEquityTransactions.Name = "dgvEquityTransactions";
-            this.dgvEquityTransactions.Size = new System.Drawing.Size(921, 475);
-            this.dgvEquityTransactions.TabIndex = 109;
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(3, 121);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(921, 475);
-            this.dataGridView1.TabIndex = 98;
+            this.dgvFinancialTransactions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvFinancialTransactions.Location = new System.Drawing.Point(3, 121);
+            this.dgvFinancialTransactions.Name = "dgvFinancialTransactions";
+            this.dgvFinancialTransactions.Size = new System.Drawing.Size(921, 475);
+            this.dgvFinancialTransactions.TabIndex = 98;
             // 
             // ctlFinanceTransaction
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dgvFinancialTransactions);
             this.Controls.Add(this.grpFinancialTransactions);
             this.Name = "ctlFinanceTransaction";
             this.Size = new System.Drawing.Size(927, 597);
             this.grpFinancialTransactions.ResumeLayout(false);
             this.grpFinancialTransactions.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvEquityTransactions)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvFinancialTransactions)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -233,7 +221,6 @@
         private System.Windows.Forms.Label lblFinancialDate;
         private System.Windows.Forms.Label lblFincialAccount;
         private System.Windows.Forms.Label lblFinancialTransaction;
-        private System.Windows.Forms.DataGridView dgvEquityTransactions;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvFinancialTransactions;
     }
 }

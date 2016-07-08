@@ -14,7 +14,7 @@ namespace StockPortfolioApplication
     public partial class ctlFinanceTransaction : UserControl
     {
         private Portfolio portfolio;
-        private SortableBindingList<StockTransaction> sortableTransactionList;
+        private SortableBindingList<FinancialTransactionDisplay> sortableTransactionList;
 
         public ctlFinanceTransaction(Portfolio p)
         {
@@ -69,60 +69,50 @@ namespace StockPortfolioApplication
             //*************************************************
             // ALSO, Add the fucking button save stuff in as well.
             //*************************************************
-            sortableTransactionList = new SortableBindingList<StockTransaction>(GetTransactionsEquities());
+            sortableTransactionList = new SortableBindingList<FinancialTransactionDisplay>(GetTransactions());
 
-            dgvEquityTransactions.DataSource = sortableTransactionList;
+            dgvFinancialTransactions.DataSource = sortableTransactionList;
             FormatDataGrid();
             //ChangeDGColors(); // for now this is eliminated as it looks weird and also doesn't change colors until after the dgv has been displayed, and then refresh makes things "flash"
-            dgvEquityTransactions.Refresh();
+            dgvFinancialTransactions.Refresh();
 
         }
 
         private void FormatDataGrid()
         {
-            dgvEquityTransactions.Columns["AccountID"].Visible = false;
-            dgvEquityTransactions.Columns["EquityID"].Visible = false;
-            dgvEquityTransactions.Columns["TransactionTypeID"].Visible = false;
+            dgvFinancialTransactions.Columns["AccountID"].Visible = false;
+            dgvFinancialTransactions.Columns["EquityID"].Visible = false;
+            dgvFinancialTransactions.Columns["TransactionTypeID"].Visible = false;
 
-            dgvEquityTransactions.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvEquityTransactions.Columns["Price"].DefaultCellStyle.Format =
-                     dgvEquityTransactions.Columns["Commission"].DefaultCellStyle.Format = "c";
+            dgvFinancialTransactions.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvFinancialTransactions.Columns["Price"].DefaultCellStyle.Format =
+                     dgvFinancialTransactions.Columns["Commission"].DefaultCellStyle.Format = "c";
 
-            dgvEquityTransactions.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            foreach (DataGridViewColumn c in dgvEquityTransactions.Columns)
+            dgvFinancialTransactions.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            foreach (DataGridViewColumn c in dgvFinancialTransactions.Columns)
             {
                 c.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             }
 
-            dgvEquityTransactions.Columns["Shares"].DefaultCellStyle.Format = "N0"; // Number, 0 decimal places (N0)
+            dgvFinancialTransactions.Columns["Shares"].DefaultCellStyle.Format = "N0"; // Number, 0 decimal places (N0)
         }
-
-        //*************************************************
-        // CHANGE THIS AND THEN UPDATE THE COMMENTS
-        //*************************************************
-        private List<StockTransaction> GetTransactionsEquities()
+        
+        private List<FinancialTransactionDisplay> GetTransactions()
         {
-            List<StockTransaction> resultList = new List<StockTransaction>();
+            List<FinancialTransactionDisplay> resultList = new List<FinancialTransactionDisplay>();
             using (var stocks = new StockPortfolioDBEntities())
             {
-                var result = from trans in stocks.tblTransactionEquities
-                             join tt in stocks.tblTransactionTypes on trans.TransactionTypeIDFK equals tt.TransactionTypeID
-                             join equity in stocks.tblEquities on trans.EquityIDFK equals equity.EquityID
-                             join acc in stocks.tblAccounts on trans.AccountIDFK equals acc.AccountID
-                             orderby acc.AccountName, equity.StockTicker
-                             select new StockTransaction()
+                var result = from ft in stocks.tblTransactionFinances
+                             join tt in stocks.tblTransactionTypes on ft.TransactionIDFK equals tt.TransactionTypeID
+                             join a in stocks.tblAccounts on ft.AccountIDFK equals a.AccountID
+                             orderby ft.TransactionDate
+                             select new FinancialTransactionDisplay()
                              {
-                                 AccountName = acc.AccountName,
-                                 StockTicker = equity.StockTicker,
-                                 StockDescription = equity.Description,
+                                 TransactionDate = (DateTime)ft.TransactionDate,
+                                 AccountName = a.AccountName,
                                  TransactionType = tt.TransactionType,
-                                 TransactionDate = (DateTime)trans.TransactionDate,
-                                 Shares = (decimal)trans.Shares,
-                                 Price = (decimal)trans.Price,
-                                 Commission = (decimal)trans.Commission,
-                                 AccountID = (int)trans.AccountIDFK,
-                                 EquityID = (int)trans.EquityIDFK,
-                                 TransactionTypeID = (int)trans.TransactionTypeIDFK
+                                 Net = (decimal)ft.Net,
+                                 Currency = ft.tblCurrency.CurrencyType
                              };
 
                 resultList = result.ToList();
@@ -130,5 +120,20 @@ namespace StockPortfolioApplication
             return resultList;
         }
 
+    }
+
+    public class FinancialTransactionDisplay
+    {
+        public DateTime TransactionDate { get; set; }
+        public string AccountName { get; set; }
+        public string TransactionType { get; set; }
+        public decimal Net { get; set; }
+        public string Currency { get; set; }
+    }
+
+    public class FinancialTransaction : StockTransactionDisplay
+    {
+        public int AccountID { get; set; }
+        public int TransactionTypeID { get; set; }
     }
 }

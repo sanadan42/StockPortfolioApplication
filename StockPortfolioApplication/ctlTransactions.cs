@@ -13,6 +13,7 @@ namespace StockPortfolioApplication
     public partial class ctlTransactions : UserControl
     {
         private ctlEquityTransaction ctlEquityTrans;
+        private ctlFinanceTransaction ctlFinancialTrans;
         private Portfolio portfolio;
 
         public ctlTransactions(Portfolio p)
@@ -27,9 +28,14 @@ namespace StockPortfolioApplication
         {
             this.ctlEquityTrans = new ctlEquityTransaction(portfolio);
             this.ctlEquityTrans.Location = new System.Drawing.Point(0, 0);
-            this.ctlEquityTrans.Visible = true;
+            this.ctlEquityTrans.Visible = false;
+
+            this.ctlFinancialTrans = new ctlFinanceTransaction(portfolio);
+            this.ctlFinancialTrans.Location = new System.Drawing.Point(0, 0);
+            this.ctlFinancialTrans.Visible = false;
 
             this.pnlTransactionDisplay.Controls.Add(ctlEquityTrans);
+            this.pnlTransactionDisplay.Controls.Add(ctlFinancialTrans);
         }
 
         public void RefreshData()
