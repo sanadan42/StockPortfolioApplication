@@ -52,21 +52,22 @@ namespace StockPortfolioApplication
                 currencies.Insert(0, new tblCurrency());
 
                 // initialize equity combo box
-                cmbTransactionEquity.DataSource = transactionEquityTypes;
                 cmbTransactionEquity.DisplayMember = "TransactionType";
                 cmbTransactionEquity.ValueMember = "TransactionTypeID";
+                cmbTransactionEquity.DataSource = transactionEquityTypes;
+                
 
                 // initialize accounts combo box
                 cmbAccountEquity.DataSource = accountsEquity;
-                cmbAccountTo.DataSource = accountsEquityTo;
                 cmbAccountEquity.DisplayMember = cmbAccountTo.DisplayMember = "AccountName";
                 cmbAccountEquity.ValueMember = cmbAccountTo.ValueMember = "AccountID";
+                cmbAccountTo.DataSource = accountsEquityTo;
                 cmbAccountTo.Visible = false;
 
                 // initialize Equity combo box
-                cmbEquityEquity.DataSource = equities;
                 cmbEquityEquity.DisplayMember = "StockTicker";
                 cmbEquityEquity.ValueMember = "EquityID";
+                cmbEquityEquity.DataSource = equities;
 
                 lblAccountTo.Visible = false;
             }
@@ -83,9 +84,7 @@ namespace StockPortfolioApplication
 
             dgvEquityTransactions.DataSource = sortableTransactionList;
             FormatDataGrid();
-            //ChangeDGColors(); // for now this is eliminated as it looks weird and also doesn't change colors until after the dgv has been displayed, and then refresh makes things "flash"
             dgvEquityTransactions.Refresh();
-            
         }
 
         private void FormatDataGrid()
@@ -175,8 +174,8 @@ namespace StockPortfolioApplication
 
         private void cmbTransactionEquity_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // instead of strings these should probably be values that correspond to the selected value that is returned
-            bool accountToStatus = cmbTransactionEquity.Text == "TRF-B" || cmbTransactionEquity.Text == "TRF-S";
+            //bool accountToStatus = cmbTransactionEquity.Text == "TRF-B" || cmbTransactionEquity.Text == "TRF-S";
+            bool accountToStatus = (int)cmbTransactionEquity.SelectedValue == (int)EquityTransactionTypes.TransferBuy || (int)cmbTransactionEquity.SelectedValue == (int)EquityTransactionTypes.TransferSell;
             lblAccountTo.Visible = accountToStatus;
             cmbAccountTo.Visible = accountToStatus;
         }
@@ -216,7 +215,7 @@ namespace StockPortfolioApplication
             finally
             {
                 InitEquityTransactions();
-                //portfolio.RefreshPortfolio();
+                portfolio.RefreshPortfolio();
                 UpdateDG();
             }
         }

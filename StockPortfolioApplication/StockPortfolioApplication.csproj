@@ -86,6 +86,12 @@
     <Compile Include="ctlBerkshireView.Designer.cs">
       <DependentUpon>ctlBerkshireView.cs</DependentUpon>
     </Compile>
+    <Compile Include="ctlDividendTransaction.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctlDividendTransaction.Designer.cs">
+      <DependentUpon>ctlDividendTransaction.cs</DependentUpon>
+    </Compile>
     <Compile Include="ctlEquityExchangeCurrency.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -199,6 +205,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ctlBerkshireView.resx">
       <DependentUpon>ctlBerkshireView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ctlDividendTransaction.resx">
+      <DependentUpon>ctlDividendTransaction.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ctlEquityExchangeCurrency.resx">
       <DependentUpon>ctlEquityExchangeCurrency.cs</DependentUpon>
