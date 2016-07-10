@@ -146,6 +146,7 @@ namespace StockPortfolioApplication
             finally
             {
                 InitFinancialTransactions();
+                portfolio.RefreshPortfolio();
                 UpdateDG();
             }
         }

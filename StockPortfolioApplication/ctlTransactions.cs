@@ -10,10 +10,18 @@ using System.Windows.Forms;
 
 namespace StockPortfolioApplication
 {
+    public enum TransactionListEnum
+    {
+        Nothing = 0,
+        Equity = 1,
+        Dividend = 2,
+        Finance = 3
+    }
     public partial class ctlTransactions : UserControl
     {
         private ctlEquityTransaction ctlEquityTrans;
         private ctlFinanceTransaction ctlFinancialTrans;
+        private ctlDividendTransaction ctlDividendTrans;
         private Portfolio portfolio;
 
         public ctlTransactions(Portfolio p)
@@ -28,8 +36,9 @@ namespace StockPortfolioApplication
         {
             List<TransactionListSelection> transactionList = new List<TransactionListSelection>();
             transactionList.Add(new TransactionListSelection("", 0));
-            transactionList.Add(new TransactionListSelection("Equity Transactions", 1));
-            transactionList.Add(new TransactionListSelection("Finance Transactions", 2));
+            transactionList.Add(new TransactionListSelection("Equity Transactions", (int)TransactionListEnum.Equity));
+            transactionList.Add(new TransactionListSelection("Dividend Transactions", (int)TransactionListEnum.Dividend));
+            transactionList.Add(new TransactionListSelection("Finance Transactions", (int)TransactionListEnum.Finance));
             this.cmbTransactionSelection.DisplayMember = "Transaction";
             this.cmbTransactionSelection.ValueMember = "Value";
             this.cmbTransactionSelection.DataSource = transactionList;
@@ -43,8 +52,13 @@ namespace StockPortfolioApplication
             this.ctlFinancialTrans.Location = new System.Drawing.Point(0, 0);
             this.ctlFinancialTrans.Visible = false;
 
+            this.ctlDividendTrans = new ctlDividendTransaction(portfolio);
+            this.ctlDividendTrans.Location = new System.Drawing.Point(0, 0);
+            this.ctlDividendTrans.Visible = false;
+
             this.pnlTransactionDisplay.Controls.Add(ctlEquityTrans);
             this.pnlTransactionDisplay.Controls.Add(ctlFinancialTrans);
+            this.pnlTransactionDisplay.Controls.Add(ctlDividendTrans);
         }
 
         public void RefreshData()
@@ -66,17 +80,24 @@ namespace StockPortfolioApplication
             {
                 switch ((int)cmbTransactionSelection.SelectedValue)
                 {
-                    case 0:
+                    case (int)TransactionListEnum.Nothing:
                         ClearPanel();
                         break;
-                    case 1:
+                    case (int)TransactionListEnum.Equity:
                         if (!ctlEquityTrans.Visible)
                         {
                             ClearPanel();
                             ctlEquityTrans.Visible = true;
                         }
                         break;
-                    case 2:
+                    case (int)TransactionListEnum.Dividend:
+                        if (!ctlDividendTrans.Visible)
+                        {
+                            ClearPanel();
+                            ctlDividendTrans.Visible = true;
+                        }
+                        break;
+                    case (int)TransactionListEnum.Finance:
                         if (!ctlFinancialTrans.Visible)
                         {
                             ClearPanel();
