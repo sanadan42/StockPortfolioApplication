@@ -106,5 +106,10 @@ namespace StockPortfolioApplication
             }
             
         }
+
+        public List<Account> GetAccounts()
+        {
+            return this.accounts;
+        }
     }
 }

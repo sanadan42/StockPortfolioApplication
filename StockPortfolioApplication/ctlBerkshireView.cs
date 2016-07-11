@@ -15,6 +15,7 @@ namespace StockPortfolioApplication
     {
         private Portfolio portfolio;
         private List<ctlBerkshireEquityView> equityViewList;
+        private ctlAccountBalances accountDisplay;
 
         private int lineOffset, totalsOffset;
 
@@ -36,6 +37,10 @@ namespace StockPortfolioApplication
         private void Init()
         {
             InitializeComponent();
+            // temporay - for testing purposes only at the moment.
+            accountDisplay = new ctlAccountBalances(portfolio);
+            accountDisplay.Location = new Point(0, 450);
+            this.Controls.Add(accountDisplay);
             Refresh();
         }
 
