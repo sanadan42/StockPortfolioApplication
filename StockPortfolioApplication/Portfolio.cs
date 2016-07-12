@@ -111,5 +111,24 @@ namespace StockPortfolioApplication
         {
             return this.accounts;
         }
+
+        public List<BalanceType> GetCurrencyTypes()
+        {
+            using (var db = new StockPortfolioDBEntities())
+            {
+                var currencies = db.tblCurrencies
+                        .Select(c =>new BalanceType()
+                        {
+                            Currency = c.CurrencyType,
+                            CurrencyID = (int)c.CurrencyID
+                        })
+                        .OrderBy(c => c.Currency) 
+                        .ToList();
+
+                return currencies;
+            }
+        }
+
+
     }
 }

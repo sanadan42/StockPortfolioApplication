@@ -3,14 +3,48 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace StockPortfolioApplication
 {
+    public enum CurrencyTypes
+    {
+        YEN = 1,
+        USD = 2,
+        CAD = 3,
+        GBP = 4
+    }
+
     public class BalanceType
     {
         public decimal Balance { get; set; }
         public string Currency { get; set; }
         public int CurrencyID { get; set; }
+
+        public CultureInfo GetCultureInfo()
+        {
+            CultureInfo currentCulture;
+            switch(CurrencyID)
+            {
+                case (int)CurrencyTypes.CAD:
+                    currentCulture = CultureInfo.CreateSpecificCulture("en-CA");
+                    break;
+                case (int)CurrencyTypes.USD:
+                    currentCulture = CultureInfo.CreateSpecificCulture("en-US");
+                    break;
+                case (int)CurrencyTypes.GBP:
+                    currentCulture = CultureInfo.CreateSpecificCulture("en-GB");
+                    break;
+                case (int)CurrencyTypes.YEN:
+                    currentCulture = CultureInfo.CreateSpecificCulture("ja-JP");
+                    break;
+                default:
+                    currentCulture = CultureInfo.CreateSpecificCulture("en-CA");
+                    break;
+            }
+            currentCulture.NumberFormat.CurrencyNegativePattern = 0;
+            return currentCulture;
+        }
     }
 
     public class Account
@@ -93,7 +127,7 @@ namespace StockPortfolioApplication
                 {
                     int currencyType = (int)t.tblEquity.tblStockExchanx.tblCurrency.CurrencyID;
                     // check to see if the balance for the given currency exists within the list
-                    BalanceType balance = GetBalance(currencyType);
+                    BalanceType balance = GetOrCreateBalance(currencyType);
                     balance.Balance -= (decimal)t.Shares * (decimal)t.Price + (decimal)t.Commission;
                 }
                 
@@ -101,7 +135,7 @@ namespace StockPortfolioApplication
                 foreach (var f in resultFinance)
                 {
                     int currencyType = (int)f.CurrencyIDFK;
-                    BalanceType balance = GetBalance(currencyType);
+                    BalanceType balance = GetOrCreateBalance(currencyType);
                     balance.Balance += (decimal)f.Net;
                 }
 
@@ -109,13 +143,28 @@ namespace StockPortfolioApplication
                 foreach (var d in resultDividend)
                 {
                     int currencyType = (int)d.tblEquity.tblStockExchanx.tblCurrency.CurrencyID;
-                    BalanceType balance = GetBalance(currencyType);
+                    BalanceType balance = GetOrCreateBalance(currencyType);
+                    if(balance == null)
+                        AddBalance(currencyType);
                     balance.Balance += (decimal)d.DividendValue;
                 }
             }
         }
 
-        private BalanceType GetBalance(int currency)
+        private BalanceType GetOrCreateBalance(int currency)
+        {
+            BalanceType balance = GetBalance(currency);
+            if(balance != null)
+            {
+                return balance;
+            }
+            else
+            {
+                return AddBalance(currency);
+            }
+        }
+
+        public BalanceType GetBalance(int currency)
         {
             // check to see if the currency type already exists, and if not then add it
             if (this.balances.Exists(b => b.CurrencyID == currency))
@@ -124,7 +173,7 @@ namespace StockPortfolioApplication
             }
             else
             {
-                return AddBalance(currency);
+                return null;
             }
         }
 

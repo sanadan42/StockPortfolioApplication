@@ -93,7 +93,6 @@ namespace StockPortfolioApplication
             dgvEquityTransactions.Columns["EquityID"].Visible = false;
             dgvEquityTransactions.Columns["TransactionTypeID"].Visible = false;
 
-            dgvEquityTransactions.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvEquityTransactions.Columns["Price"].DefaultCellStyle.Format =
                      dgvEquityTransactions.Columns["Commission"].DefaultCellStyle.Format = "c";
 
@@ -104,6 +103,8 @@ namespace StockPortfolioApplication
             }
 
             dgvEquityTransactions.Columns["Shares"].DefaultCellStyle.Format = "N0"; // Number, 0 decimal places (N0)
+            //dgvEquityTransactions.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvEquityTransactions.AutoResizeColumns();
         }
 
         private void ChangeDGColors()
