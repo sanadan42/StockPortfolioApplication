@@ -37,10 +37,11 @@ namespace StockPortfolioApplication
         private void Init()
         {
             InitializeComponent();
-            // temporay - for testing purposes only at the moment.
+            // temporary - for testing purposes only at the moment.
             accountDisplay = new ctlAccountBalances(portfolio);
             accountDisplay.Location = new Point(0, 450);
             this.Controls.Add(accountDisplay);
+
             Refresh();
         }
 
@@ -64,6 +65,7 @@ namespace StockPortfolioApplication
             pnlBerkshireEquityView.Size = new Size(pnlBerkshireEquityView.Width, this.equityViewList[this.equityViewList.Count - 1].Bottom);
             // display all totals
             CreateTotals(portfolio.GetAccountSummary());
+            accountDisplay.RefreshData();
         }
 
         private void SetEquitiesVisible()

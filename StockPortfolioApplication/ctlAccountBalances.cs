@@ -22,11 +22,12 @@ namespace StockPortfolioApplication
             this.displayList = new List<Label>();
             this.portfolio = p;
             InitializeComponent();
-            DisplaydisplayList();
+            DisplayAccountBalances();
         }
 
-        private void DisplaydisplayList()
+        private void DisplayAccountBalances()
         {
+            this.displayList = new List<Label>();
             InitAccountNameLabels(3, OFFSET_Y * 2);
             int x = 0;
             foreach(Label l in displayList)
@@ -93,7 +94,10 @@ namespace StockPortfolioApplication
             int y = yInit;
             foreach (Account a in portfolio.GetAccounts())
             {
+                // calculate all account balances
                 a.CalculateAccountBalances();
+
+                // display the account balances
                 int x = xInit;
                 foreach (BalanceType b in portfolio.GetCurrencyTypes())
                 {
@@ -111,6 +115,11 @@ namespace StockPortfolioApplication
                 }
                 y += OFFSET_Y;
             }
+        }
+
+        public void RefreshData()
+        {
+            DisplayAccountBalances();
         }
     }
 

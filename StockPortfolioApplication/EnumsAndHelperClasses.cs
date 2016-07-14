@@ -13,7 +13,8 @@ namespace StockPortfolioApplication
         WithdrawalStock = 3, // never used - should I delete this?
         DepositStock = 4, // never used - should I delete this?
         TransferBuy = 5,
-        TransferSell = 6
+        TransferSell = 6,
+        Dividend = 14
     }
 
     enum FinancialTransactionTypes

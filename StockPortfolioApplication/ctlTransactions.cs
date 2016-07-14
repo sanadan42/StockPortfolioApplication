@@ -87,6 +87,7 @@ namespace StockPortfolioApplication
                         if (!ctlEquityTrans.Visible)
                         {
                             ClearPanel();
+                            ctlEquityTrans.RefreshData();
                             ctlEquityTrans.Visible = true;
                         }
                         break;
@@ -94,6 +95,7 @@ namespace StockPortfolioApplication
                         if (!ctlDividendTrans.Visible)
                         {
                             ClearPanel();
+                            ctlDividendTrans.RefreshData();
                             ctlDividendTrans.Visible = true;
                         }
                         break;
@@ -101,6 +103,7 @@ namespace StockPortfolioApplication
                         if (!ctlFinancialTrans.Visible)
                         {
                             ClearPanel();
+                            ctlFinancialTrans.RefreshData();
                             ctlFinancialTrans.Visible = true;
                         }
                         break;
