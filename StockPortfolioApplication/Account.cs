@@ -123,7 +123,6 @@ namespace StockPortfolioApplication
 
         private IQueryable<TransactionsForCalculations> GetAllTransactionsForCalculations(StockPortfolioDBEntities stocks)
         {
-            
             var resultFinance = stocks.tblTransactionFinances
                                         .Where(f => f.AccountIDFK == this.ID)
                                         .Select(ft => new TransactionsForCalculations()
@@ -203,13 +202,14 @@ namespace StockPortfolioApplication
             {
             
                 var allResults = GetAllTransactionsForCalculations(stocks);
-                foreach (var r in allResults)
+                foreach(var v in allResults.Select(c => c.CurrencyID).Distinct())
                 {
-                    int currencyType = (int)r.CurrencyID;
+                    int currencyType = (int)v;
                     BalanceType balance = GetOrCreateBalance(currencyType);
-                    if (balance == null)
-                        AddBalance(currencyType);
-                    balance.Balance += (decimal)r.Net;
+                }
+                foreach (var b in this.balances)
+                {
+                    b.Balance = (decimal)allResults.Where(c => c.CurrencyID == b.CurrencyID).Sum(n => n.Net);
                 }
             }
 

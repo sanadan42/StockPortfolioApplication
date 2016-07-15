@@ -22,7 +22,6 @@ namespace StockPortfolioApplication
             this.displayList = new List<Label>();
             this.portfolio = p;
             InitializeComponent();
-            DisplayAccountBalances();
         }
 
         private void DisplayAccountBalances()
