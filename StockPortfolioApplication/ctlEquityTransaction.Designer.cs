@@ -77,7 +77,7 @@
             this.grpTransactionEquities.Controls.Add(this.lblEquityEquity);
             this.grpTransactionEquities.Location = new System.Drawing.Point(0, 0);
             this.grpTransactionEquities.Name = "grpTransactionEquities";
-            this.grpTransactionEquities.Size = new System.Drawing.Size(750, 109);
+            this.grpTransactionEquities.Size = new System.Drawing.Size(781, 109);
             this.grpTransactionEquities.TabIndex = 85;
             this.grpTransactionEquities.TabStop = false;
             this.grpTransactionEquities.Text = "Equity Transactions";
@@ -87,14 +87,14 @@
             this.cmbTransactionEquity.FormattingEnabled = true;
             this.cmbTransactionEquity.Location = new System.Drawing.Point(141, 50);
             this.cmbTransactionEquity.Name = "cmbTransactionEquity";
-            this.cmbTransactionEquity.Size = new System.Drawing.Size(70, 21);
+            this.cmbTransactionEquity.Size = new System.Drawing.Size(90, 21);
             this.cmbTransactionEquity.TabIndex = 67;
             this.cmbTransactionEquity.SelectedIndexChanged += new System.EventHandler(this.cmbTransactionEquity_SelectedIndexChanged);
             // 
             // lblExchangeRate
             // 
             this.lblExchangeRate.AutoSize = true;
-            this.lblExchangeRate.Location = new System.Drawing.Point(568, 32);
+            this.lblExchangeRate.Location = new System.Drawing.Point(607, 32);
             this.lblExchangeRate.Name = "lblExchangeRate";
             this.lblExchangeRate.Size = new System.Drawing.Size(81, 13);
             this.lblExchangeRate.TabIndex = 83;
@@ -103,14 +103,14 @@
             // cmbAccountEquity
             // 
             this.cmbAccountEquity.FormattingEnabled = true;
-            this.cmbAccountEquity.Location = new System.Drawing.Point(217, 50);
+            this.cmbAccountEquity.Location = new System.Drawing.Point(237, 50);
             this.cmbAccountEquity.Name = "cmbAccountEquity";
-            this.cmbAccountEquity.Size = new System.Drawing.Size(70, 21);
+            this.cmbAccountEquity.Size = new System.Drawing.Size(90, 21);
             this.cmbAccountEquity.TabIndex = 65;
             // 
             // txtExchangeRate
             // 
-            this.txtExchangeRate.Location = new System.Drawing.Point(568, 50);
+            this.txtExchangeRate.Location = new System.Drawing.Point(607, 50);
             this.txtExchangeRate.Name = "txtExchangeRate";
             this.txtExchangeRate.Size = new System.Drawing.Size(81, 20);
             this.txtExchangeRate.TabIndex = 82;
@@ -118,7 +118,7 @@
             // cmbEquityEquity
             // 
             this.cmbEquityEquity.FormattingEnabled = true;
-            this.cmbEquityEquity.Location = new System.Drawing.Point(293, 50);
+            this.cmbEquityEquity.Location = new System.Drawing.Point(332, 50);
             this.cmbEquityEquity.Name = "cmbEquityEquity";
             this.cmbEquityEquity.Size = new System.Drawing.Size(70, 21);
             this.cmbEquityEquity.TabIndex = 66;
@@ -135,7 +135,7 @@
             // lblShares
             // 
             this.lblShares.AutoSize = true;
-            this.lblShares.Location = new System.Drawing.Point(377, 31);
+            this.lblShares.Location = new System.Drawing.Point(416, 31);
             this.lblShares.Name = "lblShares";
             this.lblShares.Size = new System.Drawing.Size(40, 13);
             this.lblShares.TabIndex = 68;
@@ -151,7 +151,7 @@
             // lblPrice
             // 
             this.lblPrice.AutoSize = true;
-            this.lblPrice.Location = new System.Drawing.Point(450, 31);
+            this.lblPrice.Location = new System.Drawing.Point(489, 31);
             this.lblPrice.Name = "lblPrice";
             this.lblPrice.Size = new System.Drawing.Size(31, 13);
             this.lblPrice.TabIndex = 69;
@@ -159,7 +159,7 @@
             // 
             // btnTransactionSave
             // 
-            this.btnTransactionSave.Location = new System.Drawing.Point(655, 50);
+            this.btnTransactionSave.Location = new System.Drawing.Point(694, 50);
             this.btnTransactionSave.Name = "btnTransactionSave";
             this.btnTransactionSave.Size = new System.Drawing.Size(79, 21);
             this.btnTransactionSave.TabIndex = 79;
@@ -170,7 +170,7 @@
             // lblCommission
             // 
             this.lblCommission.AutoSize = true;
-            this.lblCommission.Location = new System.Drawing.Point(501, 31);
+            this.lblCommission.Location = new System.Drawing.Point(540, 31);
             this.lblCommission.Name = "lblCommission";
             this.lblCommission.Size = new System.Drawing.Size(62, 13);
             this.lblCommission.TabIndex = 70;
@@ -179,7 +179,7 @@
             // lblAccountTo
             // 
             this.lblAccountTo.AutoSize = true;
-            this.lblAccountTo.Location = new System.Drawing.Point(191, 78);
+            this.lblAccountTo.Location = new System.Drawing.Point(208, 78);
             this.lblAccountTo.Name = "lblAccountTo";
             this.lblAccountTo.Size = new System.Drawing.Size(20, 13);
             this.lblAccountTo.TabIndex = 78;
@@ -194,7 +194,7 @@
             0,
             0,
             0});
-            this.numEquityShares.Location = new System.Drawing.Point(372, 50);
+            this.numEquityShares.Location = new System.Drawing.Point(411, 50);
             this.numEquityShares.Maximum = new decimal(new int[] {
             1000000,
             0,
@@ -207,15 +207,15 @@
             // cmbAccountTo
             // 
             this.cmbAccountTo.FormattingEnabled = true;
-            this.cmbAccountTo.Location = new System.Drawing.Point(217, 75);
+            this.cmbAccountTo.Location = new System.Drawing.Point(237, 75);
             this.cmbAccountTo.Name = "cmbAccountTo";
-            this.cmbAccountTo.Size = new System.Drawing.Size(70, 21);
+            this.cmbAccountTo.Size = new System.Drawing.Size(90, 21);
             this.cmbAccountTo.TabIndex = 77;
             this.cmbAccountTo.Visible = false;
             // 
             // txtPrice
             // 
-            this.txtPrice.Location = new System.Drawing.Point(434, 50);
+            this.txtPrice.Location = new System.Drawing.Point(473, 50);
             this.txtPrice.Name = "txtPrice";
             this.txtPrice.Size = new System.Drawing.Size(59, 20);
             this.txtPrice.TabIndex = 72;
@@ -223,7 +223,7 @@
             // lblEquityTransaction
             // 
             this.lblEquityTransaction.AutoSize = true;
-            this.lblEquityTransaction.Location = new System.Drawing.Point(145, 31);
+            this.lblEquityTransaction.Location = new System.Drawing.Point(155, 31);
             this.lblEquityTransaction.Name = "lblEquityTransaction";
             this.lblEquityTransaction.Size = new System.Drawing.Size(63, 13);
             this.lblEquityTransaction.TabIndex = 76;
@@ -231,7 +231,7 @@
             // 
             // txtCommission
             // 
-            this.txtCommission.Location = new System.Drawing.Point(503, 50);
+            this.txtCommission.Location = new System.Drawing.Point(542, 50);
             this.txtCommission.Name = "txtCommission";
             this.txtCommission.Size = new System.Drawing.Size(59, 20);
             this.txtCommission.TabIndex = 73;
@@ -239,7 +239,7 @@
             // lblEquityAccount
             // 
             this.lblEquityAccount.AutoSize = true;
-            this.lblEquityAccount.Location = new System.Drawing.Point(231, 31);
+            this.lblEquityAccount.Location = new System.Drawing.Point(259, 31);
             this.lblEquityAccount.Name = "lblEquityAccount";
             this.lblEquityAccount.Size = new System.Drawing.Size(47, 13);
             this.lblEquityAccount.TabIndex = 75;
@@ -248,7 +248,7 @@
             // lblEquityEquity
             // 
             this.lblEquityEquity.AutoSize = true;
-            this.lblEquityEquity.Location = new System.Drawing.Point(306, 31);
+            this.lblEquityEquity.Location = new System.Drawing.Point(345, 31);
             this.lblEquityEquity.Name = "lblEquityEquity";
             this.lblEquityEquity.Size = new System.Drawing.Size(36, 13);
             this.lblEquityEquity.TabIndex = 74;
