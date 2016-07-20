@@ -11,6 +11,12 @@ using Library.Forms;
 
 namespace StockPortfolioApplication
 {
+    public enum DividendTransactionListEnum
+    {
+        Dividend = 1,
+        DRIP = 2
+    }
+
     public partial class ctlDividendTransaction : UserControl
     {
         private Portfolio portfolio;
@@ -31,6 +37,13 @@ namespace StockPortfolioApplication
 
         private void InitComboBoxes()
         {
+            List<StringListSelection> transactionList = new List<StringListSelection>();
+            transactionList.Add(new StringListSelection("Dividend", (int)DividendTransactionListEnum.Dividend));
+            transactionList.Add(new StringListSelection("Drip", (int)DividendTransactionListEnum.DRIP));
+            this.cmbTransactionSelection.DisplayMember = "Transaction";
+            this.cmbTransactionSelection.ValueMember = "Value";
+            this.cmbTransactionSelection.DataSource = transactionList;
+
             using (var db = new StockPortfolioDBEntities())
             {
                 var accountsDividend = db.tblAccounts.OrderBy(a => a.AccountName).ToList();
@@ -102,7 +115,7 @@ namespace StockPortfolioApplication
         {
             cmbDividendEquity.SelectedIndex = 0;
             cmbDividendAccount.SelectedIndex = 0;
-            txtDividend.Text = "";
+            txtDividend.Text = txtPrice.Text = "";
         }
 
         private void btnDividendSave_Click(object sender, EventArgs e)
@@ -111,13 +124,11 @@ namespace StockPortfolioApplication
             {
                 using (var stockEntity = new StockPortfolioDBEntities())
                 {
-                    stockEntity.tblTransactionDividends.Add(new tblTransactionDividend
+                    WriteDividend(stockEntity);
+                    if ((int)cmbTransactionSelection.SelectedValue == (int)DividendTransactionListEnum.DRIP)
                     {
-                        DividendDate = dtpDividend.Value,
-                        EquityIDFK = (int)cmbDividendEquity.SelectedValue,
-                        AccountIDFK = (int)cmbDividendAccount.SelectedValue,
-                        DividendValue = decimal.Parse(txtDividend.Text)
-                    });
+                        WriteEquity(stockEntity);
+                    }
                     stockEntity.SaveChanges();
                 }
             }
@@ -131,6 +142,37 @@ namespace StockPortfolioApplication
                 portfolio.RefreshPortfolio();
                 UpdateDG();
             }
+        }
+
+        private void cmbTransactionSelection_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            lblPrice.Visible = txtPrice.Visible = ((int)cmbTransactionSelection.SelectedValue == (int)DividendTransactionListEnum.DRIP);
+        }
+
+        void WriteDividend(StockPortfolioDBEntities stockEntity)
+        {
+            stockEntity.tblTransactionDividends.Add(new tblTransactionDividend
+            {
+                DividendDate = dtpDividend.Value,
+                EquityIDFK = (int)cmbDividendEquity.SelectedValue,
+                AccountIDFK = (int)cmbDividendAccount.SelectedValue,
+                DividendValue = decimal.Parse(txtDividend.Text)
+            });
+    }
+
+        void WriteEquity(StockPortfolioDBEntities stockEntity)
+        {
+            stockEntity.tblTransactionEquities.Add(new tblTransactionEquity
+            {
+                TransactionDate = dtpDividend.Value,
+                TransactionTypeIDFK = (int)EquityTransactionTypes.DRIP,
+                AccountIDFK = (int)cmbDividendAccount.SelectedValue,
+                EquityIDFK = (int)cmbDividendEquity.SelectedValue,
+                Shares = (int)Math.Floor(decimal.Parse(txtDividend.Text) / decimal.Parse(txtPrice.Text)),
+                Price = decimal.Parse(txtPrice.Text),
+                Commission = 0.0m,
+                ExchangeRate = 1.0m
+            });
         }
     }
 

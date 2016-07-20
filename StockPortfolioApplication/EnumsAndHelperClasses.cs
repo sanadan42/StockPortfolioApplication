@@ -14,7 +14,8 @@ namespace StockPortfolioApplication
         DepositStock = 4,
         TransferBuy = 5,
         TransferSell = 6,
-        Dividend = 14
+        Dividend = 14,
+        DRIP = 15
     }
 
     enum FinancialTransactionTypes
