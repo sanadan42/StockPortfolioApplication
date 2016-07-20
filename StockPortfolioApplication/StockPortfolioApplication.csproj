@@ -74,6 +74,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Account.cs" />
+    <Compile Include="ctlAccountBalances.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctlAccountBalances.Designer.cs">
+      <DependentUpon>ctlAccountBalances.cs</DependentUpon>
+    </Compile>
     <Compile Include="ctlBerkshireEquityView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -86,6 +92,12 @@
     <Compile Include="ctlBerkshireView.Designer.cs">
       <DependentUpon>ctlBerkshireView.cs</DependentUpon>
     </Compile>
+    <Compile Include="ctlDividendTransaction.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctlDividendTransaction.Designer.cs">
+      <DependentUpon>ctlDividendTransaction.cs</DependentUpon>
+    </Compile>
     <Compile Include="ctlEquityExchangeCurrency.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -97,6 +109,12 @@
     </Compile>
     <Compile Include="ctlEquityTransaction.Designer.cs">
       <DependentUpon>ctlEquityTransaction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ctlFinanceTransaction.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctlFinanceTransaction.Designer.cs">
+      <DependentUpon>ctlFinanceTransaction.cs</DependentUpon>
     </Compile>
     <Compile Include="ctlStockTransaction.cs">
       <SubType>UserControl</SubType>
@@ -188,17 +206,26 @@
     <Compile Include="ctlEquities.Designer.cs">
       <DependentUpon>ctlEquities.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ctlAccountBalances.resx">
+      <DependentUpon>ctlAccountBalances.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ctlBerkshireEquityView.resx">
       <DependentUpon>ctlBerkshireEquityView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ctlBerkshireView.resx">
       <DependentUpon>ctlBerkshireView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ctlDividendTransaction.resx">
+      <DependentUpon>ctlDividendTransaction.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ctlEquityExchangeCurrency.resx">
       <DependentUpon>ctlEquityExchangeCurrency.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ctlEquityTransaction.resx">
       <DependentUpon>ctlEquityTransaction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ctlFinanceTransaction.resx">
+      <DependentUpon>ctlFinanceTransaction.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ctlStockTransaction.resx">
       <DependentUpon>ctlStockTransaction.cs</DependentUpon>

@@ -134,6 +134,7 @@ namespace StockPortfolioApplication
                     switch (t.TransactionTypeIDFK)
                     {
                         case ((int)EquityTransactionTypes.BuyStock):
+                        case ((int)EquityTransactionTypes.DepositStock):
                             priceForCalc = (decimal)t.Price;
                             break;
                         case ((int)EquityTransactionTypes.SellStock):

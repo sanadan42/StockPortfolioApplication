@@ -30,12 +30,11 @@
         {
             this.pnlDisplay = new System.Windows.Forms.Panel();
             this.pnlNavigation = new System.Windows.Forms.Panel();
+            this.btnTestNewTransaction = new System.Windows.Forms.Button();
             this.btnBerkshireTesting = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.btnEECAdd = new System.Windows.Forms.Button();
             this.btnDataGridDisplay = new System.Windows.Forms.Button();
-            this.btnTransactionEntryDisplay = new System.Windows.Forms.Button();
-            this.btnTestNewTransaction = new System.Windows.Forms.Button();
             this.pnlNavigation.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,11 +52,20 @@
             this.pnlNavigation.Controls.Add(this.button1);
             this.pnlNavigation.Controls.Add(this.btnEECAdd);
             this.pnlNavigation.Controls.Add(this.btnDataGridDisplay);
-            this.pnlNavigation.Controls.Add(this.btnTransactionEntryDisplay);
             this.pnlNavigation.Location = new System.Drawing.Point(8, 12);
             this.pnlNavigation.Name = "pnlNavigation";
             this.pnlNavigation.Size = new System.Drawing.Size(179, 627);
             this.pnlNavigation.TabIndex = 1;
+            // 
+            // btnTestNewTransaction
+            // 
+            this.btnTestNewTransaction.Location = new System.Drawing.Point(15, 20);
+            this.btnTestNewTransaction.Name = "btnTestNewTransaction";
+            this.btnTestNewTransaction.Size = new System.Drawing.Size(149, 40);
+            this.btnTestNewTransaction.TabIndex = 5;
+            this.btnTestNewTransaction.Text = "New Transaction Entry";
+            this.btnTestNewTransaction.UseVisualStyleBackColor = true;
+            this.btnTestNewTransaction.Click += new System.EventHandler(this.btnTestNewTransaction_Click);
             // 
             // btnBerkshireTesting
             // 
@@ -99,26 +107,6 @@
             this.btnDataGridDisplay.UseVisualStyleBackColor = true;
             this.btnDataGridDisplay.Click += new System.EventHandler(this.btnDataGridDisplay_Click);
             // 
-            // btnTransactionEntryDisplay
-            // 
-            this.btnTransactionEntryDisplay.Location = new System.Drawing.Point(14, 20);
-            this.btnTransactionEntryDisplay.Name = "btnTransactionEntryDisplay";
-            this.btnTransactionEntryDisplay.Size = new System.Drawing.Size(149, 40);
-            this.btnTransactionEntryDisplay.TabIndex = 0;
-            this.btnTransactionEntryDisplay.Text = "Transaction Entry";
-            this.btnTransactionEntryDisplay.UseVisualStyleBackColor = true;
-            this.btnTransactionEntryDisplay.Click += new System.EventHandler(this.btnTransactionEntryDisplay_Click);
-            // 
-            // btnTestNewTransaction
-            // 
-            this.btnTestNewTransaction.Location = new System.Drawing.Point(15, 437);
-            this.btnTestNewTransaction.Name = "btnTestNewTransaction";
-            this.btnTestNewTransaction.Size = new System.Drawing.Size(149, 40);
-            this.btnTestNewTransaction.TabIndex = 5;
-            this.btnTestNewTransaction.Text = "Testing New Transaction";
-            this.btnTestNewTransaction.UseVisualStyleBackColor = true;
-            this.btnTestNewTransaction.Click += new System.EventHandler(this.btnTestNewTransaction_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -138,7 +126,6 @@
         private System.Windows.Forms.Panel pnlDisplay;
         private System.Windows.Forms.Panel pnlNavigation;
         private System.Windows.Forms.Button btnEECAdd;
-        private System.Windows.Forms.Button btnTransactionEntryDisplay;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btnBerkshireTesting;
         private System.Windows.Forms.Button btnDataGridDisplay;

@@ -3,13 +3,55 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace StockPortfolioApplication
 {
+    public enum CurrencyTypes
+    {
+        YEN = 1,
+        USD = 2,
+        CAD = 3,
+        GBP = 4
+    }
+
     public class BalanceType
     {
         public decimal Balance { get; set; }
         public string Currency { get; set; }
+        public int CurrencyID { get; set; }
+
+        public CultureInfo GetCultureInfo()
+        {
+            CultureInfo currentCulture;
+            switch(CurrencyID)
+            {
+                case (int)CurrencyTypes.CAD:
+                    currentCulture = CultureInfo.CreateSpecificCulture("en-CA");
+                    break;
+                case (int)CurrencyTypes.USD:
+                    currentCulture = CultureInfo.CreateSpecificCulture("en-US");
+                    break;
+                case (int)CurrencyTypes.GBP:
+                    currentCulture = CultureInfo.CreateSpecificCulture("en-GB");
+                    break;
+                case (int)CurrencyTypes.YEN:
+                    currentCulture = CultureInfo.CreateSpecificCulture("ja-JP");
+                    break;
+                default:
+                    currentCulture = CultureInfo.CreateSpecificCulture("en-CA");
+                    break;
+            }
+            currentCulture.NumberFormat.CurrencyNegativePattern = 0;
+            return currentCulture;
+        }
+    }
+
+    public class TransactionsForCalculations
+    {
+        public DateTime TransactionDate { get; set; }
+        public int TransactionType { get; set; }
+        public decimal Net { get; set; }
         public int CurrencyID { get; set; }
     }
 
@@ -79,11 +121,56 @@ namespace StockPortfolioApplication
             }
         }
 
-        public void CalculateAccountBalances()
+        private IQueryable<TransactionsForCalculations> GetAllTransactionsForCalculations(StockPortfolioDBEntities stocks)
+        {
+            var resultFinance = stocks.tblTransactionFinances
+                                        .Where(f => f.AccountIDFK == this.ID)
+                                        .Select(ft => new TransactionsForCalculations()
+                                        {
+                                            TransactionDate = (DateTime)ft.TransactionDate,
+                                            TransactionType = (int)ft.TransactionIDFK,
+                                            Net = (decimal)ft.Net,
+                                            CurrencyID = (int)ft.CurrencyIDFK
+                                        });
+
+            var resultEquities = stocks.tblTransactionEquities
+                                        .Where(t => t.AccountIDFK == this.ID)
+                                        .Where(t => t.tblTransactionType.TransactionTypeID != (int)EquityTransactionTypes.TransferBuy)
+                                        .Where(t => t.tblTransactionType.TransactionTypeID != (int)EquityTransactionTypes.TransferSell)
+                                        .Select(et => new TransactionsForCalculations()
+                                        {
+                                            TransactionDate = (DateTime)et.TransactionDate,
+                                            TransactionType = (int)et.TransactionTypeIDFK,
+                                            Net = -1 * ((decimal)et.Shares * (decimal)et.Price + (decimal)et.Commission),
+                                            CurrencyID = (int)et.tblEquity.tblStockExchanx.CurrencyIDFK
+                                        });
+
+            var resultDividend = stocks.tblTransactionDividends
+                                        .Where(d => d.AccountIDFK == this.ID)
+                                        .Select(dt => new TransactionsForCalculations()
+                                        {
+                                            TransactionDate = (DateTime)dt.DividendDate,
+                                            TransactionType = (int)EquityTransactionTypes.Dividend,
+                                            Net = (decimal)dt.DividendValue,
+                                            CurrencyID = (int)dt.tblEquity.tblStockExchanx.CurrencyIDFK
+                                        });
+            var allResults = resultEquities.Union(resultDividend).Union(resultFinance);
+            return allResults.OrderBy(d => d.TransactionDate);
+        }
+
+        public void CalculateAccountBalancesOld()
         {
             ClearAccountBalances();
             using (var stocks = new StockPortfolioDBEntities())
             {
+                var resultFinance = stocks.tblTransactionFinances.Where(f => f.AccountIDFK == this.ID).OrderBy(f => f.TransactionDate);
+                foreach (var f in resultFinance)
+                {
+                    int currencyType = (int)f.CurrencyIDFK;
+                    BalanceType balance = GetOrCreateBalance(currencyType);
+                    balance.Balance += (decimal)f.Net;
+                }
+
                 var resultEquities = stocks.tblTransactionEquities.
                                         Where(t => t.AccountIDFK == this.ID).
                                         Where(t => t.tblTransactionType.TransactionTypeID != (int)EquityTransactionTypes.TransferBuy).
@@ -93,29 +180,55 @@ namespace StockPortfolioApplication
                 {
                     int currencyType = (int)t.tblEquity.tblStockExchanx.tblCurrency.CurrencyID;
                     // check to see if the balance for the given currency exists within the list
-                    BalanceType balance = GetBalance(currencyType);
+                    BalanceType balance = GetOrCreateBalance(currencyType);
                     balance.Balance -= (decimal)t.Shares * (decimal)t.Price + (decimal)t.Commission;
-                }
-                
-                var resultFinance = stocks.tblTransactionFinances.Where(f => f.AccountIDFK == this.ID).OrderBy(f => f.TransactionDate);
-                foreach (var f in resultFinance)
-                {
-                    int currencyType = (int)f.CurrencyIDFK;
-                    BalanceType balance = GetBalance(currencyType);
-                    balance.Balance += (decimal)f.Net;
                 }
 
                 var resultDividend = stocks.tblTransactionDividends.Where(d => d.AccountIDFK == this.ID).OrderBy(d => d.DividendDate);
                 foreach (var d in resultDividend)
                 {
                     int currencyType = (int)d.tblEquity.tblStockExchanx.tblCurrency.CurrencyID;
-                    BalanceType balance = GetBalance(currencyType);
+                    BalanceType balance = GetOrCreateBalance(currencyType);
+                    if(balance == null)
+                        AddBalance(currencyType);
                     balance.Balance += (decimal)d.DividendValue;
                 }
             }
         }
 
-        private BalanceType GetBalance(int currency)
+        public void CalculateAccountBalances()
+        {
+            using (var stocks = new StockPortfolioDBEntities())
+            {
+            
+                var allResults = GetAllTransactionsForCalculations(stocks);
+                foreach(var v in allResults.Select(c => c.CurrencyID).Distinct())
+                {
+                    int currencyType = (int)v;
+                    BalanceType balance = GetOrCreateBalance(currencyType);
+                }
+                foreach (var b in this.balances)
+                {
+                    b.Balance = (decimal)allResults.Where(c => c.CurrencyID == b.CurrencyID).Sum(n => n.Net);
+                }
+            }
+
+        }
+
+        private BalanceType GetOrCreateBalance(int currency)
+        {
+            BalanceType balance = GetBalance(currency);
+            if(balance != null)
+            {
+                return balance;
+            }
+            else
+            {
+                return AddBalance(currency);
+            }
+        }
+
+        public BalanceType GetBalance(int currency)
         {
             // check to see if the currency type already exists, and if not then add it
             if (this.balances.Exists(b => b.CurrencyID == currency))
@@ -124,7 +237,7 @@ namespace StockPortfolioApplication
             }
             else
             {
-                return AddBalance(currency);
+                return null;
             }
         }
 
