@@ -17,6 +17,7 @@ namespace StockPortfolioApplication
         Dividend = 2,
         Finance = 3
     }
+
     public partial class ctlTransactions : UserControl
     {
         private ctlEquityTransaction ctlEquityTrans;
