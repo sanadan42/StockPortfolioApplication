@@ -34,11 +34,11 @@ namespace StockPortfolioApplication
 
         private void InitializeControls()
         {
-            List<TransactionListSelection> transactionList = new List<TransactionListSelection>();
-            transactionList.Add(new TransactionListSelection("", 0));
-            transactionList.Add(new TransactionListSelection("Equity Transactions", (int)TransactionListEnum.Equity));
-            transactionList.Add(new TransactionListSelection("Dividend Transactions", (int)TransactionListEnum.Dividend));
-            transactionList.Add(new TransactionListSelection("Finance Transactions", (int)TransactionListEnum.Finance));
+            List<StringListSelection> transactionList = new List<StringListSelection>();
+            transactionList.Add(new StringListSelection("", 0));
+            transactionList.Add(new StringListSelection("Equity Transactions", (int)TransactionListEnum.Equity));
+            transactionList.Add(new StringListSelection("Dividend Transactions", (int)TransactionListEnum.Dividend));
+            transactionList.Add(new StringListSelection("Finance Transactions", (int)TransactionListEnum.Finance));
             this.cmbTransactionSelection.DisplayMember = "Transaction";
             this.cmbTransactionSelection.ValueMember = "Value";
             this.cmbTransactionSelection.DataSource = transactionList;
@@ -116,12 +116,12 @@ namespace StockPortfolioApplication
         
     }
 
-    public class TransactionListSelection
+    public class StringListSelection
     {
         public string Transaction { get; set; }
         public int Value { get; set; }
 
-        public TransactionListSelection(string s, int v)
+        public StringListSelection(string s, int v)
         {
             Transaction = s;
             Value = v;
