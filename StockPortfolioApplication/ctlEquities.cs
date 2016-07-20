@@ -114,18 +114,4 @@ namespace StockPortfolioApplication
             this.exchangeIDFK = exIDFK;
         }
     }
-
-    public class MyViewModel
-    {
-        public string StockTicker { get; set; }
-        public string Description { get; set; }
-        public string ExchangeName { get; set; }
-
-        private tblEquity equity;
-
-        public MyViewModel(tblEquity te)
-        {
-            equity = te;
-        }
-    }
 }

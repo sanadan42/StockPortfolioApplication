@@ -66,6 +66,11 @@ namespace StockPortfolioApplication
             }
         }
 
+        public void RefreshData()
+        {
+            UpdateDG();
+        }
+
         private void UpdateDG()
         {
             sortableTransactionList = new SortableBindingList<FinancialTransactionDisplay>(GetTransactions());

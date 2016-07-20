@@ -74,6 +74,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Account.cs" />
+    <Compile Include="ctlAccountBalances.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctlAccountBalances.Designer.cs">
+      <DependentUpon>ctlAccountBalances.cs</DependentUpon>
+    </Compile>
     <Compile Include="ctlBerkshireEquityView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -200,6 +206,9 @@
     <Compile Include="ctlEquities.Designer.cs">
       <DependentUpon>ctlEquities.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ctlAccountBalances.resx">
+      <DependentUpon>ctlAccountBalances.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ctlBerkshireEquityView.resx">
       <DependentUpon>ctlBerkshireEquityView.cs</DependentUpon>
     </EmbeddedResource>
