@@ -137,6 +137,7 @@ namespace StockPortfolioApplication
                                         .Where(t => t.AccountIDFK == this.ID)
                                         .Where(t => t.tblTransactionType.TransactionTypeID != (int)EquityTransactionTypes.TransferBuy)
                                         .Where(t => t.tblTransactionType.TransactionTypeID != (int)EquityTransactionTypes.TransferSell)
+                                        .Where(t => t.tblTransactionType.TransactionTypeID != (int)EquityTransactionTypes.DepositStock)
                                         .Select(et => new TransactionsForCalculations()
                                         {
                                             TransactionDate = (DateTime)et.TransactionDate,
