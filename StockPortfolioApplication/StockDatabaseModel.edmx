@@ -97,7 +97,6 @@
           <Property Name="Shares" Type="decimal" Precision="19" Scale="4" />
           <Property Name="Price" Type="decimal" Precision="19" Scale="4" />
           <Property Name="Commission" Type="decimal" Precision="19" Scale="4" />
-          <Property Name="ExchangeRate" Type="decimal" Precision="19" Scale="4" />
         </EntityType>
         <EntityType Name="tblTransactionFinance">
           <Key>
@@ -472,7 +471,6 @@
           <Property Name="Shares" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="Commission" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="ExchangeRate" Type="Decimal" Precision="19" Scale="4" />
           <NavigationProperty Name="tblAccount" Relationship="Self.FK_tblTransactionEquities_tblAccounts" FromRole="tblTransactionEquities" ToRole="tblAccounts" />
           <NavigationProperty Name="tblEquity" Relationship="Self.FK_tblTransactionEquities_tblEquities" FromRole="tblTransactionEquities" ToRole="tblEquities" />
           <NavigationProperty Name="tblTransactionType" Relationship="Self.FK_tblTransactionEquities_tblTransactionTypes" FromRole="tblTransactionEquities" ToRole="tblTransactionTypes" />
@@ -845,7 +843,6 @@
                 <ScalarProperty Name="Shares" ColumnName="Shares" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="Commission" ColumnName="Commission" />
-                <ScalarProperty Name="ExchangeRate" ColumnName="ExchangeRate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

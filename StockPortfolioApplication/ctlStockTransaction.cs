@@ -94,7 +94,6 @@ namespace StockPortfolioApplication
             numEquityShares.Value = 0;
             txtPrice.Text = "";
             txtCommission.Text = "";
-            txtExchangeRate.Text = "";
         }
 
         private void InitDividendTransactions()
@@ -150,8 +149,7 @@ namespace StockPortfolioApplication
                         EquityIDFK = (int)cmbEquityEquity.SelectedValue,
                         Shares = shareModifier*(decimal)numEquityShares.Value,
                         Price = decimal.Parse(txtPrice.Text),
-                        Commission = decimal.Parse(txtCommission.Text),
-                        ExchangeRate = decimal.Parse(txtExchangeRate.Text)
+                        Commission = decimal.Parse(txtCommission.Text)
                     });
 
                     stockEntity.SaveChanges();

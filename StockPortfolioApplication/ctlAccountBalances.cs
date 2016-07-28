@@ -26,8 +26,11 @@ namespace StockPortfolioApplication
 
         private void DisplayAccountBalances()
         {
+            this.grpAccountBalances.Controls.Clear();
+
             this.displayList = new List<Label>();
             InitAccountNameLabels(3, OFFSET_Y * 2);
+
             int x = 0;
             foreach(Label l in displayList)
             {

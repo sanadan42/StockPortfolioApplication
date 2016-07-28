@@ -170,8 +170,7 @@ namespace StockPortfolioApplication
                 EquityIDFK = (int)cmbDividendEquity.SelectedValue,
                 Shares = (int)Math.Floor(decimal.Parse(txtDividend.Text) / decimal.Parse(txtPrice.Text)),
                 Price = decimal.Parse(txtPrice.Text),
-                Commission = 0.0m,
-                ExchangeRate = 1.0m
+                Commission = 0.0m
             });
         }
     }

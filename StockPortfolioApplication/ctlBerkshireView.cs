@@ -18,6 +18,7 @@ namespace StockPortfolioApplication
         private ctlAccountBalances accountDisplay;
 
         private int lineOffset, totalsOffset;
+        private int accountSelection;
 
         public ctlBerkshireView()
         {
@@ -30,6 +31,7 @@ namespace StockPortfolioApplication
         public ctlBerkshireView(Portfolio portfolio)
         {
             this.portfolio = portfolio;
+            this.accountSelection = -1; // set to all accounts as default selection
 
             Init();
         }
@@ -37,17 +39,40 @@ namespace StockPortfolioApplication
         private void Init()
         {
             InitializeComponent();
+            
+
             // temporary - for testing purposes only at the moment.
             accountDisplay = new ctlAccountBalances(portfolio);
             accountDisplay.Location = new Point(0, 450);
             this.Controls.Add(accountDisplay);
 
+            InitCombos();
             Refresh();
+        }
+
+        private void InitCombos()
+        {
+            using (var stockEntity = new StockPortfolioDBEntities())
+            {
+
+                var entityAccounts = stockEntity.tblAccounts.OrderBy(a => a.AccountName);
+                var accounts = entityAccounts.ToList();
+
+                var acc = new tblAccount();
+                acc.AccountID = -1;
+                accounts.Insert(0, acc);
+
+                // initialize equity combo box
+                cmbAccountSelection.DisplayMember = "AccountName";
+                cmbAccountSelection.ValueMember = "AccountID";
+                cmbAccountSelection.DataSource = accounts;
+            }
         }
 
         public void RefreshData()
         {
-            BuildEquityList(portfolio.GetEquityList());
+
+            BuildEquityList(portfolio.GetEquityList(this.accountSelection));
 
             int i = 0;
             this.pnlBerkshireEquityView.Controls.Clear();
@@ -64,7 +89,7 @@ namespace StockPortfolioApplication
             // resize the main equity panel view to fit all equities
             pnlBerkshireEquityView.Size = new Size(pnlBerkshireEquityView.Width, this.equityViewList[this.equityViewList.Count - 1].Bottom);
             // display all totals
-            CreateTotals(portfolio.GetAccountSummary());
+            CreateTotals(portfolio.GetAccount(this.accountSelection));
             accountDisplay.RefreshData();
         }
 
@@ -154,6 +179,7 @@ namespace StockPortfolioApplication
         {
             using (Graphics g = e.Graphics)
             {
+                g.Clear(SystemColors.Control);
                 DrawTotalLines(g);
                 DrawSummaryLines(g);
             }
@@ -182,6 +208,14 @@ namespace StockPortfolioApplication
             int x2 = equityViewList[0].ValueHPos + 65;
             int y = lblCostTotal.Bottom + 3;
             g.DrawLine(new Pen(Color.Black, 1), new Point(x1, y), new Point(x2, y));
+        }
+
+        private void cmbAccountSelection_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.accountSelection = (int)cmbAccountSelection.SelectedValue;
+            this.Invalidate();
+            this.RefreshData();
+            
         }
     }
 }

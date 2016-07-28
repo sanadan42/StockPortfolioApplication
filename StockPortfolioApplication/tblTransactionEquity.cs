@@ -22,7 +22,6 @@ namespace StockPortfolioApplication
         public Nullable<decimal> Shares { get; set; }
         public Nullable<decimal> Price { get; set; }
         public Nullable<decimal> Commission { get; set; }
-        public Nullable<decimal> ExchangeRate { get; set; }
     
         public virtual tblAccount tblAccount { get; set; }
         public virtual tblEquity tblEquity { get; set; }

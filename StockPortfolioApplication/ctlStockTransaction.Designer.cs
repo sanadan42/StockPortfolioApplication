@@ -45,8 +45,6 @@
             this.btnTransactionSave = new System.Windows.Forms.Button();
             this.dtpTransactionDate = new System.Windows.Forms.DateTimePicker();
             this.lblEquityTransactionDate = new System.Windows.Forms.Label();
-            this.txtExchangeRate = new System.Windows.Forms.TextBox();
-            this.lblExchangeRate = new System.Windows.Forms.Label();
             this.grpTransactionEquities = new System.Windows.Forms.GroupBox();
             this.cmbDividendAccount = new System.Windows.Forms.ComboBox();
             this.cmbDividendEquity = new System.Windows.Forms.ComboBox();
@@ -234,28 +232,10 @@
             this.lblEquityTransactionDate.TabIndex = 81;
             this.lblEquityTransactionDate.Text = "Date";
             // 
-            // txtExchangeRate
-            // 
-            this.txtExchangeRate.Location = new System.Drawing.Point(568, 50);
-            this.txtExchangeRate.Name = "txtExchangeRate";
-            this.txtExchangeRate.Size = new System.Drawing.Size(81, 20);
-            this.txtExchangeRate.TabIndex = 82;
-            // 
-            // lblExchangeRate
-            // 
-            this.lblExchangeRate.AutoSize = true;
-            this.lblExchangeRate.Location = new System.Drawing.Point(568, 32);
-            this.lblExchangeRate.Name = "lblExchangeRate";
-            this.lblExchangeRate.Size = new System.Drawing.Size(81, 13);
-            this.lblExchangeRate.TabIndex = 83;
-            this.lblExchangeRate.Text = "Exchange Rate";
-            // 
             // grpTransactionEquities
             // 
             this.grpTransactionEquities.Controls.Add(this.cmbTransactionEquity);
-            this.grpTransactionEquities.Controls.Add(this.lblExchangeRate);
             this.grpTransactionEquities.Controls.Add(this.cmbAccountEquity);
-            this.grpTransactionEquities.Controls.Add(this.txtExchangeRate);
             this.grpTransactionEquities.Controls.Add(this.cmbEquityEquity);
             this.grpTransactionEquities.Controls.Add(this.lblEquityTransactionDate);
             this.grpTransactionEquities.Controls.Add(this.lblShares);
@@ -547,8 +527,6 @@
         private System.Windows.Forms.Button btnTransactionSave;
         private System.Windows.Forms.DateTimePicker dtpTransactionDate;
         private System.Windows.Forms.Label lblEquityTransactionDate;
-        private System.Windows.Forms.TextBox txtExchangeRate;
-        private System.Windows.Forms.Label lblExchangeRate;
         private System.Windows.Forms.GroupBox grpTransactionEquities;
         private System.Windows.Forms.ComboBox cmbDividendAccount;
         private System.Windows.Forms.ComboBox cmbDividendEquity;

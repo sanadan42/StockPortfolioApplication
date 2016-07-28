@@ -36,8 +36,10 @@ namespace StockPortfolioApplication
                 var accountsEquity = entityAccounts.ToList();
                 var accountsEquityTo = entityAccounts.ToList();
 
-                accountsEquity.Insert(0, new tblAccount());
-                accountsEquityTo.Insert(0, new tblAccount());
+                var acc = new tblAccount();
+                acc.AccountID = -1;
+                accountsEquity.Insert(0, acc);
+                accountsEquityTo.Insert(0, acc);
 
                 var equitiesAll = stockEntity.tblEquities.OrderBy(c => c.StockTicker);
                 var equities = equitiesAll.ToList();
@@ -175,7 +177,6 @@ namespace StockPortfolioApplication
             numEquityShares.Value = 0;
             txtPrice.Text = "";
             txtCommission.Text = "";
-            txtExchangeRate.Text = "";
         }
 
         private void cmbTransactionEquity_SelectedIndexChanged(object sender, EventArgs e)
@@ -207,8 +208,7 @@ namespace StockPortfolioApplication
                         EquityIDFK = (int)cmbEquityEquity.SelectedValue,
                         Shares = shareModifier * (decimal)numEquityShares.Value,
                         Price = decimal.Parse(txtPrice.Text),
-                        Commission = decimal.Parse(txtCommission.Text),
-                        ExchangeRate = decimal.Parse(txtExchangeRate.Text)
+                        Commission = decimal.Parse(txtCommission.Text)
                     });
 
                     stockEntity.SaveChanges();

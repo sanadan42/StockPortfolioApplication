@@ -41,13 +41,15 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.lblTransactionType = new System.Windows.Forms.Label();
+            this.cmbAccountSelection = new System.Windows.Forms.ComboBox();
             this.pnlBerkshireSummary.SuspendLayout();
             this.pnlBerkshireSummaryLabels.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlBerkshireEquityView
             // 
-            this.pnlBerkshireEquityView.Location = new System.Drawing.Point(0, 0);
+            this.pnlBerkshireEquityView.Location = new System.Drawing.Point(0, 29);
             this.pnlBerkshireEquityView.Name = "pnlBerkshireEquityView";
             this.pnlBerkshireEquityView.Size = new System.Drawing.Size(926, 314);
             this.pnlBerkshireEquityView.TabIndex = 0;
@@ -164,10 +166,30 @@
             this.label1.Text = "Unrealized Gains";
             this.label1.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
+            // lblTransactionType
+            // 
+            this.lblTransactionType.AutoSize = true;
+            this.lblTransactionType.Location = new System.Drawing.Point(4, 7);
+            this.lblTransactionType.Name = "lblTransactionType";
+            this.lblTransactionType.Size = new System.Drawing.Size(47, 13);
+            this.lblTransactionType.TabIndex = 5;
+            this.lblTransactionType.Text = "Account";
+            // 
+            // cmbAccountSelection
+            // 
+            this.cmbAccountSelection.FormattingEnabled = true;
+            this.cmbAccountSelection.Location = new System.Drawing.Point(56, 3);
+            this.cmbAccountSelection.Name = "cmbAccountSelection";
+            this.cmbAccountSelection.Size = new System.Drawing.Size(141, 21);
+            this.cmbAccountSelection.TabIndex = 4;
+            this.cmbAccountSelection.SelectedIndexChanged += new System.EventHandler(this.cmbAccountSelection_SelectedIndexChanged);
+            // 
             // ctlBerkshireView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.lblTransactionType);
+            this.Controls.Add(this.cmbAccountSelection);
             this.Controls.Add(this.pnlBerkshireSummaryLabels);
             this.Controls.Add(this.lblValueTotal);
             this.Controls.Add(this.lblCostTotal);
@@ -199,5 +221,7 @@
         private System.Windows.Forms.Label lblSummaryDividends;
         private System.Windows.Forms.Label lblSummaryRealized;
         private System.Windows.Forms.Label lblSummaryUnrealized;
+        private System.Windows.Forms.Label lblTransactionType;
+        private System.Windows.Forms.ComboBox cmbAccountSelection;
     }
 }

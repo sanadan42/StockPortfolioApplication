@@ -30,9 +30,7 @@
         {
             this.grpTransactionEquities = new System.Windows.Forms.GroupBox();
             this.cmbTransactionEquity = new System.Windows.Forms.ComboBox();
-            this.lblExchangeRate = new System.Windows.Forms.Label();
             this.cmbAccountEquity = new System.Windows.Forms.ComboBox();
-            this.txtExchangeRate = new System.Windows.Forms.TextBox();
             this.cmbEquityEquity = new System.Windows.Forms.ComboBox();
             this.lblEquityTransactionDate = new System.Windows.Forms.Label();
             this.lblShares = new System.Windows.Forms.Label();
@@ -57,9 +55,7 @@
             // grpTransactionEquities
             // 
             this.grpTransactionEquities.Controls.Add(this.cmbTransactionEquity);
-            this.grpTransactionEquities.Controls.Add(this.lblExchangeRate);
             this.grpTransactionEquities.Controls.Add(this.cmbAccountEquity);
-            this.grpTransactionEquities.Controls.Add(this.txtExchangeRate);
             this.grpTransactionEquities.Controls.Add(this.cmbEquityEquity);
             this.grpTransactionEquities.Controls.Add(this.lblEquityTransactionDate);
             this.grpTransactionEquities.Controls.Add(this.lblShares);
@@ -91,15 +87,6 @@
             this.cmbTransactionEquity.TabIndex = 67;
             this.cmbTransactionEquity.SelectedIndexChanged += new System.EventHandler(this.cmbTransactionEquity_SelectedIndexChanged);
             // 
-            // lblExchangeRate
-            // 
-            this.lblExchangeRate.AutoSize = true;
-            this.lblExchangeRate.Location = new System.Drawing.Point(607, 32);
-            this.lblExchangeRate.Name = "lblExchangeRate";
-            this.lblExchangeRate.Size = new System.Drawing.Size(81, 13);
-            this.lblExchangeRate.TabIndex = 83;
-            this.lblExchangeRate.Text = "Exchange Rate";
-            // 
             // cmbAccountEquity
             // 
             this.cmbAccountEquity.FormattingEnabled = true;
@@ -107,13 +94,6 @@
             this.cmbAccountEquity.Name = "cmbAccountEquity";
             this.cmbAccountEquity.Size = new System.Drawing.Size(90, 21);
             this.cmbAccountEquity.TabIndex = 65;
-            // 
-            // txtExchangeRate
-            // 
-            this.txtExchangeRate.Location = new System.Drawing.Point(607, 50);
-            this.txtExchangeRate.Name = "txtExchangeRate";
-            this.txtExchangeRate.Size = new System.Drawing.Size(81, 20);
-            this.txtExchangeRate.TabIndex = 74;
             // 
             // cmbEquityEquity
             // 
@@ -159,7 +139,7 @@
             // 
             // btnTransactionSave
             // 
-            this.btnTransactionSave.Location = new System.Drawing.Point(694, 50);
+            this.btnTransactionSave.Location = new System.Drawing.Point(608, 50);
             this.btnTransactionSave.Name = "btnTransactionSave";
             this.btnTransactionSave.Size = new System.Drawing.Size(79, 21);
             this.btnTransactionSave.TabIndex = 79;
@@ -283,9 +263,7 @@
 
         private System.Windows.Forms.GroupBox grpTransactionEquities;
         private System.Windows.Forms.ComboBox cmbTransactionEquity;
-        private System.Windows.Forms.Label lblExchangeRate;
         private System.Windows.Forms.ComboBox cmbAccountEquity;
-        private System.Windows.Forms.TextBox txtExchangeRate;
         private System.Windows.Forms.ComboBox cmbEquityEquity;
         private System.Windows.Forms.Label lblEquityTransactionDate;
         private System.Windows.Forms.Label lblShares;
