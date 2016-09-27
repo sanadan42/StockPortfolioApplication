@@ -97,11 +97,11 @@
         }
 
         #endregion
-
         private System.Windows.Forms.Label lblShares;
         private System.Windows.Forms.Label lblCostCalculated;
         private System.Windows.Forms.Label lblDescription;
         private System.Windows.Forms.Label lblTicker;
         private System.Windows.Forms.Label lblValueCalculated;
+        
     }
 }
