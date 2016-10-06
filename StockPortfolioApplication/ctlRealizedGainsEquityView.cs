@@ -1,0 +1,82 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace StockPortfolioApplication
+{
+    public partial class ctlCapitalGainsEquityView : UserControl
+    {
+        public ctlCapitalGainsEquityView()
+        {
+            InitializeComponent();
+        }
+
+        public void Populate(Equity e)
+        {
+            // MODIFY THIS TO POPULATE FOR A GIVEN DATE
+            // ACB FUNCTION HAS BEEN UPDATED TO ALLOW FOR THIS
+            // IT WASN"T HARD
+            //...
+            // but i still need to fix this part
+            this.lblTicker.Text = e.Ticker;
+            this.lblDescription.Text = e.Description;
+            this.lblShares.Text = ((int)e.Shares).ToString();
+            this.lblCostCalculated.Text = e.TotalCost.ToString("C");
+            this.lblValueCalculated.Text = (e.Shares * e.CurrentPrice).ToString("C");
+
+            //Ticker = e.Ticker;
+            //Description = e.Description;
+            //Shares = e.Shares;
+            //Cost = e.TotalCost;
+            //Value = e.Shares * e.CurrentPrice;
+        }
+
+        public void SetAsHeader()
+        {
+            this.lblTicker.Text = "Ticker";
+            this.lblDescription.Text = "Description";
+            this.lblShares.Text = "Shares";
+            this.lblCostCalculated.Text = "Cost";
+            this.lblValueCalculated.Text = "Value";
+
+            this.BackColor = Color.Black;
+            foreach(Control c in Controls)
+            {
+                c.ForeColor = Color.White;
+            }
+        }
+
+        public void SetBackColor(int i)
+        {
+            if (i == 0)
+            {
+                this.BackColor = SystemColors.ActiveCaption;
+            }
+            else
+            {
+                if ((i % 2) == 0)
+                {
+                    this.BackColor = SystemColors.ControlDark;
+                }
+            }
+        }
+
+        public int TickerHPos { get { return lblTicker.Location.X; } }
+        public int DecriptionHPos { get { return lblDescription.Location.X; } }
+        public int SharesHPos { get { return lblShares.Location.X; } }
+        public int CostHPos { get { return lblCostCalculated.Location.X; } }
+        public int ValueHPos { get { return lblValueCalculated.Location.X; } }
+
+        public string Ticker { get; set; }
+        public string Description { get; set; }
+        public decimal Shares { get; set; }
+        public decimal Cost { get; set; }
+        public decimal Value { get; set; }// this should be a calculated view of value = current # shares * current price
+    }
+}

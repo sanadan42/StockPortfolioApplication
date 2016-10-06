@@ -80,6 +80,12 @@
     <Compile Include="ctlAccountBalances.Designer.cs">
       <DependentUpon>ctlAccountBalances.cs</DependentUpon>
     </Compile>
+    <Compile Include="ctlRealizedGainsEquityView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctlRealizedGainsEquityView.Designer.cs">
+      <DependentUpon>ctlRealizedGainsEquityView.cs</DependentUpon>
+    </Compile>
     <Compile Include="ctlBerkshireEquityView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -208,6 +214,9 @@
     </Compile>
     <EmbeddedResource Include="ctlAccountBalances.resx">
       <DependentUpon>ctlAccountBalances.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ctlRealizedGainsEquityView.resx">
+      <DependentUpon>ctlRealizedGainsEquityView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ctlBerkshireEquityView.resx">
       <DependentUpon>ctlBerkshireEquityView.cs</DependentUpon>

@@ -110,8 +110,40 @@ namespace StockPortfolioApplication
                 }
             }
         }
+
+        private List<tblTransactionEquity> GetTransactionsForEquity(Equity equity, Account account, DateTime date)
+        {
+            using (var stocks = new StockPortfolioDBEntities())
+            {
+                if (account.ID == -1)
+                {
+                    var result = stocks.tblTransactionEquities
+                                .Where(e => e.EquityIDFK == equity.ID)
+                                .Where(d => d.TransactionDate <= date)
+                                .OrderBy(d => d.TransactionDate);
+                    return result.ToList();
+                }
+                else
+                {
+                    var result = stocks.tblTransactionEquities
+                                .Where(a => a.AccountIDFK == account.ID)
+                                .Where(e => e.EquityIDFK == equity.ID)
+                                .Where(d => d.TransactionDate <= date)
+                                .OrderBy(d => d.TransactionDate);
+                    return result.ToList();
+                }
+            }
+        }
         #endregion
-                
+
+        private struct EquityValues
+        {
+            public decimal TotalCost { get; set; }
+            public decimal AverageCost { get; set; }
+            public decimal RealizedGain { get; set; }
+            public decimal Shares { get; set; }
+        }
+
         #region Equity Calculations
         public void EquityCalculations(Equity equity, Account account)
         {
@@ -122,10 +154,33 @@ namespace StockPortfolioApplication
             //      - RealizedGain - whenever there is a sale there has to be a profit / loss
             //      - AverageCost - this is the ACB or Average Cost Basis
             
-            decimal totalCost = 0.0m, averageCost = 0.0m, realizedGain = 0.0m;
-            decimal shares = 0;
+            EquityValues values = new EquityValues();
 
             var transactions = GetTransactionsForEquity(equity, account);
+            ACBCalcs(transactions, ref values);
+
+            equity.Shares = values.Shares;
+            equity.TotalCost = values.Shares == 0 ? 0.0m : values.TotalCost; // if there are no shares then I don't want to see the commission of the last trade - set the total cost = 0.0;
+            equity.AverageCostBasis = values.AverageCost;
+            equity.RealizedGain = values.RealizedGain;
+        }
+
+        public decimal ACBDate(Equity equity, Account account, DateTime date)
+        {
+            // pre: 
+            // post: equity will be populated with the most difficult aggregate calcs
+            //      - ACB (averageCost)
+
+            EquityValues values = new EquityValues();
+
+            var transactions = GetTransactionsForEquity(equity, account, date);
+            ACBCalcs(transactions, ref values);
+
+            return values.AverageCost;
+        }
+
+        private void ACBCalcs(List<tblTransactionEquity> transactions, ref EquityValues values)
+        {
             if (!(transactions.Count == 0))
             {
                 foreach (var t in transactions)
@@ -138,28 +193,23 @@ namespace StockPortfolioApplication
                             priceForCalc = (decimal)t.Price;
                             break;
                         case ((int)EquityTransactionTypes.SellStock):
-                            priceForCalc = averageCost;
-                            realizedGain += -1 * (decimal)t.Shares * ((decimal)t.Price - averageCost) - (decimal)t.Commission; // when we are selling stocks t.shares will be negative, so need to multiply by -1. or... could do aveCost - t.Price... same same
-                            break;
                         case ((int)EquityTransactionTypes.TransferBuy):
                         case ((int)EquityTransactionTypes.TransferSell):
-                            priceForCalc = averageCost;
+                            priceForCalc = values.AverageCost;
                             break;
                         default:
                             priceForCalc = 0.0m;
                             break;
                     }
 
-                    shares += (decimal)t.Shares;
-                    totalCost += (decimal)t.Shares * priceForCalc + (decimal)t.Commission;
-                    averageCost = shares == 0.0m ? 0.0m : totalCost / shares;
+                    if( t.TransactionTypeIDFK == ((int)EquityTransactionTypes.SellStock))
+                        // when we are selling stocks t.shares will be negative, so need to multiply by -1. or... could do aveCost - t.Price... same same
+                        values.RealizedGain += -1 * (decimal)t.Shares * ((decimal)t.Price - values.AverageCost) - (decimal)t.Commission;
+                    values.Shares += (decimal)t.Shares;
+                    values.TotalCost += (decimal)t.Shares * priceForCalc + (decimal)t.Commission;
+                    values.AverageCost = values.Shares == 0.0m ? 0.0m : values.TotalCost / values.Shares;
                 }
             }
-
-            equity.Shares = shares;
-            equity.TotalCost = shares == 0 ? 0.0m : totalCost; // if there are no shares then I don't want to see the commission of the last trade - set the total cost = 0.0;
-            equity.AverageCostBasis = averageCost;
-            equity.RealizedGain = realizedGain;
         }
         #endregion
 
